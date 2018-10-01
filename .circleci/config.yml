@@ -12,14 +12,18 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command: apk add --no-cache build-base \
-                                      postgresql \
-                                      postgresql-dev \
-                                      nodejs \
-                                      tzdata
+          command: apk add --no-cache build-base postgresql postgresql-dev nodejs nodejs-npm tzdata
+      - restore_cache:
+          keys:
+          - bundle-v1-{{ checksum "Gemfile.lock" }}
+      - run: bundle check || bundle install --path vendor/bundle --jobs 4 --retry 3
+      - save_cache:
+          key: bundle-v1-{{ checksum "Gemfile.lock" }}
+          paths:
+            - "vendor/bundle"
       - run:
           name: Setup Database
-          command: bundle exec rake db:migrate
+          command: bundle exec rake db:create db:migrate
       - run:
           name: Run Test Suite
           command: COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN bundle exec rspec

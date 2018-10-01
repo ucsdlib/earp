@@ -1,0 +1,25 @@
+---
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ruby:2.5.1-alpine
+      - image: postgres:10.5-alpine
+    environment:
+      RAILS_ENV: test
+      DATABASE_URL: localhost
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: apk add --no-cache build-base \
+                                      postgresql \
+                                      postgresql-dev \
+                                      nodejs \
+                                      tzdata
+      - run:
+          name: Setup Database
+          command: bundle exec rake db:migrate
+      - run:
+          name: Run Test Suite
+          command: COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN bundle exec rspec

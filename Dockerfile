@@ -5,6 +5,7 @@ RUN apk add --no-cache \
   postgresql \
   postgresql-dev \
   nodejs \
+  nodejs-npm \
   tzdata
 
 

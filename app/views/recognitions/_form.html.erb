@@ -1,0 +1,42 @@
+<%= form_with(model: recognition, local: true) do |form| %>
+  <% if recognition.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(recognition.errors.count, "error") %> prohibited this recognition from being saved:</h2>
+
+      <ul>
+      <% recognition.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :recognizee %>
+    <%= form.text_field :recognizee %>
+  </div>
+
+  <div class="field">
+    <%= form.label :library_value %>
+    <%= form.text_field :library_value %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :anonymous %>
+    <%= form.check_box :anonymous %>
+  </div>
+
+  <div class="field">
+    <%= form.label :recognizer %>
+    <%= form.text_field :recognizer %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

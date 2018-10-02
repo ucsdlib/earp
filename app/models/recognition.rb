@@ -1,0 +1,2 @@
+class Recognition < ApplicationRecord
+end

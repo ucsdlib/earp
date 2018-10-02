@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Recognizee:</strong>
+  <%= @recognition.recognizee %>
+</p>
+
+<p>
+  <strong>Library value:</strong>
+  <%= @recognition.library_value %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @recognition.description %>
+</p>
+
+<p>
+  <strong>Anonymous:</strong>
+  <%= @recognition.anonymous %>
+</p>
+
+<p>
+  <strong>Recognizer:</strong>
+  <%= @recognition.recognizer %>
+</p>
+
+<%= link_to 'Edit', edit_recognition_path(@recognition) %> |
+<%= link_to 'Back', recognitions_path %>

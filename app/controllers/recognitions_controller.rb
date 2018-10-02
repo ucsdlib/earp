@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# RecognitionsController
 class RecognitionsController < ApplicationController
-  before_action :set_recognition, only: [:show, :edit, :update, :destroy]
+  before_action :set_recognition, only: %i[show edit update destroy]
 
   # GET /recognitions
   # GET /recognitions.json
@@ -9,8 +12,7 @@ class RecognitionsController < ApplicationController
 
   # GET /recognitions/1
   # GET /recognitions/1.json
-  def show
-  end
+  def show; end
 
   # GET /recognitions/new
   def new
@@ -18,8 +20,7 @@ class RecognitionsController < ApplicationController
   end
 
   # GET /recognitions/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /recognitions
   # POST /recognitions.json
@@ -62,13 +63,15 @@ class RecognitionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_recognition
-      @recognition = Recognition.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def recognition_params
-      params.require(:recognition).permit(:recognizee, :library_value, :description, :anonymous, :recognizer)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_recognition
+    @recognition = Recognition.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def recognition_params
+    params.require(:recognition).permit(:recognizee, :library_value,
+                                        :description, :anonymous, :recognizer)
+  end
 end

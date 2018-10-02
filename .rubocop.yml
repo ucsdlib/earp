@@ -23,3 +23,6 @@ Style/Documentation:
     - 'app/mailers/application_mailer.rb'
     - 'app/helpers/application_helper.rb'
     - 'app/models/application_record.rb'
+
+Metrics/LineLength:
+  Max: 120

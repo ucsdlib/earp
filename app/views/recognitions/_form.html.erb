@@ -1,42 +1,17 @@
-<%= form_with(model: recognition, local: true) do |form| %>
-  <% if recognition.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(recognition.errors.count, "error") %> prohibited this recognition from being saved:</h2>
+<%= simple_form_for(@recognition) do |f| %>
+  <%= f.input :recognizee,
+              collection: employees,
+              include_blank: false %>
 
-      <ul>
-      <% recognition.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= f.input :library_value,
+              collection: library_values,
+              include_blank: false %>
 
-  <div class="field">
-    <%= form.label :recognizee %>
-    <%= form.text_field :recognizee %>
-  </div>
+  <%= f.input :description %>
 
-  <div class="field">
-    <%= form.label :library_value %>
-    <%= form.text_field :library_value %>
-  </div>
+  <%= f.input :anonymous %>
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
+  <%= f.input :recognizer %>
 
-  <div class="field">
-    <%= form.label :anonymous %>
-    <%= form.check_box :anonymous %>
-  </div>
-
-  <div class="field">
-    <%= form.label :recognizer %>
-    <%= form.text_field :recognizer %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= f.button :submit, class: "btn-primary" %>
 <% end %>

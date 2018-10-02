@@ -1,0 +1,25 @@
+require: rubocop-rspec
+
+AllCops:
+  DisplayCopNames: true
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'app/assets/**/*'
+    - 'config/**/*'
+    - 'doc/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'Gemfile'
+    - 'config.ru'
+    - 'Rakefile'
+
+Rails:
+  Enabled: true
+
+Style/Documentation:
+  Exclude:
+    - 'app/mailers/application_mailer.rb'
+    - 'app/helpers/application_helper.rb'
+    - 'app/models/application_record.rb'

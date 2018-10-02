@@ -21,6 +21,9 @@ jobs:
           paths:
             - "vendor/bundle"
       - run:
+          name: Rubocop
+          command: bundle exec rubocop
+      - run:
           name: Setup Database
           command: bundle exec rake db:create db:migrate
       - run:

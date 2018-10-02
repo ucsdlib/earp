@@ -44,6 +44,7 @@ class Ldap
     employees_only = Net::LDAP::Filter.pres('EmployeeID')
     staff = Net::LDAP::Filter.eq('ObjectCategory', 'person')
     users = Net::LDAP::Filter.eq('ObjectClass', 'user')
-    employees_only & staff & users
+    no_lib_accounts = Net::LDAP::Filter.ne('sAMAccountName', 'lib-*')
+    employees_only & staff & users & no_lib_accounts
   end
 end

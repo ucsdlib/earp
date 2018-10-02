@@ -24,14 +24,26 @@ class Ldap
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   # Query all currently active employees
-  # @return [Array] employee information (Name, Email)
+  # @return [Array] employee information (Name, EmployeeID)
   def employees
     result = []
     ldap_connection.search(
-      filter: Net::LDAP::Filter.eq('objectcategory', 'user'),
-      attributes: %w[user email] # TODO: ask Dan
+      filter: employees_filter,
+      attributes: %w[DisplayName EmployeeID]
     ) do |employee|
-      result << employee
+      result << [employee.displayname.first, employee.employeeid]
     end
+    result
+  end
+
+  private
+
+  # Only show current library staff, excluding students
+  # @return [NET::LDAP::Filter] for employees query
+  def employees_filter
+    employees_only = Net::LDAP::Filter.pres('EmployeeID')
+    staff = Net::LDAP::Filter.eq('ObjectCategory', 'person')
+    users = Net::LDAP::Filter.eq('ObjectClass', 'user')
+    employees_only & staff & users
   end
 end

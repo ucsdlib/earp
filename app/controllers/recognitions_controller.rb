@@ -25,6 +25,7 @@ class RecognitionsController < ApplicationController
 
   # POST /recognitions
   # POST /recognitions.json
+  # rubocop:disable Metrics/MethodLength
   def create
     @recognition = Recognition.new(recognition_params)
     @recognition.user = current_user
@@ -38,6 +39,7 @@ class RecognitionsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # PATCH/PUT /recognitions/1
   # PATCH/PUT /recognitions/1.json

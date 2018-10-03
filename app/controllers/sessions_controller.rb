@@ -28,7 +28,9 @@ class SessionsController < ApplicationController
   def destroy
     destroy_user_session
     if Rails.configuration.shibboleth
+      # rubocop:disable Metrics/LineLength,Rails/OutputSafety
       flash[:alert] = 'You have been logged out of this applicaton. To logout of all Single Sign-On applications, close your browser'.html_safe
+      # rubocop:enable Metrics/LineLength,Rails/OutputSafety
     end
 
     redirect_to root_url

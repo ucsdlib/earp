@@ -1,16 +1,21 @@
+<% if logged_in? %>
+<%= link_to 'Sign out', signout_path, class: "btn btn-outline-secondary"%>
+<% else %>
+<%= link_to 'Sign in', signin_path, class: "btn btn-outline-secondary"%>
+<% end %>
 <p id="notice"><%= notice %></p>
 
-<h1>Recognitions</h1>
+<h1>Library Staff Recognitions</h1>
 
-<table>
-  <thead>
+<table class='table'>
+  <thead class="thead-light">
     <tr>
-      <th>Recognizee</th>
-      <th>Library value</th>
-      <th>Description</th>
-      <th>Anonymous</th>
-      <th>Recognizer</th>
-      <th colspan="3"></th>
+      <th scope="col">Recognizee</th>
+      <th scope="col">Library value</th>
+      <th scope="col">Description</th>
+      <th scope="col">Anonymous</th>
+      <th scope="col">Recognizer</th>
+      <th scope="col" colspan="3">Actions</th>
     </tr>
   </thead>
 
@@ -21,7 +26,7 @@
         <td><%= recognition.library_value %></td>
         <td><%= recognition.description %></td>
         <td><%= recognition.anonymous %></td>
-        <td><%= recognition.recognizer %></td>
+        <td><%= recognition.user.full_name %></td>
         <td><%= link_to 'Show', recognition %></td>
         <td><%= link_to 'Edit', edit_recognition_path(recognition) %></td>
         <td><%= link_to 'Destroy', recognition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -32,4 +37,4 @@
 
 <br>
 
-<%= link_to 'New Recognition', new_recognition_path %>
+<%= link_to 'New Recognition', new_recognition_path ,class: "btn btn-primary"%>

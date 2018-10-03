@@ -26,7 +26,7 @@ module ApplicationHelper
     ) do |employee|
       result << [employee.displayname.first, employee.employeeid.first]
     end
-    result
+    result.sort
   end
 
   private

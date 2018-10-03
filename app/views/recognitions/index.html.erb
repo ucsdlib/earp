@@ -26,7 +26,7 @@
         <td><%= recognition.library_value %></td>
         <td><%= recognition.description %></td>
         <td><%= recognition.anonymous %></td>
-        <td><%= recognition.recognizer %></td>
+        <td><%= recognition.user.full_name %></td>
         <td><%= link_to 'Show', recognition %></td>
         <td><%= link_to 'Edit', edit_recognition_path(recognition) %></td>
         <td><%= link_to 'Destroy', recognition, method: :delete, data: { confirm: 'Are you sure?' } %></td>

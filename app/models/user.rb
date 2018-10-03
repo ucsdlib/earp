@@ -5,6 +5,8 @@ require 'ldap'
 
 # User - authenticated Library user
 class User < ApplicationRecord
+  has_many :recognitions, dependent: :destroy
+
   def self.find_or_create_for_developer(_access_token)
     User.find_by(uid: 1, provider: 'developer') ||
       User.create(uid: 1, provider: 'developer', email: 'developer@ucsd.edu', full_name: 'developer')

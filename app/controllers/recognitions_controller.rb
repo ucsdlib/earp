@@ -27,7 +27,7 @@ class RecognitionsController < ApplicationController
   # POST /recognitions.json
   def create
     @recognition = Recognition.new(recognition_params)
-
+    @recognition.user = current_user
     respond_to do |format|
       if @recognition.save
         format.html { redirect_to @recognition, notice: 'Recognition was successfully created.' }
@@ -73,6 +73,7 @@ class RecognitionsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def recognition_params
     params.require(:recognition).permit(:recognizee, :library_value,
-                                        :description, :anonymous, :recognizer)
+                                        :description, :anonymous,
+                                        :recognizer)
   end
 end

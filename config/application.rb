@@ -29,5 +29,8 @@ module Earp
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Only production (staging eventually)
+    config.shibboleth = false
   end
 end

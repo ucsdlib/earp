@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
     end
 
     it "should reuse an existing User if the access token matches" do
-      token = { uid: '1', provider: 'developer',
+      token = { 'uid' => '1', 'provider' => 'developer',
                 'info' => { 'email' => nil, 'name' => nil }
               }
       user = User.find_or_create_for_developer(token)
@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
 
   describe ".find_or_create_for_shibboleth" do
     it "should create a User when a user is first authenticated" do
-      token = { uid: 'test_user', provider: 'shibboleth',
+      token = { 'uid' => 'test_user', 'provider' => 'shibboleth',
                 'info' => { 'email' => nil, 'name' => nil }
               }
 

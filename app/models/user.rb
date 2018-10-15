@@ -12,12 +12,14 @@ class User < ApplicationRecord
       User.create(uid: 1, provider: 'developer', email: 'developer@ucsd.edu', full_name: 'developer')
   end
 
+  # Finds or creates a shibboleth account
+  # @param access_token [OmniAuth::AuthHash]
   def self.find_or_create_for_shibboleth(access_token)
     begin
-      uid = access_token['uid']
-      email = access_token['info']['email'] || "#{uid}@ucsd.edu"
-      provider = access_token['provider']
-      name = access_token['info']['name']
+      uid = access_token.uid
+      email = access_token.info.email || "#{uid}@ucsd.edu"
+      provider = access_token.provider
+      name = access_token.info.name
     rescue StandardError => e
       logger.warn "shibboleth: #{e}"
     end

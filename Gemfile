@@ -45,12 +45,13 @@ gem 'simple_form'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
-  gem 'capybara'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'capybara'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'selenium-webdriver'
 end
 
 group :development do

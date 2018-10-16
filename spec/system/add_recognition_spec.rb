@@ -33,4 +33,23 @@ RSpec.describe "adding a recognition", type: :system do
     expect(page).to have_content('collab')
   end
 
+  it "allows a user to edit an existing recognition" do
+    allow(RecognitionsController.helpers).to receive(:employees).and_return(
+      [['Joe Employee', 'joe'],['Jane Employee']]
+    )
+    visit signin_path
+
+    visit new_recognition_path
+    fill_in('recognition_description', with: 'Really Long Text...')
+    select('Collaboration and Communication', from: 'recognition_library_value')
+    # select('Option', from: 'Employees')
+    # check('recognition_anonymous')
+    click_on("Create Recognition")
+
+    click_on("Edit")
+    fill_in('recognition_description', with: 'I changed my mind')
+    click_on("Update Recognition")
+
+    expect(page).to have_content('I changed my mind')
+  end
 end

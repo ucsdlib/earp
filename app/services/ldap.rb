@@ -66,9 +66,9 @@ class Ldap
     result = []
     ldap_connection.search(
       filter: employees_filter,
-      attributes: %w[DisplayName EmployeeID]
+      attributes: %w[DisplayName CN]
     ) do |employee|
-      result << [employee.displayname.first, employee.employeeid.first]
+      result << [employee.displayname.first, employee.cn.first]
     end
     validate_ldap_response
 

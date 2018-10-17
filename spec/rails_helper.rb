@@ -17,6 +17,7 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
 SimpleCov.start :rails do
   add_filter "/channels/"
   add_filter "/mailers/"
+  add_filter "/jobs/"
 end
 # Add additional requires below this line. Rails is not loaded until this point!
 

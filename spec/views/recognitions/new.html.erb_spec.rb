@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "recognitions/new", type: :view do
   before(:each) do
-    assign(:recognition, Recognition.new(
-      :recognizee => "MyString",
-      :library_value => "MyString",
-      :description => "MyText",
-      :anonymous => false,
-      :recognizer => "MyString"
-    ))
+    # assign(:recognition, Recognition.new(
+    #   :recognizee => "MyString",
+    #   :library_value => "MyString",
+    #   :description => "MyText",
+    #   :anonymous => false,
+    #   :recognizer => "MyString"
+    # ))
   end
 
   it "renders new recognition form" do

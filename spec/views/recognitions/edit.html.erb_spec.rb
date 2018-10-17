@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe "recognitions/edit", type: :view do
   before(:each) do
-    @recognition = assign(:recognition, Recognition.create!(
-      :recognizee => "MyString",
-      :library_value => "MyString",
-      :description => "MyText",
-      :anonymous => false,
-      :recognizer => "MyString"
-    ))
+    # @recognition = assign(:recognition, Recognition.create!(
+    #   :recognizee => "MyString",
+    #   :library_value => "MyString",
+    #   :description => "MyText",
+    #   :anonymous => false,
+    #   :recognizer => "MyString"
+    # ))
   end
 
   it "renders the edit recognition form" do

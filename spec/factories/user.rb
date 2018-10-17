@@ -2,7 +2,7 @@
 FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "person#{n}@ucsd.edu" }
-    sequence(:uid) { |n| n }
+    sequence(:uid) { |n| "person#{n}" }
     full_name { 'Jane Triton' }
     provider { 'shibboleth' }
 

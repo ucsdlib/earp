@@ -6,4 +6,12 @@ RSpec.describe Ldap, type: :service do
       expect(described_class.employees_filter.to_s).to eq('(&(&(&(EmployeeID=*)(ObjectCategory=person))(ObjectClass=user))(!(sAMAccountName=lib-*)))')
     end
   end
+
+  describe '.earp_filter' do
+    it 'returns an LDAP filter to check admin membership' do
+      fake_credentials = { group: 'memberof=CN=lib-test' }
+      allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
+      expect(described_class.earp_filter('drseuss').to_s).to eq('(&(&(sAMAccountName=drseuss)(objectcategory=user))(memberof=memberof=CN=lib-test))')
+    end
+  end
 end

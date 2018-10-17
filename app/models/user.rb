@@ -27,34 +27,7 @@ class User < ApplicationRecord
       User.create(uid: uid, provider: provider, email: email, full_name: name)
   end
 
-  def self.in_super_user_group?(uid)
-    lookup_group(uid) == uid
-  end
-
-  def self.lookup_group(search_param)
-    result = ''
-    ldap = Ldap.new
-
-    ldap.ldap_connection.search(
-      filter: group_filter(search_param),
-      attributes: %w[sAMAccountName],
-      return_result: false
-    ) { |item| result = item.sAMAccountName.first }
-
-    get_ldap_response(ldap)
-    result
-  end
-
-  def self.group_filter(search_param)
-    search_filter = Net::LDAP::Filter.eq('sAMAccountName', search_param)
-    category_filter = Net::LDAP::Filter.eq('objectcategory', 'user')
-    member_filter = Net::LDAP::Filter.eq('memberof', Rails.application.credentials.ldap[:group])
-    search_filter & category_filter & member_filter
-  end
-
-  def self.get_ldap_response(ldap)
-    msg = "Response Code: #{ldap.get_operation_result.code}, Message: #{ldap.get_operation_result.message}"
-
-    raise msg unless ldap.get_operation_result.code.zero?
+  def self.administrator?(uid)
+    Ldap.earp_group(uid) == uid
   end
 end

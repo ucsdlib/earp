@@ -25,7 +25,7 @@
         <td><%= recognition.recognizee %></td>
         <td><%= recognition.library_value %></td>
         <td><%= recognition.description %></td>
-        <td><%= recognition.anonymous %></td>
+        <td><%= recognition.anonymous ? 'Anonymous' : 'No' %></td>
         <td><%= recognition.user.full_name %></td>
         <td><%= link_to 'Show', recognition %></td>
         <td><%= link_to 'Edit', edit_recognition_path(recognition) %></td>

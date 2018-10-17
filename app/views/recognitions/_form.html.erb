@@ -1,11 +1,11 @@
 <%= simple_form_for(@recognition) do |f| %>
   <%= f.input :recognizee,
-              collection: employees,
-              include_blank: false %>
+              prompt: 'Select employee to recognize',
+              collection: employees %>
 
   <%= f.input :library_value,
-              collection: library_values,
-              include_blank: false %>
+              prompt: 'Select library value',
+              collection: library_values %>
 
   <%= f.input :description %>
 

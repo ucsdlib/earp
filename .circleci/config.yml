@@ -11,7 +11,7 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command: apk add --no-cache build-base postgresql postgresql-dev nodejs nodejs-npm tzdata
+          command: apk add --no-cache git build-base postgresql postgresql-dev nodejs nodejs-npm tzdata
       - restore_cache:
           keys:
           - bundle-v1-{{ checksum "Gemfile.lock" }}

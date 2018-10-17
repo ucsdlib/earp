@@ -2,13 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'adding a recognition', type: :system do
   before do
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:shibboleth] = OmniAuth::AuthHash.new({
-      provider: 'shibboleth',
-      uid: '1',
-      info: { 'email' => 'test@ucsd.edu', 'name' => 'Dr. Seuss' }
-    })
-    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:shibboleth]
+    omniauth_setup_shibboleth
   end
 
   it 'enforces authentication' do

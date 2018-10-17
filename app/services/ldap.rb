@@ -85,6 +85,49 @@ class Ldap
     employees_only & staff & users & no_lib_accounts
   end
 
-  # Query manager for a given employee
-  # @return
+  # Query manager DN for a given employee
+  # @param [String] uid/cn of the employee who's supervisor we need to find
+  # @return [Hash] manager information with name and email keys
+  # Example: { first_name: 'Dr.', last_name: 'Seuss', email: 'thedoctor@ucsd.edu' }
+  def self.manager(uid)
+    dname = ''
+    ldap_connection.search(
+      filter: manager_filter(uid),
+      attributes: %w[Manager]
+    ) do |employee|
+      # This returns dn syntax, which we use as base query in manager_details
+      # Ex: "CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU"
+      dname = employee.manager.first
+    end
+    validate_ldap_response
+    manager_details(dname)
+  end
+
+  # Query manager email and name for a given employee
+  # @param [String] dname information for the manager to lookup
+  # @return [Hash] manager information with name and email keys
+  # Example: { first_name: 'Dr.', last_name: 'Seuss', email: 'thedoctor@ucsd.edu' }
+  # rubocop:disable Metrics/MethodLength
+  def self.manager_details(dname)
+    result = {}
+    ldap_connection.search(
+      base: dname,
+      filter: Net::LDAP::Filter.eq('objectcategory', 'user'),
+      attributes: %w[mail givenName sn]
+    ) do |m|
+      result[:email] = m.mail.first
+      result[:first_name] = m.givenName.first
+      result[:last_name] = m.sn.first
+    end
+    validate_ldap_response
+
+    result
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def self.manager_filter(uid)
+    cname_filter = Net::LDAP::Filter.eq('CN', uid)
+    category_filter = Net::LDAP::Filter.eq('objectcategory', 'user')
+    cname_filter & category_filter
+  end
 end

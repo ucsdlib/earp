@@ -14,4 +14,9 @@ RSpec.describe Ldap, type: :service do
       expect(described_class.earp_filter('drseuss').to_s).to eq('(&(&(sAMAccountName=drseuss)(objectcategory=user))(memberof=memberof=CN=lib-test))')
     end
   end
+  describe '.manager_filter' do
+    it 'returns an LDAP filter to find the manager of an given employee' do
+      expect(described_class.manager_filter('drseuss').to_s).to eq('(&(CN=drseuss)(objectcategory=user))')
+    end
+  end
 end

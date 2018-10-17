@@ -10,7 +10,8 @@ RSpec.describe Recognition, type: :model do
 
 
   context 'valid recognition' do
-    let(:recognition) { FactoryBot.create(:recognition) }
+    let(:recognition) { FactoryBot.build_stubbed(:recognition, user: user) }
+    let(:user) { FactoryBot.build_stubbed(:user) }
     it "persists with required attributes" do
       expect(recognition).to be_valid
     end

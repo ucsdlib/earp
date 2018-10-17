@@ -6,7 +6,5 @@ FactoryBot.define do
     sequence(:recognizee) { |n| n }
     library_value { %w[diversity collab innovate flexible service].sample }
     sequence(:description) { |n| "#{n} is so AMAZING!" }
-
-    user
   end
 end

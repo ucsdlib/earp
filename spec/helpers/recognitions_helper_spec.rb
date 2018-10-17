@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the RecognitionsHelper. For example:
-#
-# describe RecognitionsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe RecognitionsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#library_values' do
+    specify { expect(helper.library_values).to eq(LIBRARY_VALUES) }
+  end
+
+  describe '#employees' do
+    it 'calls to Ldap for returning current employees' do
+      mock_employee_query
+      result = helper.employees
+      expect(Ldap).to have_received(:employees)
+    end
+  end
 end

@@ -16,7 +16,7 @@ RSpec.describe "adding a recognition", type: :system do
   end
 
   it "allows a user to create a recognition" do
-    allow(RecognitionsController.helpers).to receive(:employees).and_return(
+    allow(Ldap).to receive(:employees).and_return(
       [['Joe Employee', 'joe'],['Jane Employee']]
     )
     # TODO: replace w/ a helper + something like fabricator/faker
@@ -34,7 +34,7 @@ RSpec.describe "adding a recognition", type: :system do
   end
 
   it "allows a user to edit an existing recognition" do
-    allow(RecognitionsController.helpers).to receive(:employees).and_return(
+    allow(Ldap).to receive(:employees).and_return(
       [['Joe Employee', 'joe'],['Jane Employee']]
     )
     visit signin_path

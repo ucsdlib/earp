@@ -56,7 +56,6 @@ class Ldap
       Response Code: #{ldap_connection.get_operation_result.code}
       Message: #{ldap_connection.get_operation_result.message}
     MESSAGE
-
     raise msg unless ldap_connection.get_operation_result.code.zero?
   end
 

@@ -9,6 +9,7 @@ RSpec.describe Ldap, type: :service do
       entry1['samaccountname'] = 'drseuss'
       entry2 = Net::LDAP::Entry.new('CN=nonadmin,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry2['samaccountname'] = ''
+      mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
     end
 
@@ -29,6 +30,7 @@ RSpec.describe Ldap, type: :service do
       entry2 = Net::LDAP::Entry.new('CN=zbestemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry2['cn'] = 'zbestemployee'
       entry2['displayName'] = ["Zbestemployee, The"]
+      mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
     end
 
@@ -45,6 +47,7 @@ RSpec.describe Ldap, type: :service do
     before do
       entry = Net::LDAP::Entry.new('CN=,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry['manager'] = 'CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU'
+      mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry)
       allow(Ldap).to receive(:manager_details).and_return({ first_name: 'Dr.',
                                                             last_name: 'Seuss',
@@ -65,6 +68,7 @@ RSpec.describe Ldap, type: :service do
       entry['sn'] = 'Seuss'
       entry['givenname'] = 'Dr.'
       entry['mail'] = 'drseuss@ucsd.edu'
+      mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry)
     end
 
@@ -88,9 +92,25 @@ RSpec.describe Ldap, type: :service do
       expect(described_class.earp_filter('drseuss').to_s).to eq('(&(&(sAMAccountName=drseuss)(objectcategory=user))(memberof=memberof=CN=lib-test))')
     end
   end
+
   describe '.manager_filter' do
     it 'returns an LDAP filter to find the manager of an given employee' do
       expect(described_class.manager_filter('drseuss').to_s).to eq('(&(CN=drseuss)(objectcategory=user))')
+    end
+  end
+
+  describe '.validate_ldap_response' do
+    it 'raises an error with a non-zero exit code' do
+      operation_result = OpenStruct.new(:code => 1, :message => 'Something terrible happened')
+      allow(mock_ldap_connection).to receive(:get_operation_result).and_return(operation_result)
+      expect{ described_class.validate_ldap_response }.to raise_error(RuntimeError).
+        with_message("Response Code: 1\nMessage: Something terrible happened\n")
+    end
+
+    it 'returns nil with a zero exit code' do
+      operation_result = OpenStruct.new(:code => 0, :message => 'LDAP here, all is well')
+      allow(mock_ldap_connection).to receive(:get_operation_result).and_return(operation_result)
+      expect{ described_class.validate_ldap_response }.not_to raise_error
     end
   end
 end

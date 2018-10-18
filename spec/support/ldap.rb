@@ -10,6 +10,9 @@ end
 def mock_ldap_connection
   fake_ldap_connection = double("MockLDAP")
   allow(Ldap).to receive(:ldap_connection).and_return(fake_ldap_connection)
-  allow(Ldap).to receive(:validate_ldap_response).and_return(nil)
   fake_ldap_connection
+end
+
+def mock_ldap_validation
+  allow(Ldap).to receive(:validate_ldap_response).and_return(nil)
 end

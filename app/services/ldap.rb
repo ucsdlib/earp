@@ -23,16 +23,55 @@ class Ldap
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
+  # Given a <something> determine whether a user is in the earp admin group
+  # @param uid [String] the user id to check. e.g. 'drseuss'
+  # @return [String] the original uid, assuming it is in the earp group
+  def self.earp_group(uid)
+    result = ''
+
+    ldap_connection.search(
+      filter: earp_filter(uid),
+      attributes: %w[sAMAccountName],
+      return_result: false
+    ) { |item| result = item.sAMAccountName.first }
+
+    validate_ldap_response
+    result
+  end
+
+  # Only query against the given uid as a member of the earp ldap group
+  # @param uid [String] the user id to check. e.g. 'drseuss'
+  # @return [NET::LDAP::Filter] for employees query
+  def self.earp_filter(uid)
+    search_filter = Net::LDAP::Filter.eq('sAMAccountName', uid)
+    category_filter = Net::LDAP::Filter.eq('objectcategory', 'user')
+    member_filter = Net::LDAP::Filter.eq('memberof', Rails.application.credentials.ldap[:group])
+    search_filter & category_filter & member_filter
+  end
+
+  # Used if an error is encountered for an ldap query. This could happen if LDAP is down, or a given user doesn't have a
+  # manager in their record, etc.
+  def self.validate_ldap_response
+    msg = <<~MESSAGE
+      Response Code: #{ldap_connection.get_operation_result.code}
+      Message: #{ldap_connection.get_operation_result.message}
+    MESSAGE
+
+    raise msg unless ldap_connection.get_operation_result.code.zero?
+  end
+
   # Query all currently active employees
   # @return [Array] employee information (Name, EmployeeID)
   def self.employees
     result = []
     ldap_connection.search(
       filter: employees_filter,
-      attributes: %w[DisplayName EmployeeID]
+      attributes: %w[DisplayName CN]
     ) do |employee|
-      result << [employee.displayname.first, employee.employeeid.first]
+      result << [employee.displayname.first, employee.cn.first]
     end
+    validate_ldap_response
+
     result.sort
   end
 
@@ -44,5 +83,51 @@ class Ldap
     users = Net::LDAP::Filter.eq('ObjectClass', 'user')
     no_lib_accounts = Net::LDAP::Filter.ne('sAMAccountName', 'lib-*')
     employees_only & staff & users & no_lib_accounts
+  end
+
+  # Query manager DN for a given employee
+  # @param [String] uid/cn of the employee who's supervisor we need to find
+  # @return [Hash] manager information with name and email keys
+  # Example: { first_name: 'Dr.', last_name: 'Seuss', email: 'thedoctor@ucsd.edu' }
+  def self.manager(uid)
+    dname = ''
+    ldap_connection.search(
+      filter: manager_filter(uid),
+      attributes: %w[Manager]
+    ) do |employee|
+      # This returns dn syntax, which we use as base query in manager_details
+      # Ex: "CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU"
+      dname = employee.manager.first
+    end
+    validate_ldap_response
+    manager_details(dname)
+  end
+
+  # Query manager email and name for a given employee
+  # @param [String] dname information for the manager to lookup
+  # @return [Hash] manager information with name and email keys
+  # Example: { first_name: 'Dr.', last_name: 'Seuss', email: 'thedoctor@ucsd.edu' }
+  # rubocop:disable Metrics/MethodLength
+  def self.manager_details(dname)
+    result = {}
+    ldap_connection.search(
+      base: dname,
+      filter: Net::LDAP::Filter.eq('objectcategory', 'user'),
+      attributes: %w[mail givenName sn]
+    ) do |m|
+      result[:email] = m.mail.first
+      result[:first_name] = m.givenName.first
+      result[:last_name] = m.sn.first
+    end
+    validate_ldap_response
+
+    result
+  end
+  # rubocop:enable Metrics/MethodLength
+
+  def self.manager_filter(uid)
+    cname_filter = Net::LDAP::Filter.eq('CN', uid)
+    category_filter = Net::LDAP::Filter.eq('objectcategory', 'user')
+    cname_filter & category_filter
   end
 end

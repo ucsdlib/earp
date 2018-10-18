@@ -1,9 +1,10 @@
 # earp
 An application supporting an Employee Recognition program workflow
 
-[![Coverage Status](https://coveralls.io/repos/github/ucsdlib/earp/badge.svg?branch=master)](https://coveralls.io/github/ucsdlib/earp?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ucsdlib/earp/badge.svg)](https://coveralls.io/github/ucsdlib/earp)
 
 [![CircleCI](https://circleci.com/gh/ucsdlib/earp/tree/master.svg?style=svg)](https://circleci.com/gh/ucsdlib/earp/tree/master)
+
 
 ## Local Development
 ### Secrets

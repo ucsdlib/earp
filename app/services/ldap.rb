@@ -23,14 +23,14 @@ class Ldap
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-  # Given a <something> determine whether a user is in the earp admin group
+  # Given a <something> determine whether a user is in the hifive admin group
   # @param uid [String] the user id to check. e.g. 'drseuss'
-  # @return [String] the original uid, assuming it is in the earp group
-  def self.earp_group(uid)
+  # @return [String] the original uid, assuming it is in the hifive group
+  def self.hifive_group(uid)
     result = ''
 
     ldap_connection.search(
-      filter: earp_filter(uid),
+      filter: hifive_filter(uid),
       attributes: %w[sAMAccountName],
       return_result: false
     ) { |item| result = item.sAMAccountName.first }
@@ -39,10 +39,10 @@ class Ldap
     result
   end
 
-  # Only query against the given uid as a member of the earp ldap group
+  # Only query against the given uid as a member of the hifive ldap group
   # @param uid [String] the user id to check. e.g. 'drseuss'
   # @return [NET::LDAP::Filter] for employees query
-  def self.earp_filter(uid)
+  def self.hifive_filter(uid)
     search_filter = Net::LDAP::Filter.eq('sAMAccountName', uid)
     category_filter = Net::LDAP::Filter.eq('objectcategory', 'user')
     member_filter = Net::LDAP::Filter.eq('memberof', Rails.application.credentials.ldap[:group])

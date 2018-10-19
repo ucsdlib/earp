@@ -1,9 +1,9 @@
-# earp
+# Hi Five!
 An application supporting an Employee Recognition program workflow
 
-[![Coverage Status](https://coveralls.io/repos/github/ucsdlib/earp/badge.svg)](https://coveralls.io/github/ucsdlib/earp)
+[![Coverage Status](https://coveralls.io/repos/github/ucsdlib/hifive/badge.svg)](https://coveralls.io/github/ucsdlib/hifive)
 
-[![CircleCI](https://circleci.com/gh/ucsdlib/earp/tree/master.svg?style=svg)](https://circleci.com/gh/ucsdlib/earp/tree/master)
+[![CircleCI](https://circleci.com/gh/ucsdlib/hifive/tree/master.svg?style=svg)](https://circleci.com/gh/ucsdlib/hifive/tree/master)
 
 
 ## Local Development
@@ -22,4 +22,4 @@ To edit secrets: `bin/rails credentials:edit`
 
 #### Debugging
 With docker-compose running, in a new terminal/tab attach to the container:
-`docker attach earp_web_1`
+`docker attach hifive_web_1`

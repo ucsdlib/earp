@@ -28,6 +28,6 @@ class User < ApplicationRecord
   end
 
   def self.administrator?(uid)
-    Ldap.earp_group(uid) == uid
+    Ldap.hifive_group(uid) == uid
   end
 end

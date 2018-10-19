@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Ldap, type: :service do
-  describe '.earp_group' do
+  describe '.hifive_group' do
     before do
       fake_credentials = { group: 'memberof=CN=lib-test' }
       allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
@@ -14,11 +14,11 @@ RSpec.describe Ldap, type: :service do
     end
 
     it 'returns an empty string with no match' do
-      expect(described_class.earp_group('nonadmin')).to eq('')
+      expect(described_class.hifive_group('nonadmin')).to eq('')
     end
 
     it 'returns the cn for the given user with a match' do
-      expect(described_class.earp_group('drseuss')).to eq('')
+      expect(described_class.hifive_group('drseuss')).to eq('')
     end
   end
 
@@ -85,11 +85,11 @@ RSpec.describe Ldap, type: :service do
     end
   end
 
-  describe '.earp_filter' do
+  describe '.hifive_filter' do
     it 'returns an LDAP filter to check admin membership' do
       fake_credentials = { group: 'memberof=CN=lib-test' }
       allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
-      expect(described_class.earp_filter('drseuss').to_s).to eq('(&(&(sAMAccountName=drseuss)(objectcategory=user))(memberof=memberof=CN=lib-test))')
+      expect(described_class.hifive_filter('drseuss').to_s).to eq('(&(&(sAMAccountName=drseuss)(objectcategory=user))(memberof=memberof=CN=lib-test))')
     end
   end
 

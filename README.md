@@ -16,6 +16,10 @@ TBD)
 To edit secrets: `bin/rails credentials:edit`
 
 ### Docker
+**note** at the moment, the Chromium/Chromedriver versions on Alpine linux will
+not work with Capybara. So for now, run the application locally, and the
+docker-compose file will just run the database in a container.
+
 1. Install docker and docker-compose
 1. Run docker-compose file `docker-compose up`
 1. In a separate tab, setup the db `docker-compose exec web bin/rails db:create db:migrate`

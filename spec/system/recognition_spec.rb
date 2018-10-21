@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'adding a recognition', type: :system do
+RSpec.describe 'interacting with recognitions', type: :system do
   before do
     omniauth_setup_shibboleth
   end
@@ -71,5 +71,42 @@ RSpec.describe 'adding a recognition', type: :system do
     expect(page).to have_content('I changed my mind')
     expect(page).to have_content('collab')
     expect(page).to have_content('joe')
+  end
+
+  it 'does not allow a user to edit a recognition without a recognizee, value, or description', :aggregate_failures do
+    sign_in
+    mock_employee_query
+    # create recognition
+    visit new_recognition_path
+    fill_in('recognition_description', with: 'Really Long Text...')
+    select('Collaboration and Communication', from: 'recognition_library_value')
+    select('Jane Employee', from: 'recognition_recognizee')
+    click_on('Create Recognition')
+    # try editing it creating an invalid entry
+    click_on('Edit')
+    fill_in('recognition_description', with: '')
+    click_on('Update Recognition')
+    # assert we're back on the edit page with original context
+    expect(page).to have_selector('.edit_recognition')
+  end
+
+end
+
+RSpec.describe 'A user can delete an existing Recognition', type: :system, js: true do
+  it 'allows a user to delete their own recognitions' do
+    sign_in
+    mock_employee_query
+    # create recognition
+    visit new_recognition_path
+    fill_in('recognition_description', with: 'Really Long Text...')
+    select('Collaboration and Communication', from: 'recognition_library_value')
+    select('Jane Employee', from: 'recognition_recognizee')
+    click_on('Create Recognition')
+    # try editing it creating an invalid entry
+    visit recognitions_path
+    accept_confirm do
+      click_on('Destroy')
+    end
+    expect(page.find(:css, "#notice")).to have_content "Recognition was successfully destroyed."
   end
 end

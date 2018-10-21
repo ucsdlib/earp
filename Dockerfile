@@ -1,7 +1,10 @@
-FROM ruby:2.5.1-alpine
+FROM ruby:2.5.3-alpine
 
-RUN apk add --no-cache \
+RUN apk --no-cache upgrade && \
+  apk add --no-cache \
   build-base \
+  chromium-chromedriver \
+  chromium \
   postgresql \
   postgresql-dev \
   nodejs \

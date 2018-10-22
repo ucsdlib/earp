@@ -26,38 +26,25 @@ RSpec.describe Ldap, type: :service do
     before do
       entry1 = Net::LDAP::Entry.new('CN=aemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry1['cn'] = 'aemployee'
-      entry1['displayName'] = ["Employee, A"]
+      entry1['displayName'] = ['Employee, A']
+      entry1['givenName'] = ['A']
+      entry1['sn'] = ['Employee']
+      entry1['mail'] = ['aemployee@ucsd.edu']
+      entry1['manager'] = ['boss1@ucsd.edu']
       entry2 = Net::LDAP::Entry.new('CN=zbestemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry2['cn'] = 'zbestemployee'
       entry2['displayName'] = ["Zbestemployee, The"]
+      entry2['givenName'] = ['The']
+      entry2['sn'] = ['Zbestemployee']
+      entry2['mail'] = ['zbestemployee@ucsd.edu']
+      entry2['manager'] = ['boss2@ucsd.edu']
       mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
     end
 
     it 'returns all entries' do
-      expect(described_class.employees.size).to eq(2)
-    end
-    it 'returns a sorted list' do
-      expect(described_class.employees.first[0]).to eq('Employee, A')
-      expect(described_class.employees.last[0]).to eq('Zbestemployee, The')
-    end
-  end
-
-  describe '.manager' do
-    before do
-      entry = Net::LDAP::Entry.new('CN=,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
-      entry['manager'] = 'CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU'
-      mock_ldap_validation
-      allow(mock_ldap_connection).to receive(:search).and_yield(entry)
-      allow(Ldap).to receive(:manager_details).and_return({ first_name: 'Dr.',
-                                                            last_name: 'Seuss',
-                                                            email: 'drseuss@ucsd.edu' })
-    end
-
-    it 'return a hash of manager information for a given employee' do
-      expect(described_class.manager('employee')).to eq({:email=>"drseuss@ucsd.edu",
-                                                         :first_name=>"Dr.",
-                                                         :last_name=>"Seuss"})
+      described_class.employees
+      expect(Employee.count).to eq(2)
     end
   end
 

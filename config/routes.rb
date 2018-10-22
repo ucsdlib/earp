@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   get "/auth/developer", to: 'sessions#developer', as: :developer
   match "/auth/shibboleth/callback" => "sessions#shibboleth", as: :callback, via: [:get, :post]
   match "/signout" => "sessions#destroy", as: :signout, via: [:get, :post]
+  match "/auth/failure", to: 'sessions#failure', as: :failed_signin, via: [:get, :post]
 end

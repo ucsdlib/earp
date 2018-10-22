@@ -60,18 +60,15 @@ class Ldap
   end
 
   # Query all currently active employees
-  # @return [Array] employee information (Name, EmployeeID)
+  # @return [Array] employee information to populate Employees table
   def self.employees
-    result = []
     ldap_connection.search(
       filter: employees_filter,
-      attributes: %w[DisplayName CN]
+      attributes: %w[DisplayName CN mail manager givenName sn]
     ) do |employee|
-      result << [employee.displayname.first, employee.cn.first]
+      Employee.populate_from_ldap(employee)
     end
     validate_ldap_response
-
-    result.sort
   end
 
   # Only show current library staff, excluding students
@@ -82,24 +79,6 @@ class Ldap
     users = Net::LDAP::Filter.eq('ObjectClass', 'user')
     no_lib_accounts = Net::LDAP::Filter.ne('sAMAccountName', 'lib-*')
     employees_only & staff & users & no_lib_accounts
-  end
-
-  # Query manager DN for a given employee
-  # @param [String] uid/cn of the employee who's supervisor we need to find
-  # @return [Hash] manager information with name and email keys
-  # Example: { first_name: 'Dr.', last_name: 'Seuss', email: 'thedoctor@ucsd.edu' }
-  def self.manager(uid)
-    dname = ''
-    ldap_connection.search(
-      filter: manager_filter(uid),
-      attributes: %w[Manager]
-    ) do |employee|
-      # This returns dn syntax, which we use as base query in manager_details
-      # Ex: "CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU"
-      dname = employee.manager.first
-    end
-    validate_ldap_response
-    manager_details(dname)
   end
 
   # Query manager email and name for a given employee

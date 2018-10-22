@@ -10,19 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_03_210327) do
+ActiveRecord::Schema.define(version: 2018_10_22_161349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "employees", force: :cascade do |t|
+    t.string "uid", null: false
+    t.string "name", null: false
+    t.string "manager", null: false
+    t.string "email", null: false
+    t.string "display_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "recognitions", force: :cascade do |t|
-    t.string "recognizee", null: false
     t.string "library_value", null: false
     t.text "description", null: false
     t.boolean "anonymous", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "employee_id"
+    t.index ["employee_id"], name: "index_recognitions_on_employee_id"
     t.index ["user_id"], name: "index_recognitions_on_user_id"
   end
 
@@ -35,5 +46,6 @@ ActiveRecord::Schema.define(version: 2018_10_03_210327) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "recognitions", "employees"
   add_foreign_key "recognitions", "users"
 end

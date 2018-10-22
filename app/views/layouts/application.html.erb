@@ -10,6 +10,9 @@
   </head>
 
   <body>
+    <section id="messages" class="container-fluid">
+      <%= render partial: "shared/flash" %>
+    </section>
     <section id="main-container" class="container-fluid">
       <%= yield %>
     </section>

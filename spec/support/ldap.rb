@@ -1,7 +1,9 @@
 def mock_employee_query
-  allow(Ldap).to receive(:employees).and_return(
-    [['Joe Employee', 'joe'],['Jane Employee', 'jane']]
-  )
+  FactoryBot.create(:employee, display_name: 'Joe Employee')
+  FactoryBot.create(:employee, display_name: 'Jane Employee')
+  # allow(Ldap).to receive(:employees).and_return(
+  #   [['Joe Employee', 'joe'],['Jane Employee', 'jane']]
+  # )
 end
 
 # Mock out core ldap connection methods

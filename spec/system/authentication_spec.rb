@@ -6,6 +6,10 @@ RSpec.describe 'authenticating', type: :system do
       omniauth_setup_developer
     end
 
+    after(:all) do
+      Rails.configuration.shibboleth = true
+    end
+
     it 'enforces authentication' do
       sign_in
       expect(page).to have_content('Sign out')

@@ -22,7 +22,7 @@
   <tbody>
     <% @recognitions.each do |recognition| %>
       <tr>
-        <td><%= recognition.recognizee %></td>
+        <td><%= recognition.employee.display_name %></td>
         <td><%= recognition.library_value %></td>
         <td><%= recognition.description %></td>
         <td><%= recognition.anonymous ? 'Anonymous' : 'No' %></td>

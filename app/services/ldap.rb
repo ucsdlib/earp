@@ -34,7 +34,6 @@ class Ldap
       attributes: %w[CN],
       return_result: false
     ) { |item| result = item.cn.first }
-    # ) { byebug }
 
     validate_ldap_response
     result

@@ -25,10 +25,10 @@ class SessionsController < ApplicationController
   def find_or_create_user(auth_type)
     find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
     omniauth_results = request.env['omniauth.auth']
-    @user = User.send(find_or_create_method, omniauth_results)
+    user = User.send(find_or_create_method, omniauth_results)
 
     if valid_user?(auth_type, omniauth_results)
-      create_user_session(@user) if @user
+      create_user_session(user) if user
       redirect_to root_url, notice: "You have successfully authenticated from #{auth_type} account!"
     else
       render file: Rails.root.join('public', '403'), formats: [:html], status: 403, layout: false

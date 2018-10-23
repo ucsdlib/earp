@@ -23,7 +23,31 @@ class Ldap
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-  # Given a <something> determine whether a user is in the hifive admin group
+  # Given a UID/CN determine whether a user is a library staff member using #employees filter
+  # @param uid [String] the user id to check. e.g. 'drseuss'
+  # @return [String] the original uid if valid library staff
+  def self.library_staff(uid)
+    result = ''
+
+    ldap_connection.search(
+      filter: library_staff_filter(uid),
+      attributes: %w[CN],
+      return_result: false
+    ) { |item| result = item.cn.first }
+    # ) { byebug }
+
+    validate_ldap_response
+    result
+  end
+
+  # Filters for checking if a given user is a library employee
+  # @param uid [String] the user id to check. e.g. 'drseuss'
+  # @return [NET::LDAP::Filter] for employees query
+  def self.library_staff_filter(uid)
+    Net::LDAP::Filter.eq('CN', uid) & employees_filter
+  end
+
+  # Given a UID/CN determine whether a user is in the hifive admin group
   # @param uid [String] the user id to check. e.g. 'drseuss'
   # @return [String] the original uid, assuming it is in the hifive group
   def self.hifive_group(uid)
@@ -31,9 +55,9 @@ class Ldap
 
     ldap_connection.search(
       filter: hifive_filter(uid),
-      attributes: %w[sAMAccountName],
+      attributes: %w[CN],
       return_result: false
-    ) { |item| result = item.sAMAccountName.first }
+    ) { |item| result = item.cn.first }
 
     validate_ldap_response
     result
@@ -43,10 +67,8 @@ class Ldap
   # @param uid [String] the user id to check. e.g. 'drseuss'
   # @return [NET::LDAP::Filter] for employees query
   def self.hifive_filter(uid)
-    search_filter = Net::LDAP::Filter.eq('sAMAccountName', uid)
-    category_filter = Net::LDAP::Filter.eq('objectcategory', 'user')
     member_filter = Net::LDAP::Filter.eq('memberof', Rails.application.credentials.ldap[:group])
-    search_filter & category_filter & member_filter
+    library_staff_filter(uid) & member_filter
   end
 
   # Used if an error is encountered for an ldap query. This could happen if LDAP is down, or a given user doesn't have a
@@ -64,6 +86,7 @@ class Ldap
   def self.employees
     ldap_connection.search(
       filter: employees_filter,
+      return_result: false,
       attributes: %w[DisplayName CN mail manager givenName sn]
     ) do |employee|
       Employee.populate_from_ldap(employee)
@@ -83,6 +106,7 @@ class Ldap
 
   # Query manager email and name for a given employee
   # @param [String] dname information for the manager to lookup
+  #   Example: CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU
   # @return [Hash] manager information with name and email keys
   # Example: { first_name: 'Dr.', last_name: 'Seuss', email: 'thedoctor@ucsd.edu' }
   # rubocop:disable Metrics/MethodLength
@@ -90,6 +114,7 @@ class Ldap
     result = {}
     ldap_connection.search(
       base: dname,
+      return_result: false,
       filter: Net::LDAP::Filter.eq('objectcategory', 'user'),
       attributes: %w[mail givenName sn]
     ) do |m|
@@ -102,10 +127,4 @@ class Ldap
     result
   end
   # rubocop:enable Metrics/MethodLength
-
-  def self.manager_filter(uid)
-    cname_filter = Net::LDAP::Filter.eq('CN', uid)
-    category_filter = Net::LDAP::Filter.eq('objectcategory', 'user')
-    cname_filter & category_filter
-  end
 end

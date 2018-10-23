@@ -1,14 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe Ldap, type: :service do
+  describe '.library_staff' do
+    before do
+      fake_credentials = { group: 'memberof=CN=lib-test' }
+      allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
+      entry1 = Net::LDAP::Entry.new('CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
+      entry1['cn'] = 'drseuss'
+      entry2 = Net::LDAP::Entry.new('CN=nonadmin,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
+      entry2['cn'] = ''
+      mock_ldap_validation
+      allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
+    end
+
+    it 'returns an empty string with no match' do
+      expect(described_class.library_staff('nonadmin')).to eq('')
+    end
+
+    it 'returns the cn for the given user with a match' do
+      expect(described_class.library_staff('drseuss')).to eq('')
+    end
+  end
+
   describe '.hifive_group' do
     before do
       fake_credentials = { group: 'memberof=CN=lib-test' }
       allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
       entry1 = Net::LDAP::Entry.new('CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
-      entry1['samaccountname'] = 'drseuss'
+      entry1['cn'] = 'drseuss'
       entry2 = Net::LDAP::Entry.new('CN=nonadmin,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
-      entry2['samaccountname'] = ''
+      entry2['cn'] = ''
       mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
     end
@@ -76,13 +97,7 @@ RSpec.describe Ldap, type: :service do
     it 'returns an LDAP filter to check admin membership' do
       fake_credentials = { group: 'memberof=CN=lib-test' }
       allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
-      expect(described_class.hifive_filter('drseuss').to_s).to eq('(&(&(sAMAccountName=drseuss)(objectcategory=user))(memberof=memberof=CN=lib-test))')
-    end
-  end
-
-  describe '.manager_filter' do
-    it 'returns an LDAP filter to find the manager of an given employee' do
-      expect(described_class.manager_filter('drseuss').to_s).to eq('(&(CN=drseuss)(objectcategory=user))')
+      expect(described_class.hifive_filter('drseuss').to_s).to eq('(&(&(CN=drseuss)(&(&(&(EmployeeID=*)(ObjectCategory=person))(ObjectClass=user))(!(sAMAccountName=lib-*))))(memberof=memberof=CN=lib-test))')
     end
   end
 

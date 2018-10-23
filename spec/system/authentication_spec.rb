@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'authenticating', type: :system do
   context 'as a user with no shibboleth credentials' do
     before do
+      mock_valid_library_employee
       omniauth_setup_shibboleth
       OmniAuth.config.mock_auth[:shibboleth] = :invalid_credentials
       OmniAuth.config.on_failure = Proc.new { |env|
@@ -14,7 +15,6 @@ RSpec.describe 'authenticating', type: :system do
       sign_in
       expect(page).to have_content('You are not an authorized Library employee')
     end
-
   end
 
   context 'as a developer' do
@@ -43,12 +43,20 @@ RSpec.describe 'authenticating', type: :system do
       omniauth_setup_shibboleth
     end
 
-    it 'enforces authentication' do
+    it 'allows access for library staff' do
+      mock_valid_library_employee
       sign_in
       expect(page).to have_content('Sign out')
     end
 
+    it 'does not allow access for non-library staff' do
+      mock_invalid_library_employee
+      sign_in
+      expect(page).to have_content('Forbidden')
+    end
+
     it 'redirects to root url on sign out' do
+      mock_valid_library_employee
       sign_in
       sign_out
       expect(page).to have_content('Sign in')

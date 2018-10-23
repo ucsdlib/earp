@@ -7,6 +7,10 @@ RSpec.describe User, type: :model do
     info: { 'email' => 'test@ucsd.edu', 'name' => 'Dr. Seuss' }
   })}
 
+  let(:invalid_auth_hash) { OmniAuth::AuthHash.new({
+    info: { 'email' => 'test@ucsd.edu', 'name' => 'Dr. Seuss' }
+  })}
+
   describe ".find_or_create_for_developer" do
     it "should create a User for first time user" do
       auth_hash.provider = 'developer'
@@ -37,6 +41,10 @@ RSpec.describe User, type: :model do
       expect(user.uid).to eq("1")
       expect(user.email).to eq('test@ucsd.edu')
       expect(user.full_name).to eq('Dr. Seuss')
+    end
+
+    it 'should throw an error with bad or missing response information' do
+      expect { User.find_or_create_for_shibboleth(invalid_auth_hash) }.to raise_error(StandardError)
     end
   end
 

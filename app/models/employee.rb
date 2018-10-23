@@ -14,7 +14,6 @@ class Employee < ApplicationRecord
     e = find_or_initialize_by(uid: employee_info.cn.first)
     e.display_name = employee_info.displayname.first
     e.email = employee_info.mail.first
-    # TODO: manager isn't always available. what do we do...?
     e.manager = employee_info.manager.first
     e.name = "#{employee_info.givenName.first} #{employee_info.sn.first}"
     e.save

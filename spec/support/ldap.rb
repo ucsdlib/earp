@@ -18,3 +18,12 @@ end
 def mock_ldap_validation
   allow(Ldap).to receive(:validate_ldap_response).and_return(nil)
 end
+
+def mock_valid_library_employee
+  # omniauth_test from #omniauth_setup_shibboleth
+  allow(Ldap).to receive(:library_staff).and_return('omniauth_test')
+end
+
+def mock_invalid_library_employee
+  allow(Ldap).to receive(:library_staff).and_return('')
+end

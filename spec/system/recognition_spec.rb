@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'interacting with recognitions', type: :system do
   before do
+    mock_valid_library_employee
     omniauth_setup_shibboleth
   end
 

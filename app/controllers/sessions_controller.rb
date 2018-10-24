@@ -50,6 +50,7 @@ class SessionsController < ApplicationController
 
   def valid_user?(auth_type, omniauth_results)
     return true if auth_type.eql? 'developer'
+
     auth_type == 'shibboleth' && User.library_staff?(omniauth_results.uid)
   end
 

@@ -2,5 +2,5 @@
 #
 # Update the Employee table
 every 1.day at: '3:00 am' do
-  runner 'Ldap.employees'
+  runner 'Ldap::Queries.employees'
 end

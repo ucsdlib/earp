@@ -28,13 +28,13 @@ class User < ApplicationRecord
   end
 
   def self.administrator?(uid)
-    Ldap.hifive_group(uid) == uid
+    Ldap::Queries.hifive_group(uid) == uid
   end
 
   # Determine whether the authenticated Shib user is Library staff
   # @param uid [String] example: 'drseuss'
   # @return [Boolean]
   def self.library_staff?(uid)
-    Ldap.library_staff(uid) == uid
+    Ldap::Queries.library_staff(uid) == uid
   end
 end

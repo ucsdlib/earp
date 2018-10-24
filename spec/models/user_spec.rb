@@ -52,14 +52,14 @@ RSpec.describe User, type: :model do
     context 'user is not in group' do
       it 'returns false' do
         user = User.find_or_create_for_shibboleth(auth_hash)
-        allow(Ldap).to receive(:hifive_group).with(user.uid).and_return('')
+        allow(Ldap::Queries).to receive(:hifive_group).with(user.uid).and_return('')
         expect(User.administrator?(user.uid)).to be false
       end
     end
     context 'user is in group' do
       it 'returns true' do
         user = User.find_or_create_for_shibboleth(auth_hash)
-        allow(Ldap).to receive(:hifive_group).with(user.uid).and_return(user.uid)
+        allow(Ldap::Queries).to receive(:hifive_group).with(user.uid).and_return(user.uid)
         expect(User.administrator?(user.uid)).to be true
       end
     end

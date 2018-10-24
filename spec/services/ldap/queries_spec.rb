@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Ldap, type: :service do
+RSpec.describe Ldap::Queries, type: :service do
   describe '.library_staff' do
     before do
       fake_credentials = { group: 'memberof=CN=lib-test' }
@@ -84,20 +84,6 @@ RSpec.describe Ldap, type: :service do
       expect(described_class.manager_details(dn)).to eq({:email=>"drseuss@ucsd.edu",
                                                          :first_name=>"Dr.",
                                                          :last_name=>"Seuss"})
-    end
-  end
-
-  describe '.employees_filter' do
-    it 'returns an LDAP filter for all Library employees' do
-      expect(described_class.employees_filter.to_s).to eq('(&(&(&(EmployeeID=*)(ObjectCategory=person))(ObjectClass=user))(!(sAMAccountName=lib-*)))')
-    end
-  end
-
-  describe '.hifive_filter' do
-    it 'returns an LDAP filter to check admin membership' do
-      fake_credentials = { group: 'memberof=CN=lib-test' }
-      allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
-      expect(described_class.hifive_filter('drseuss').to_s).to eq('(&(&(CN=drseuss)(&(&(&(EmployeeID=*)(ObjectCategory=person))(ObjectClass=user))(!(sAMAccountName=lib-*))))(memberof=memberof=CN=lib-test))')
     end
   end
 

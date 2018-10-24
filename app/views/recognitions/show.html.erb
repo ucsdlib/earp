@@ -1,5 +1,8 @@
 <p id="notice"><%= notice %></p>
 
+<% if(File.file?("app/assets/images/photos/#{@recognition.employee.uid}.jpg")) %>
+<p><%= image_tag("photos/#{@recognition.employee.uid}.jpg") %></p>
+<% end %>
 <p>
   <strong>Recognizee:</strong>
   <%= @recognition.employee.display_name %>

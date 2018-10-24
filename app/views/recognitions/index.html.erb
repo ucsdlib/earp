@@ -10,7 +10,7 @@
 <table class='table'>
   <thead class="thead-light">
     <tr>
-      <th scope="col">Recognizee</th>
+      <th scope="col" colspan=2>Recognizee</th>
       <th scope="col">Library value</th>
       <th scope="col">Description</th>
       <th scope="col">Anonymous</th>
@@ -23,6 +23,11 @@
     <% @recognitions.each do |recognition| %>
       <tr>
         <td><%= recognition.employee.display_name %></td>
+        <% if(File.file?("app/assets/images/photos/#{recognition.employee.uid}.jpg")) %>
+        <td><%= image_tag("photos/#{recognition.employee.uid}.jpg") %></td>
+        <% else %>
+        <td></td>
+        <% end %>
         <td><%= recognition.library_value %></td>
         <td><%= recognition.description %></td>
         <td><%= recognition.anonymous ? 'Anonymous' : 'No' %></td>

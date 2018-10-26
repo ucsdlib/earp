@@ -7,8 +7,9 @@ RSpec.describe User, type: :model do
     info: { 'email' => 'test@ucsd.edu', 'name' => 'Dr. Seuss' }
   })}
 
-  let(:invalid_auth_hash) { OmniAuth::AuthHash.new({
-    info: { 'email' => 'test@ucsd.edu', 'name' => 'Dr. Seuss' }
+  let(:invalid_auth_hash_missing_info) { OmniAuth::AuthHash.new({
+    provider: 'shibboleth',
+    uid: 'test'
   })}
 
   describe ".find_or_create_for_developer" do
@@ -44,7 +45,7 @@ RSpec.describe User, type: :model do
     end
 
     it 'should throw an error with bad or missing response information' do
-      expect { User.find_or_create_for_shibboleth(invalid_auth_hash) }.to raise_error(StandardError)
+      expect { User.find_or_create_for_shibboleth(invalid_auth_hash_missing_info) }.to raise_error(StandardError)
     end
   end
 

@@ -19,18 +19,17 @@ To edit secrets: `bin/rails credentials:edit`
 1. Install docker and docker-compose
 1. Run docker-compose file `docker-compose up`
 
-**note** at the moment, the Chromium/Chromedriver versions on Alpine linux will
-not work with Capybara. So for now, run the application locally, and the
-docker-compose file will just run the database in a container.
-1. In a separate tab, setup the db `bin/rails db:create db:migrate`
+#### Testing
+1. Run tests with `docker-compose exec web` prefix for any RSpec command.
 
-OR (if you would like to pre-load Employee table for local dev)
-1. In a separate tab, setup the db `bin/rails db:setup`
-
-**when Alpine available again**
-1. In a separate tab, setup the db `docker-compose exec web bin/rails db:create db:migrate`
-OR (if you would like to pre-load Employee table for local dev)
-1. In a separate tab, setup the db `docker-compose exec web bin/rails db:setup`
+Examples:
+```
+docker-compose exec web bin/rails spec
+docker-compose exec web bundle exec rake spec
+docker-compose exec web bundle exec rake spec/models/user.rb
+docker-compose exec web bundle exec rake spec/models/user.rb:50
+...
+```
 
 #### Debugging
 With docker-compose running, in a new terminal/tab attach to the container:

@@ -1,20 +1,20 @@
 version: '3.6'
 
 services:
-#  web:
-#    build: .
-#    ports:
-#      - "3000:3000"
-#    working_dir: /home/theodor/app
-#    command: bundle exec puma
-#    volumes:
-#      - ./:/home/theodor/app
-#    depends_on:
-#      - database
-#    environment:
-#      DATABASE_URL: postgres://postgres@database
-#    stdin_open: true
-#    tty: true
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: sh -c 'bin/rails db:drop db:create db:migrate && bundle exec puma'
+    volumes:
+      - ./:/app
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgres://postgres@database
+    stdin_open: true
+    tty: true
 
   database:
     image: postgres:10.5-alpine

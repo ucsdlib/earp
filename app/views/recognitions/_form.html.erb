@@ -9,7 +9,9 @@
 
   <%= f.input :description %>
 
-  <%= f.input :anonymous %>
+  <%= f.input :anonymous,
+              label: 'Please do not include my name with the post',
+              hint: 'Your name will still be shared with the person being recognized and their supervisor'%>
 
   <%= f.button :submit, class: "btn-primary" %>
 <% end %>

@@ -10,6 +10,9 @@
 # Ignore coverage
 /coverage
 
+# Ignore employee photos
+/app/assets/images/photos/*.jpg
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*

@@ -38,6 +38,7 @@ gem 'omniauth-shibboleth'
 #
 # Simple Form, Bootstrap and friends
 gem 'bootstrap', '~> 4.1.3'
+gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'simple_form'
 

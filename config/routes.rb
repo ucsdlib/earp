@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :recognitions
+  resources :statistics
   root 'recognitions#index'
 
   # Shib/AD auth

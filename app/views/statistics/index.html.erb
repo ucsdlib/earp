@@ -1,0 +1,18 @@
+<%
+  s_date = params[:start_date] ? params[:start_date] : ""
+  e_date = params[:end_date] ? params[:end_date] : ""
+%>
+<div class="text-center"><h3>Recognition Statistics</h3></div>
+<br>
+<div class="center-block">
+<%= form_tag statistics_path, method: "GET", class: "navbar-form" do %>
+    <div class="input-daterange input-group" id="datepicker">
+      <input type="text" class="input-sm form-control" name="start_date" />
+      <span class="input-group-addon">to</span>
+      <input type="text" class="input-sm form-control" name="end_date" />
+    </div>
+    <br>
+    <%= submit_tag "Submit", name: nil, class: "btn btn-primary" %>
+<% end %>
+</div>
+

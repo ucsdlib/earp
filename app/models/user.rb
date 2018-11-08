@@ -21,7 +21,7 @@ class User < ApplicationRecord
       provider = access_token.provider
       name = access_token.info.name
     rescue StandardError => e
-      logger.warn "shibboleth: #{e}"
+      logger.warn "shibboleth: #{e}" && return
     end
     User.find_by(uid: uid, provider: provider) ||
       User.create(uid: uid, provider: provider, email: email, full_name: name)
@@ -29,6 +29,10 @@ class User < ApplicationRecord
 
   def self.administrator?(uid)
     Ldap::Queries.hifive_group(uid) == uid
+  end
+
+  def developer?
+    provider.eql?('developer')
   end
 
   # Determine whether the authenticated Shib user is Library staff

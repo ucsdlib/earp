@@ -12,6 +12,22 @@ RSpec.describe User, type: :model do
     uid: 'test'
   })}
 
+  describe "#developer?" do
+    it 'should return true when provider is developer' do
+      auth_hash.provider = 'developer'
+      auth_hash.uid = '1'
+      user = User.find_or_create_for_developer(auth_hash)
+      expect(user.developer?).to be true
+    end
+
+    it 'should return false when provider is shibboleth' do
+      user = User.find_or_create_for_shibboleth(auth_hash)
+      expect(user.developer?).to be false
+    end
+
+
+  end
+
   describe ".find_or_create_for_developer" do
     it "should create a User for first time user" do
       auth_hash.provider = 'developer'
@@ -44,8 +60,9 @@ RSpec.describe User, type: :model do
       expect(user.full_name).to eq('Dr. Seuss')
     end
 
-    it 'should throw an error with bad or missing response information' do
-      expect { User.find_or_create_for_shibboleth(invalid_auth_hash_missing_info) }.to raise_error(StandardError)
+    it 'should not persist a shib response with bad or missing information' do
+      User.find_or_create_for_shibboleth(invalid_auth_hash_missing_info)
+      expect(User.find_by(uid: 'test', provider: 'shibboleth')).to be nil
     end
   end
 

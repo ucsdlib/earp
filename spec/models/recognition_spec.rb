@@ -19,4 +19,22 @@ RSpec.describe Recognition, type: :model do
       expect(recognition).to be_valid
     end
   end
+
+  describe '.created_between' do
+    let!(:recognition1) { FactoryBot.create(:recognition,
+                                                 user: user,
+                                                 created_at: Time.parse('2018-10-01'),
+                                                 description: 'in report',
+                                                 employee: employee) }
+    let!(:recognition2) { FactoryBot.create(:recognition,
+                                                 user: user,
+                                                 created_at: Time.parse('2017-10-01'),
+                                                 description: 'not in report',
+                                                 employee: employee) }
+    let(:employee) { FactoryBot.create(:employee) }
+    let(:user) { FactoryBot.create(:user) }
+    it 'finds recognitions in a given date range' do
+      expect(described_class.created_between('2018-01-01', '2018-12-31').map(&:description)).to eq(['in report'])
+    end
+  end
 end

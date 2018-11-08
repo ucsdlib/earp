@@ -1,0 +1,29 @@
+<html lang="en">
+  <body>
+<% 
+  lisn_url = 'https://library.ucsd.edu/lisn'
+%>
+     <p>Dear <%= @recognition.employee.name %>,</p><br/>
+
+
+     <p>You have been recognized for <b><%=  LIBRARY_VALUES[ @recognition.library_value ]  %></b> </p>
+
+     <p>Please see the recognition below:</>
+
+     <p><i><%= @recognition.description %></i></p> 
+
+     <p>This recognition can also be viewed online in LiSN
+     (<%= link_to lisn_url, lisn_url%>)
+     or by going directly to the post: <%= link_to recognition_url(@recognition), recognition_url(@recognition) %></p>
+
+     <p>If for some reason you do not want your recognition to appear, or would like it removed from the LiSN, 
+     please click this link to opt-out: <%= link_to optout_url(key: @key), optout_url(key: @key) %> </p><br/>
+
+
+     <p>Best Regards,</p>
+
+     <p>High Five! Employee Recognition Program<br/>
+        UC San Diego Library<br/>
+        https://library.ucsd.edu/h5</p>     
+  </body>
+</html>

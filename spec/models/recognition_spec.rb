@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Recognition, type: :model do
+  let!(:email) { mock_email_credential }
+  let!(:supervisor) { mock_supervisor }
+
   context 'invalid recognition' do
     let(:recognition) { Recognition.new }
     it "must have required attributes" do
@@ -48,6 +51,7 @@ RSpec.describe Recognition, type: :model do
                                                  employee: employee) }
     let(:employee) { FactoryBot.create(:employee) }
     let(:user) { FactoryBot.create(:user) }
+
     it 'finds recognitions in a given date range' do
       expect(described_class.created_between('2018-01-01', '2018-12-31').map(&:description)).to eq(['in report'])
     end

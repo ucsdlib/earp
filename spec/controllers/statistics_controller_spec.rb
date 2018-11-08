@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe StatisticsController, type: :controller do
+  let!(:email) { mock_email_credential }
+  let!(:supervisor) { mock_supervisor }
   describe "GET index" do
     context 'with statistics results' do
       let!(:recognition_in_range) { FactoryBot.create(:recognition,

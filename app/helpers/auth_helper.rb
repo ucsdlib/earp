@@ -20,7 +20,6 @@ module AuthHelper
 
   # Require that a current user is authenticated and an administrator
   def require_administrator
-    # redirect_to recognitions_path unless logged_in?# && User.administrator?(current_user)
     redirect_to recognitions_path unless logged_in? && valid_administrator?
   end
 end

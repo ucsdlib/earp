@@ -3,9 +3,9 @@
 <div class="center-block">
 <%= form_tag statistics_path, method: "GET", class: "navbar-form" do %>
     <div class="input-daterange input-group" id="datepicker">
-      <input type="text" class="input-sm form-control" name="start_date" />
+      <input type="text" aria-label="Start Date" class="input-sm form-control" name="start_date" />
       <span class="input-group-addon">to</span>
-      <input type="text" class="input-sm form-control" name="end_date" />
+      <input type="text" aria-label="End Date" class="input-sm form-control" name="end_date" />
     </div>
     <br>
     <%= submit_tag "Submit", name: nil, class: "btn btn-primary" %>

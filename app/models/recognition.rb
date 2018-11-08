@@ -20,5 +20,6 @@ class Recognition < ApplicationRecord
   def generate_link
     key = Digest::SHA1.bubblebabble(id.to_s + Time.zone.now.to_s)
     OptOutLink.new(key: key, recognition_id: id, expires: 6.months.from_now).save
+    RecognitionMailer.email(Recognition.find(id)).deliver_now
   end
 end

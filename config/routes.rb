@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   resources :statistics
   root 'recognitions#index'
 
+  # OptOutLinks
+  get '/optout', to: 'opt_out_links#optout', as: :optout
+
   # Shib/AD auth
   get "/signin", to: 'sessions#new', as: :signin
   get "/auth/shibboleth", as: :shibboleth

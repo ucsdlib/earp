@@ -1,0 +1,2 @@
+class OptOutLink < ApplicationRecord
+end

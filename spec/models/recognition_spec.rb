@@ -20,6 +20,21 @@ RSpec.describe Recognition, type: :model do
     end
   end
 
+  describe '#generate_link' do
+    let!(:recognition) { FactoryBot.create(:recognition,
+                                                 user: user,
+                                                 created_at: Time.parse('2018-10-01'),
+                                                 description: 'in report',
+                                                 employee: employee) }
+    let(:employee) { FactoryBot.create(:employee) }
+    let(:user) { FactoryBot.create(:user) }
+
+    it 'generates an OptOutLink' do
+      expect(OptOutLink.count).to be(1)
+      expect(OptOutLink.first.recognition_id).to eq(recognition.id)
+    end
+  end
+
   describe '.created_between' do
     let!(:recognition1) { FactoryBot.create(:recognition,
                                                  user: user,

@@ -1,5 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe OptOutLink, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '.audit_expired_links' do
+    let!(:expired_link) { FactoryBot.create(:opt_out_link,
+                                                 key: 'expired-key',
+                                                 expires: Time.parse('2018-10-01')) }
+    let!(:non_expired_link) { FactoryBot.create(:opt_out_link,
+                                                 key: 'valid-key',
+                                                 expires: Time.parse('2020-10-01')) }
+    it 'finds expired links and deletes them' do
+      travel_to Date.new(2018, 10, 02) do
+        described_class.audit_expired_links
+        expect(OptOutLink.count).to be(1)
+        expect(OptOutLink.first.key).to eq('valid-key')
+      end
+    end
+  end
 end

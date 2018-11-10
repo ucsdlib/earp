@@ -22,8 +22,10 @@ class OptOutLinksController < ApplicationController
   # Finish the optout process by suppressing the recognition and removing the optoutlink
   def complete_optout(optout_record)
     recognition_record = Recognition.find_by(id: optout_record.recognition_id)
-    recognition_record.suppressed = true
-    recognition_record.save!
+    if recognition_record
+      recognition_record.suppressed = true
+      recognition_record.save!
+    end
     optout_record.delete
   end
 

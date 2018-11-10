@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root 'recognitions#index'
 
   # OptOutLinks
-  get '/optout', to: 'opt_out_links#optout', as: :optout
+  get '/optout/:key', to: 'opt_out_links#optout', as: :optout
 
   # Shib/AD auth
   get "/signin", to: 'sessions#new', as: :signin

@@ -6,6 +6,6 @@ every 1.day at: '3:00 am' do
 end
 
 # Remove expired OptOutLinks
-every 1.day at: '3:00 am' do
+every 1.day at: '2:00 am' do
   runner 'OptOutLink.audit_expired_links'
 end

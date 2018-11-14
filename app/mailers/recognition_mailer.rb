@@ -13,7 +13,12 @@ class RecognitionMailer < ApplicationMailer
 
   def opt_out_key(recognition)
     optout_obj = OptOutLink.where(recognition_id: recognition.id).first
-    @key = optout_obj ? optout_obj.key : ''
+    if optout_obj
+      @key = optout_obj.key
+    else
+      @key = Digest::SHA1.bubblebabble(recognition.id.to_s + Time.zone.now.to_s)
+      OptOutLink.new(key: @key, recognition_id: recognition.id, expires: 6.months.from_now).save
+    end
   end
 
   def manager_email(manager_dn)

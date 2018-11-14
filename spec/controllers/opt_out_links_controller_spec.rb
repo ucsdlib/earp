@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe OptOutLinksController, type: :controller do
   describe "GET #optout" do
     let!(:email) { mock_email_credential }
-    let!(:supervisor) { mock_supervisor }
+    let(:manager) { FactoryBot.create(:employee) }
     let!(:recognition) { FactoryBot.create(:recognition,
                                             user: user,
                                             created_at: Time.parse('2018-10-01'),
                                             library_value: 'collab',
                                             description: 'perhaps something not nice',
-                                            employee: employee) }
+                                            employee: employee) }   
     let(:employee) { FactoryBot.create(:employee) }
     let(:user) { FactoryBot.create(:user) }
 

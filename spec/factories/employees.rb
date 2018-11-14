@@ -3,7 +3,7 @@ FactoryBot.define do
     sequence(:uid) { |n| "employee#{n}" }
     sequence(:email) { |n| "employee#{n}@ucsd.edu" }
     name { "MyString" }
-    manager { "CN=supervisor,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU" }
+    sequence(:manager) { |n| "CN=employee#{n-1},OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU" }
     display_name { "MyString" }
   end
 end

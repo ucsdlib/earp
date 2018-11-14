@@ -37,6 +37,5 @@ RSpec.describe RecognitionMailer do
   it 'assigns recognition url' do
     url = "/recognitions/#{recognition.id}"
     expect(email.body.encoded).to match(url)
-  end
-      
+  end    
 end

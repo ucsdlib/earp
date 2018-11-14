@@ -16,4 +16,11 @@ RSpec.describe OptOutLink, type: :model do
       end
     end
   end
+
+  describe '#to_param' do
+    let!(:expired_link) { FactoryBot.build_stubbed(:opt_out_link, key: 'valid-key')}
+    it 'overrides to_param for custom route url with key' do
+      expect(expired_link.to_param).to eq('valid-key')
+    end
+  end
 end

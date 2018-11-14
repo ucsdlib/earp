@@ -3,6 +3,7 @@
 # RecognitionsHelper
 module RecognitionsHelper
   def library_values
-    LIBRARY_VALUES
+    # helper for form needs to be [label, value]
+    LIBRARY_VALUES.to_a.map { |entry| [entry[1], entry[0]] }
   end
 end

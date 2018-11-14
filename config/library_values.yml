@@ -1,16 +1,6 @@
 ---
--
-  - 'Community, Diversity, and Inclusion'
-  - 'diversity'
--
-  - 'Collaboration and Communication'
-  - 'collab'
--
-  - 'Innovation, Creativity, and Risk-taking'
-  - 'innovate'
--
-  - 'Responsiveness, Flexibility, and Continuous Improvement'
-  - 'flexible'
--
-  - 'Service and Excellence'
-  - 'service'
+diversity: 'Community, Diversity, and Inclusion'
+collab: 'Collaboration and Communication'
+innovate: 'Innovation, Creativity, and Risk-taking'
+flexible: 'Responsiveness, Flexibility, and Continuous Improvement'
+service: 'Service and Excellence'

@@ -22,7 +22,7 @@ module StatisticsHelper
   def recognition_row(recognition)
     nominee = recognition.employee.display_name
     nominator = recognition.user.full_name
-    value = recognition.library_value
+    value = LIBRARY_VALUES[recognition.library_value]
     anonymous = recognition.anonymous
     suppressed = recognition.suppressed
     submitted = recognition.created_at

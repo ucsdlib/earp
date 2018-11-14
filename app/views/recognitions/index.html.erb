@@ -28,7 +28,7 @@
         <% else %>
         <td></td>
         <% end %>
-        <td><%= recognition.library_value %></td>
+        <td><%= LIBRARY_VALUES[ recognition.library_value ] %></td>
         <td><%= recognition.description %></td>
         <td><%= recognition.anonymous ? 'Anonymous' : 'No' %></td>
         <td><%= recognition.user.full_name %></td>

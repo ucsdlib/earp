@@ -35,7 +35,7 @@ RSpec.describe 'interacting with recognitions', type: :system do
     click_on('Create Recognition')
     visit recognitions_path
     expect(page).to have_content('Really Long Text...')
-    expect(page).to have_content('collab')
+    expect(page).to have_content('Collaboration and Communication')
     expect(page).to have_content('Joe Employee')
   end
 
@@ -70,7 +70,7 @@ RSpec.describe 'interacting with recognitions', type: :system do
     click_on('Update Recognition')
 
     expect(page).to have_content('I changed my mind')
-    expect(page).to have_content('collab')
+    expect(page).to have_content('Collaboration and Communication')
     expect(page).to have_content('Joe Employee')
   end
 

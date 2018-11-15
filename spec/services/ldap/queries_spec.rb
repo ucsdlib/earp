@@ -69,24 +69,6 @@ RSpec.describe Ldap::Queries, type: :service do
     end
   end
 
-  describe '.manager_details' do
-    let(:dn) { 'CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU' }
-    before do
-      entry = Net::LDAP::Entry.new(dn)
-      entry['sn'] = 'Seuss'
-      entry['givenname'] = 'Dr.'
-      entry['mail'] = 'drseuss@ucsd.edu'
-      mock_ldap_validation
-      allow(mock_ldap_connection).to receive(:search).and_yield(entry)
-    end
-
-    it 'returns a hash of manager information for a given employee' do
-      expect(described_class.manager_details(dn)).to eq({:email=>"drseuss@ucsd.edu",
-                                                         :first_name=>"Dr.",
-                                                         :last_name=>"Seuss"})
-    end
-  end
-
   describe '.validate_ldap_response' do
     it 'raises an error with a non-zero exit code' do
       operation_result = OpenStruct.new(:code => 1, :message => 'Something terrible happened')

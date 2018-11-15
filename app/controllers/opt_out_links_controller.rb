@@ -14,7 +14,7 @@ class OptOutLinksController < ApplicationController
       complete_optout(optout_record)
       notice = 'Your recogntion has been suppressed from public view'
     end
-    redirect_to recognitions_url, notice: notice
+    redirect_to root_url, notice: notice
   end
 
   private

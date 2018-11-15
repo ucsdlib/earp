@@ -12,6 +12,14 @@ class RecognitionsController < ApplicationController
     @recognitions = Recognition.all
   end
 
+  # GET /feed.rss
+  def feed
+    @recognitions = Recognition.last(15)
+    respond_to do |format|
+      format.rss { render layout: false }
+    end
+  end
+
   # GET /recognitions/1
   # GET /recognitions/1.json
   def show; end

@@ -1,5 +1,12 @@
 require 'rails_helper'
 
-# RecognitionsController specs placeholder
+# RecognitionsController
 RSpec.describe RecognitionsController, type: :controller do
+  describe "GET Recognitions RSS feed" do
+    it "returns an RSS feed" do
+      get :feed, :format => "rss"
+      expect(response).to be_success
+      expect(response.content_type).to eq("application/rss+xml")
+    end
+  end
 end

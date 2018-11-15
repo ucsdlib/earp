@@ -13,7 +13,7 @@ RSpec.describe 'authenticating', type: :system do
 
     it 'should not allow access to the application' do
       sign_in
-      expect(page).to have_content('You are not an authorized Library employee')
+      expect(page).to have_content('Forbidden')
     end
   end
 

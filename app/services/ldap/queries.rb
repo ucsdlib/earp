@@ -73,29 +73,5 @@ module Ldap
       validate_ldap_response
       result
     end
-
-    # Query manager email and name for a given employee
-    # @param [String] dname information for the manager to lookup
-    #   Example: CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU
-    # @return [Hash] manager information with name and email keys
-    # Example: { first_name: 'Dr.', last_name: 'Seuss', email: 'thedoctor@ucsd.edu' }
-    # rubocop:disable Metrics/MethodLength
-    def self.manager_details(dname)
-      result = {}
-      ldap_connection.search(
-        base: dname,
-        return_result: false,
-        filter: Net::LDAP::Filter.eq('objectcategory', 'user'),
-        attributes: %w[mail givenName sn]
-      ) do |m|
-        result[:email] = m.mail.first
-        result[:first_name] = m.givenName.first
-        result[:last_name] = m.sn.first
-      end
-      validate_ldap_response
-
-      result
-    end
-    # rubocop:enable Metrics/MethodLength
   end
 end

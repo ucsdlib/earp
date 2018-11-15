@@ -1,0 +1,9 @@
+<p>
+  <strong>Welcome to High Five!</strong>
+</p>
+
+<% if logged_in? %>
+<%= link_to 'Sign out', signout_path, class: "btn btn-outline-secondary"%>
+<% else %>
+<%= link_to 'Sign in', signin_path, class: "btn btn-outline-secondary"%>
+<% end %>

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :recognitions
   resources :statistics
-  root 'recognitions#index'
+  root 'recognitions#home'
 
   # RSS feed
   get 'feed', to: 'recognitions#feed', as: :feed

@@ -14,7 +14,7 @@ class RecognitionsController < ApplicationController
 
   # GET /feed.rss
   def feed
-    @recognitions = Recognition.last(15)
+    @recognitions = Recognition.all.order(:created_at).reverse_order.first(15)
     respond_to do |format|
       format.rss { render layout: false }
     end

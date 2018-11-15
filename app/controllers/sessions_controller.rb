@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def failure
-    redirect_to root_url, alert: 'You are not an authorized Library employee'
+    render file: Rails.root.join('public', '403'), formats: [:html], status: 403, layout: false
   end
 
   def find_or_create_user(auth_type)

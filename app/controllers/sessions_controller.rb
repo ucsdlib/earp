@@ -29,7 +29,8 @@ class SessionsController < ApplicationController
 
     if valid_user?(auth_type, omniauth_results)
       create_user_session(user) if user
-      redirect_to root_url, notice: "You have successfully authenticated from #{auth_type} account!"
+      flash[:notice] = "You have successfully authenticated from #{auth_type} account!"
+      redirect_back_or root_url
     else
       render file: Rails.root.join('public', '403'), formats: [:html], status: 403, layout: false
     end
@@ -37,13 +38,11 @@ class SessionsController < ApplicationController
 
   def destroy
     destroy_user_session
-    if Rails.configuration.shibboleth
-      # rubocop:disable Metrics/LineLength,Rails/OutputSafety
-      flash[:alert] = 'You have been logged out of this applicaton. To logout of all Single Sign-On applications, close your browser'.html_safe
-      # rubocop:enable Metrics/LineLength,Rails/OutputSafety
-    end
 
-    redirect_to root_url
+    # rubocop:disable Metrics/LineLength
+    redirect_to root_url,
+                notice: 'You have been logged out of this applicaton. To logout of all Single Sign-On applications, close your browser'
+    # rubocop:enable Metrics/LineLength
   end
 
   private
@@ -63,4 +62,11 @@ class SessionsController < ApplicationController
     session[:user_name] = nil
     session[:user_id] = nil
   end
+
+  # Redirects to stored location (or to the default).
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
 end

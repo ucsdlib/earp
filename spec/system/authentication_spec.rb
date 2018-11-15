@@ -27,7 +27,7 @@ RSpec.describe 'authenticating', type: :system do
     end
 
     it 'enforces authentication' do
-      sign_in
+      visit recognitions_path
       expect(page).to have_content('Sign out')
     end
 

@@ -7,6 +7,7 @@ module AuthHelper
   end
 
   def require_user
+    store_location
     redirect_to signin_path, notice: 'You need to sign in!' unless logged_in?
   end
 
@@ -20,6 +21,12 @@ module AuthHelper
 
   # Require that a current user is authenticated and an administrator
   def require_administrator
-    redirect_to recognitions_path unless logged_in? && valid_administrator?
+    redirect_to root_url unless logged_in? && valid_administrator?
+  end
+
+  # Stores the URL trying to be accessed.
+  # This allows us to redirect them back after SSO authentication
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
   end
 end

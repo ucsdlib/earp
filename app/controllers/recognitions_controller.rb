@@ -3,7 +3,7 @@
 # RecognitionsController
 class RecognitionsController < ApplicationController
   helper RecognitionsHelper
-  before_action :require_user, only: %i[new edit create update destroy]
+  before_action :require_user, only: %i[show index new edit create update destroy]
   before_action :set_recognition, only: %i[show edit update destroy]
 
   # GET /recognitions
@@ -23,6 +23,9 @@ class RecognitionsController < ApplicationController
   # GET /recognitions/1
   # GET /recognitions/1.json
   def show; end
+
+  # Homepage for app
+  def front; end
 
   # GET /recognitions/new
   def new

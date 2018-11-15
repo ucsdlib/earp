@@ -9,7 +9,12 @@ RSpec.describe 'interacting with recognitions', type: :system do
 
   it 'enforces authentication' do
     visit new_recognition_path
-    expect(page).to have_content('Sign out')
+    expect(page).to have_content('You have successfully authenticated')
+  end
+
+  it 'redirects after authentication to originally requested path' do
+    visit recognitions_path
+    expect(page).to have_current_path(recognitions_path)
   end
 
   it 'does not allow a user to create a recognition without a recognizee, value, and description' do

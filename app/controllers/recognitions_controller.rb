@@ -5,6 +5,7 @@ class RecognitionsController < ApplicationController
   helper RecognitionsHelper
   before_action :require_user, only: %i[show index new edit create update destroy]
   before_action :set_recognition, only: %i[show edit update destroy]
+  before_action :authorize_editor, only: %i[edit update destroy]
 
   # GET /recognitions
   # GET /recognitions.json
@@ -78,6 +79,13 @@ class RecognitionsController < ApplicationController
   end
 
   private
+
+  # Ensure the current user is allowed to edit/update/delete the current recognition
+  def authorize_editor
+    # rubocop:disable Metrics/LineLength
+    redirect_to @recognition, notice: 'You are only allowed to modify your own recognitions' unless can_administrate?(@recognition)
+    # rubocop:enable Metrics/LineLength
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_recognition

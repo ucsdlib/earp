@@ -1,0 +1,71 @@
+require 'rails_helper'
+
+RSpec.describe 'enforcing authorization in recognitions', type: :system do
+  let!(:recognition_for_different_user) { FactoryBot.create(:recognition,
+                                                user: user1,
+                                                description: 'employee1 is great',
+                                                employee: employee1) }
+  let(:employee1) { FactoryBot.create(:employee) }
+  let(:user1) { FactoryBot.create(:user) }
+  let!(:recognition_for_logged_in_user) { FactoryBot.create(:recognition,
+                                                user: logged_in_user,
+                                                description: 'employee2 is great',
+                                                employee: employee2) }
+  let(:employee2) { FactoryBot.create(:employee) }
+  # note omniauth_test is the uid set in omniauth_setup_shibboleth
+  # we need these to match for testing the 'logged in user'
+  let(:logged_in_user) { FactoryBot.create(:user, uid: 'omniauth_test' ) }
+
+  context 'as an administrator' do
+    before do
+      mock_valid_library_employee
+      mock_library_administrator
+      omniauth_setup_shibboleth
+      mock_email_credential
+    end
+
+    it 'can see links to edit/delete all records', :aggregate_failures do
+      visit recognitions_path
+      expect(page).to have_link('Edit', count: 2)
+      expect(page).to have_link('Destroy', count: 2)
+    end
+
+    it 'can edit a recognition they did not create', :aggregate_failures do
+      visit edit_recognition_path(recognition_for_different_user)
+      fill_in('recognition_description', with: 'admin approved')
+      click_on('Update Recognition')
+      expect(page).to have_content('admin approved')
+    end
+
+    it 'can delete a recognition they did not create', js: true do
+      visit recognitions_path
+
+      accept_confirm do
+        click_link('Destroy', href: recognition_path(recognition_for_different_user))
+      end
+      expect(page.find(:css, "#notice")).to have_content "Recognition was successfully destroyed."
+    end
+  end
+
+  context 'as a library staff member' do
+    before do
+      mock_valid_library_employee
+      mock_non_library_administrator
+      omniauth_setup_shibboleth
+      mock_email_credential
+    end
+    it 'can only see links to edit/delete their own records', :aggregate_failures do
+      visit recognitions_path
+      expect(page).to have_link('Edit', count: 1)
+      expect(page).to have_link('Edit', href: edit_recognition_path(recognition_for_logged_in_user))
+      expect(page).to have_link('Destroy', count: 1)
+      expect(page).to have_link('Destroy', href: recognition_path(recognition_for_logged_in_user))
+    end
+
+    it 'cannot edit a recognition they did not create', :aggregate_failures do
+      visit edit_recognition_path(recognition_for_different_user)
+      expect(page).to have_current_path(recognition_path(recognition_for_different_user))
+      expect(page).to have_content('You are only allowed to modify your own recognitions')
+    end
+  end
+end

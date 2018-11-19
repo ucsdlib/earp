@@ -13,6 +13,10 @@ def sign_out_developer
   visit new_session_path
 end
 
-def mock_valid_library_administrator
-  allow(User).to receive(:administrator?).and_return('')
+def mock_library_administrator
+  allow(User).to receive(:administrator?).and_return(true)
+end
+
+def mock_non_library_administrator
+  allow(User).to receive(:administrator?).and_return(false)
 end

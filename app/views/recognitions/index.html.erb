@@ -33,8 +33,13 @@
         <td><%= recognition.anonymous ? 'Anonymous' : 'No' %></td>
         <td><%= recognition.user.full_name %></td>
         <td><%= link_to 'Show', recognition %></td>
+        <% if can_administrate?(recognition) %>
         <td><%= link_to 'Edit', edit_recognition_path(recognition) %></td>
         <td><%= link_to 'Destroy', recognition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% else %>
+        <td></td>
+        <td></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

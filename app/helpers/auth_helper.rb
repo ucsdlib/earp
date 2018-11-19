@@ -23,7 +23,7 @@ module AuthHelper
   # The recognition must belong to the current user or the current user must be an administrator
   # @param [Recognition] recognition
   def can_administrate?(recognition)
-    current_user.recognitions.include?(recognition) || User.administrator?(current_user.id)
+    current_user.recognitions.include?(recognition) || valid_administrator?
   end
 
   # Require that a current user is authenticated and an administrator

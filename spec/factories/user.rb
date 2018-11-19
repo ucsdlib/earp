@@ -5,10 +5,5 @@ FactoryBot.define do
     sequence(:uid) { |n| "user#{n}" }
     full_name { 'Jane Triton' }
     provider { 'shibboleth' }
-
-    # future idea for adding Roles
-    # factory :admin do
-    #   roles { [Role.where(name: "admin").first_or_create] }
-    # end
   end
 end

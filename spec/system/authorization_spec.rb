@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'enforcing authorization in recognitions', type: :system do
+  before do
+    mock_valid_library_employee
+    omniauth_setup_shibboleth
+    mock_email_credential
+  end
+
   let!(:recognition_for_different_user) { FactoryBot.create(:recognition,
                                                 user: user1,
                                                 description: 'employee1 is great',
@@ -18,10 +24,7 @@ RSpec.describe 'enforcing authorization in recognitions', type: :system do
 
   context 'as an administrator' do
     before do
-      mock_valid_library_employee
       mock_library_administrator
-      omniauth_setup_shibboleth
-      mock_email_credential
     end
 
     it 'can see links to edit/delete all records', :aggregate_failures do
@@ -49,10 +52,7 @@ RSpec.describe 'enforcing authorization in recognitions', type: :system do
 
   context 'as a library staff member' do
     before do
-      mock_valid_library_employee
       mock_non_library_administrator
-      omniauth_setup_shibboleth
-      mock_email_credential
     end
     it 'can only see links to edit/delete their own records', :aggregate_failures do
       visit recognitions_path

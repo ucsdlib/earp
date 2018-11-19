@@ -25,7 +25,7 @@ RSpec.describe StatisticsController, type: :controller do
       before do
         set_current_user
         mock_valid_library_employee
-        mock_valid_library_administrator
+        mock_library_administrator
         expect(@controller).to receive(:send_data)
           .with(csv_string, csv_options) { @controller.render nothing: true }
       end
@@ -49,7 +49,7 @@ RSpec.describe StatisticsController, type: :controller do
     before do
       set_current_user
       mock_valid_library_employee
-      mock_valid_library_administrator
+      mock_library_administrator
     end
 
     it 'should respond with a flash notification' do

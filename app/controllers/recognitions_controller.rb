@@ -10,12 +10,12 @@ class RecognitionsController < ApplicationController
   # GET /recognitions
   # GET /recognitions.json
   def index
-    @recognitions = Recognition.all.order('created_at DESC')
+    @recognitions = Recognition.all_recognitions
   end
 
   # GET /feed.rss
   def feed
-    @recognitions = Recognition.all.order('created_at DESC').first(15)
+    @recognitions = Recognition.feed
     respond_to do |format|
       format.rss { render layout: false }
     end

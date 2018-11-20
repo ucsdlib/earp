@@ -56,4 +56,40 @@ RSpec.describe Recognition, type: :model do
       expect(described_class.created_between('2018-01-01', '2018-12-31').map(&:description)).to eq(['in report'])
     end
   end
+
+  describe '.feed' do
+    let!(:suppressed_recognition) { FactoryBot.create(:recognition,
+                                                      suppressed: true,
+                                                      description: 'not in feed',
+                                                      user: user,
+                                                      employee: employee) }
+    let!(:public_recognition) { FactoryBot.create(:recognition,
+                                                  user: user,
+                                                  description: 'in feed',
+                                                  employee: employee) }
+    let(:employee) { FactoryBot.create(:employee) }
+    let(:user) { FactoryBot.create(:user) }
+
+    it 'only includes non-suppressed/public records' do
+      expect(described_class.feed.map(&:description)).to eq(['in feed'])
+    end
+  end
+
+  describe '.all_recognitions' do
+    let!(:suppressed_recognition) { FactoryBot.create(:recognition,
+                                                      suppressed: true,
+                                                      description: 'suppressed',
+                                                      user: user,
+                                                      employee: employee) }
+    let!(:public_recognition) { FactoryBot.create(:recognition,
+                                                  user: user,
+                                                  description: 'public',
+                                                  employee: employee) }
+    let(:employee) { FactoryBot.create(:employee) }
+    let(:user) { FactoryBot.create(:user) }
+
+    it 'includes all records, including non-suppressed/public' do
+      expect(described_class.all_recognitions.map(&:description)).to eq(['public', 'suppressed'])
+    end
+  end
 end

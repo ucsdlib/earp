@@ -27,6 +27,16 @@ RSpec.describe 'enforcing authorization in recognitions', type: :system do
       mock_library_administrator
     end
 
+    it 'can see suppressed records' do
+      suppressed_recognition = FactoryBot.create(:recognition,
+                                                  user: user1,
+                                                  suppressed: true,
+                                                  description: 'i am suppressed',
+                                                  employee: employee1)
+      visit recognitions_path
+      expect(page).to have_content('i am suppressed')
+    end
+
     it 'can see links to edit/delete all records', :aggregate_failures do
       visit recognitions_path
       expect(page).to have_link('Edit', count: 2)
@@ -54,6 +64,17 @@ RSpec.describe 'enforcing authorization in recognitions', type: :system do
     before do
       mock_non_library_administrator
     end
+
+    it 'cannot see suppressed records' do
+      suppressed_recognition = FactoryBot.create(:recognition,
+                                                  user: user1,
+                                                  suppressed: true,
+                                                  description: 'i am suppressed',
+                                                  employee: employee1)
+      visit recognitions_path
+      expect(page).not_to have_content('i am suppressed')
+    end
+
     it 'can only see links to edit/delete their own records', :aggregate_failures do
       visit recognitions_path
       expect(page).to have_link('Edit', count: 1)

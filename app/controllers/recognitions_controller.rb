@@ -10,7 +10,7 @@ class RecognitionsController < ApplicationController
   # GET /recognitions
   # GET /recognitions.json
   def index
-    @recognitions = Recognition.all_recognitions
+    @recognitions = valid_administrator? ? Recognition.all_recognitions : Recognition.public_recognitions
   end
 
   # GET /feed.rss

@@ -30,8 +30,9 @@ RSpec.describe RecognitionMailer do
  
   it 'assigns recognition name, library value, and description' do
     expect(email.body.encoded).to match("Dear #{recognition.employee.name},")
-    expect(email.body.encoded).to match("#{LIBRARY_VALUES[recognition.library_value]}")
-    expect(email.body.encoded).to match("#{recognition.description}")
+    expect(email.body.encoded).to match(LIBRARY_VALUES[recognition.library_value])
+    expect(email.body.encoded).to match(recognition.user.full_name)
+    expect(email.body.encoded).to match(recognition.description)
   end 
 
   it 'assigns recognition url' do

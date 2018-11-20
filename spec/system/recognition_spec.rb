@@ -5,6 +5,7 @@ RSpec.describe 'interacting with recognitions', type: :system do
     mock_valid_library_employee
     omniauth_setup_shibboleth
     mock_email_credential
+    mock_non_library_administrator
   end
 
   it 'enforces authentication' do

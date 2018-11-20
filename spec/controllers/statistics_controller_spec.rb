@@ -19,7 +19,7 @@ RSpec.describe StatisticsController, type: :controller do
                                                   employee: employee) }
       let(:employee) { FactoryBot.create(:employee) }
       let(:user) { FactoryBot.create(:user) }
-      let(:csv_string) { "Reconizee,Recognizer,Value,Anonymous,Opted-Out,Submitted\nMyString,Jane Triton,Collaboration and Communication,false,false,2018-10-01 00:00:00 UTC\n" }
+      let(:csv_string) { "Reconizee,Recognizer,Value,Description,Anonymous,Opted-Out,Submitted\nMyString,Jane Triton,Collaboration and Communication,in report,false,false,2018-10-01 00:00:00 UTC\n" }
       let(:csv_options) { {:filename=>"highfive-stats-2018-10-01-2018-10-15.csv"} }
 
       before do

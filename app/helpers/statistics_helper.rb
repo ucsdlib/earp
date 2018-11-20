@@ -8,7 +8,7 @@ module StatisticsHelper
   # @param results
   # @return [String] csv of results
   def generate_csv(results)
-    attributes = %w[Reconizee Recognizer Value Anonymous Opted-Out Submitted]
+    attributes = %w[Reconizee Recognizer Value Description Anonymous Opted-Out Submitted]
 
     CSV.generate(headers: true) do |csv|
       csv << attributes
@@ -23,9 +23,10 @@ module StatisticsHelper
     nominee = recognition.employee.display_name
     nominator = recognition.user.full_name
     value = LIBRARY_VALUES[recognition.library_value]
+    description = recognition.description
     anonymous = recognition.anonymous
     suppressed = recognition.suppressed
     submitted = recognition.created_at
-    [nominee, nominator, value, anonymous, suppressed, submitted]
+    [nominee, nominator, value, description, anonymous, suppressed, submitted]
   end
 end

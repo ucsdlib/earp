@@ -19,7 +19,9 @@ RSpec.describe 'authenticating', type: :system do
 
   context 'as a developer' do
     before do
+      mock_valid_library_employee
       omniauth_setup_developer
+      mock_library_administrator
     end
 
     after(:all) do

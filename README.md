@@ -7,6 +7,11 @@ An application supporting an Employee Recognition program workflow
 
 
 ## Local Development
+### Email / Letter Opener
+To view emails submitted in a development context, you can navigate to:
+```
+http://localhost:3000/letter_opener
+```
 ### Secrets
 This app is using Rails 5.2+ encrypted secrets, stored in
 `config/credentials.yml.enc`. In order to access them, you'll need to set the

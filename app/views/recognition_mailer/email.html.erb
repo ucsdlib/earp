@@ -6,7 +6,7 @@
      <p>Dear <%= @recognition.employee.name %>,</p><br/>
 
 
-     <p>You have been recognized for <b><%=  LIBRARY_VALUES[ @recognition.library_value ]  %></b> </p>
+     <p>You have been recognized for <b><%=  LIBRARY_VALUES[ @recognition.library_value ]  %></b> by <b><%= @recognition.user.full_name %></b>. </p>
 
      <p>Please see the recognition below:</>
 
@@ -16,7 +16,7 @@
      (<%= link_to lisn_url, lisn_url%>)
      or by going directly to the post: <%= link_to recognition_url(@recognition), recognition_url(@recognition) %></p>
 
-     <p>If for some reason you do not want your recognition to appear, or would like it removed from the LiSN, 
+     <p>If for some reason you do not want your recognition to appear, or would like it removed from LiSN, 
      please click this link to opt-out: <%= link_to optout_url(@key), optout_url(@key) %> </p><br/>
 
 

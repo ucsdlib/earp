@@ -32,5 +32,6 @@ module Hifive
 
     # Only production (staging eventually)
     config.shibboleth = false
+    config.image_path = 'https://library.ucsd.edu/hifivephotos/'
   end
 end

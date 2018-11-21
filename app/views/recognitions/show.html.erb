@@ -1,5 +1,5 @@
-<% if(File.file?("app/assets/images/photos/#{@recognition.employee.uid}.jpg")) %>
-<p><%= image_tag("photos/#{@recognition.employee.uid}.jpg") %></p>
+<% if(url_exist?("#{Rails.configuration.image_path}#{@recognition.employee.uid}.jpg")) %>
+<p><%= image_tag("#{Rails.configuration.image_path}#{@recognition.employee.uid}.jpg") %></p>
 <% end %>
 <p>
   <strong>Recognizee:</strong>

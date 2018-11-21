@@ -17,16 +17,5 @@ class Employee < ApplicationRecord
     e.manager = employee_info.manager.first
     e.name = "#{employee_info.givenName.first} #{employee_info.sn.first}"
     e.save
-    # try saving thumbnail as well
-    cache_employee_photo(employee_info)
-  end
-
-  # Given an Net::LDAP::Entry store the employee photo if available
-  # @param [Net::LDAP::Entry] employee_info
-  def self.cache_employee_photo(employee_info)
-    return unless employee_info.respond_to?(:thumbnailphoto)
-
-    image_path = Rails.root.join('app', 'assets', 'images', 'photos', "#{employee_info.cn.first}.jpg")
-    IO.write(image_path.to_s, employee_info.thumbnailphoto.first, mode: 'wb')
   end
 end

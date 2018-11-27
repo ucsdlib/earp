@@ -1,6 +1,7 @@
 <%= simple_form_for(@recognition) do |f| %>
   <%= f.association :employee,
               label_method: :display_name,
+              collection: Employee.order(:display_name),
               prompt: 'Select employee to recognize' %>
 
   <%= f.input :library_value,

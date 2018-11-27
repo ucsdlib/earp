@@ -35,7 +35,7 @@ module Ldap
       ldap_connection.search(
         filter: Ldap::Filters.employees,
         return_result: false,
-        attributes: %w[DisplayName CN mail manager givenName sn Thumbnailphoto]
+        attributes: %w[DisplayName CN mail manager givenName sn Thumbnailphoto whenChanged]
       ) do |employee|
         Employee.populate_from_ldap(employee)
       end

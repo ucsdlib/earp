@@ -52,6 +52,7 @@ RSpec.describe Ldap::Queries, type: :service do
       entry1['sn'] = ['Employee']
       entry1['mail'] = ['aemployee@ucsd.edu']
       entry1['manager'] = ['boss1@ucsd.edu']
+      entry1['whenChanged'] = ['20181130172427.0Z']
       entry2 = Net::LDAP::Entry.new('CN=zbestemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry2['cn'] = 'zbestemployee'
       entry2['displayName'] = ["Zbestemployee, The"]
@@ -59,6 +60,7 @@ RSpec.describe Ldap::Queries, type: :service do
       entry2['sn'] = ['Zbestemployee']
       entry2['mail'] = ['zbestemployee@ucsd.edu']
       entry2['manager'] = ['boss2@ucsd.edu']
+      entry2['whenChanged'] = ['20181130172427.0Z']
       mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
     end

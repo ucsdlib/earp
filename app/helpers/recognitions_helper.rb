@@ -14,5 +14,7 @@ module RecognitionsHelper
     Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
       http.request_head(uri.path).is_a?(Net::HTTPSuccess)
     end
+  rescue
+    false
   end
 end

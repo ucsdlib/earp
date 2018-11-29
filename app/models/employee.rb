@@ -26,7 +26,7 @@ class Employee < ApplicationRecord
     Rails.logger.tagged('employee', 'update') { Rails.logger.info "updating employee: #{employee.uid}" }
     employee.display_name = employee_info.displayname.first
     employee.email = employee_info.mail.first
-    employee.manager = manager_cn_from_dn(employee_info.manager.first)
+    employee.manager = manager_cn_from_dn(employee_info.manager.first) if employee_info.respond_to?(:manager)
     employee.name = employee_display_name(employee_info)
     employee.save
   end

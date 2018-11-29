@@ -14,6 +14,7 @@ AllCops:
     - 'Gemfile'
     - 'config.ru'
     - 'Rakefile'
+    - 'Capfile'
 
 Rails:
   Enabled: true
@@ -28,5 +29,5 @@ Metrics/LineLength:
   Max: 120
 
 Metrics/AbcSize:
-  Max: 17
+  Max: 18
 

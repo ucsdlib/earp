@@ -34,8 +34,11 @@ gem 'omniauth-shibboleth'
 # gem 'mini_magick', '~> 4.8'
 
 # Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-#
+gem 'capistrano', '~> 3.10.2'
+gem 'capistrano-bundler', '1.4.0'
+gem 'capistrano-rails', '~> 1.3.1'
+gem 'capistrano-rbenv', '~> 2.1.4'
+
 # Simple Form, Bootstrap and friends
 gem 'bootstrap', '~> 4.1.3'
 gem 'bootstrap-datepicker-rails'
@@ -46,6 +49,7 @@ gem 'simple_form'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'whenever', require: false
+gem 'listen', '>= 3.0.5', '< 3.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -63,7 +67,6 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
-  gem 'listen', '>= 3.0.5', '< 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'

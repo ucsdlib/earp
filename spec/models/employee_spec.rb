@@ -52,6 +52,19 @@ RSpec.describe Employee, type: :model do
     end
   end
 
+  describe '.update_status_for_all' do
+    let!(:active_employee1) { FactoryBot.create(:employee, active: true, display_name: 'active employee') }
+    let!(:active_employee2) { FactoryBot.create(:employee, active: true, display_name: 'active employee 2') }
+    let!(:employee_to_deactivate) { FactoryBot.create(:employee, active: true, display_name: 'inactive employee') }
+    it 'deactives employees who are no longer in ldap OU' do
+      active_employees = [active_employee1.uid, active_employee2.uid]
+      described_class.update_status_for_all(active_employees)
+
+      expect(described_class.active_employees.map(&:display_name)).to eq(['active employee', 'active employee 2'])
+    end
+
+  end
+
   describe '.populate_from_ldap' do
     let(:entry1) { Net::LDAP::Entry.new('CN=aemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU') }
     before do

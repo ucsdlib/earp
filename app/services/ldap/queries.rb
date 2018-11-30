@@ -30,17 +30,21 @@ module Ldap
     end
 
     # Query all currently active employees
-    # @return [Array] employee information to populate Employees table
+    # rubocop:disable Metrics/MethodLength
     def self.employees
+      current_employees = []
       ldap_connection.search(
         filter: Ldap::Filters.employees,
         return_result: false,
         attributes: %w[DisplayName CN mail manager givenName sn whenChanged]
       ) do |employee|
         Employee.populate_from_ldap(employee)
+        current_employees << employee.cn.first
       end
+      Employee.update_status_for_all(current_employees)
       validate_ldap_response
     end
+    # rubocop:enable Metrics/MethodLength
 
     # Given a UID/CN determine whether a user is a library staff member using #employees filter
     # @param uid [String] the user id to check. e.g. 'drseuss'

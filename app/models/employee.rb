@@ -7,6 +7,10 @@ class Employee < ApplicationRecord
 
   validates :uid, :email, :manager, :display_name, :name, presence: true
 
+  # custom scopes
+  scope :sort_by_name, -> { order(:display_name) }
+  scope :active_employees, -> { where(active: true).sort_by_name }
+
   # Given an Net::LDAP::Entry extract and populate an Employee record
   # using the cn/uid as the unique key
   # @param [Net::LDAP::Entry] employee_info

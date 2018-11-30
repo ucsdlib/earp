@@ -44,6 +44,14 @@ RSpec.describe Employee, type: :model do
     end
   end
 
+  describe '.active_employees' do
+    let!(:active_employee) { FactoryBot.create(:employee, active: true, display_name: 'active employee') }
+    let!(:inactive_employee) { FactoryBot.create(:employee, active: false, display_name: 'inactive employee') }
+    it 'only includes currently active employees' do
+      expect(described_class.active_employees.map(&:display_name)).to eq(['active employee'])
+    end
+  end
+
   describe '.populate_from_ldap' do
     let(:entry1) { Net::LDAP::Entry.new('CN=aemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU') }
     before do

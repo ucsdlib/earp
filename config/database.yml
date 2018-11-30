@@ -31,14 +31,18 @@ test:
 
 staging:
   <<: *default
+  <% if ENV['RAILS_ENV'].eql? 'staging' %>
   database: <%= Rails.application.credentials.database[:staging][:database] %>
   host: <%= Rails.application.credentials.database[:staging][:host] %>
   username: <%= Rails.application.credentials.database[:staging][:username] %>
   password: <%= Rails.application.credentials.database[:staging][:password] %>
+  <% end %>
 
 production:
   <<: *default
+  <% if ENV['RAILS_ENV'].eql? 'production' %>
   database: <%= Rails.application.credentials.database[:production][:database] %>
   host: <%= Rails.application.credentials.database[:production][:host] %>
   username: <%= Rails.application.credentials.database[:production][:username] %>
   password: <%= Rails.application.credentials.database[:production][:password] %>
+  <% end %>

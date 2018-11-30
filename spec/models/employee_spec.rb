@@ -58,7 +58,11 @@ RSpec.describe Employee, type: :model do
 
     it 'should handle updating Employee records', :aggregate_failures do
       expect(Employee.count).to be_zero
-      described_class.populate_from_ldap(entry1)
+      # ensure the updated_at date is prior to our record to update
+      travel_to Date.new(2018, 10, 02) do
+        described_class.populate_from_ldap(entry1)
+      end
+
       entry1['displayName'] = 'Batman'
       entry1['whenChanged'] = ['20181130172427.0Z'] # newer record simulation
       described_class.populate_from_ldap(entry1)

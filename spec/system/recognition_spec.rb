@@ -18,6 +18,16 @@ RSpec.describe 'interacting with recognitions', type: :system do
     expect(page).to have_current_path(recognitions_path)
   end
 
+  it 'does not display inactive employees in the select list' do
+    sign_in
+    FactoryBot.create(:employee, display_name: 'Lincoln, Abraham')
+    FactoryBot.create(:employee, active: false, display_name: 'Washington, George')
+    FactoryBot.create(:employee, display_name: 'Adams, John')
+    visit new_recognition_path
+    expect(page.find_field('recognition_employee_id').text).to eq "Select employee to recognize Adams, John Lincoln, Abraham"
+
+  end
+
   it 'sorts the employees by display name in the select list' do
     sign_in
     FactoryBot.create(:employee, display_name: 'Lincoln, Abraham')

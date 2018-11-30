@@ -41,4 +41,16 @@ class Employee < ApplicationRecord
 
     false
   end
+
+  # Takes a current listing of employees from the Ldap::Queries.employees query and compares it to the listing in the
+  # Employee database. If there are employees in database that are NOT in the ldap response, we need to mark them
+  # inactive under the assumption they no longer work for the library
+  # @param [Array] employees where each entry is the uid of a given employee
+  def self.update_status_for_all(employees)
+    (Employee.pluck(:uid) - employees).each do |employee_uid|
+      employee_to_deactivate = Employee.find_by(uid: employee_uid)
+      employee_to_deactivate.active = false
+      employee_to_deactivate.save
+    end
+  end
 end

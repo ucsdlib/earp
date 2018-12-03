@@ -1,4 +1,4 @@
-# set :output, "/path/to/my/cron_log.log"
+set :output, { error: "log/cron_error.log", standard: "log/cron_standard.log" }
 #
 # Update the Employee table
 every 1.day at: '3:00 am' do

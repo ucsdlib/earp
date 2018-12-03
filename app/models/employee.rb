@@ -23,6 +23,7 @@ class Employee < ApplicationRecord
 
   # Update a new, or existing, Employee with the employee info from LDAP
   def self.update_employee_from_ldap(employee, employee_info)
+    Rails.logger.tagged('employee', 'update') { Rails.logger.error "updating employee: #{employee.uid}" }
     employee.display_name = employee_info.displayname.first
     employee.email = employee_info.mail.first
     employee.manager = employee_info.manager.first
@@ -48,6 +49,7 @@ class Employee < ApplicationRecord
   # @param [Array] employees where each entry is the uid of a given employee
   def self.update_status_for_all(employees)
     (Employee.pluck(:uid) - employees).each do |employee_uid|
+      Rails.logger.tagged('employee', 'deactivate') { Rails.logger.error "deactivating employee: #{employee_uid}" }
       employee_to_deactivate = Employee.find_by(uid: employee_uid)
       employee_to_deactivate.active = false
       employee_to_deactivate.save

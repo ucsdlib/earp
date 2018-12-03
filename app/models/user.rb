@@ -21,7 +21,7 @@ class User < ApplicationRecord
       provider = access_token.provider
       name = access_token.info.name
     rescue StandardError => e
-      logger.warn "shibboleth: #{e}" && return
+      logger.tagged('shibboleth') { logger.error e } && return
     end
     User.find_by(uid: uid, provider: provider) ||
       User.create(uid: uid, provider: provider, email: email, full_name: name)

@@ -24,6 +24,7 @@ class Recognition < ApplicationRecord
 
   # Generate an OptOutLink for this Recognition
   def generate_link
+    logger.tagged('recognition') { logger.info "sending email for recognition #{id}" }
     generate_key(id)
     RecognitionMailer.email(Recognition.find(id)).deliver_now
   end

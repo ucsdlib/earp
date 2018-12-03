@@ -22,11 +22,16 @@ module Ldap
     # Used if an error is encountered for an ldap query. This could happen if LDAP is down, or a given user doesn't have
     # a manager in their record, etc.
     def self.validate_ldap_response
+      operation_result_code = ldap_connection.get_operation_result.code
+      return nil if operation_result_code.zero?
+
       msg = <<~MESSAGE
-        Response Code: #{ldap_connection.get_operation_result.code}
+        Response Code: #{Net::LDAP::ResultStrings[operation_result_code]}
         Message: #{ldap_connection.get_operation_result.message}
       MESSAGE
-      raise msg unless ldap_connection.get_operation_result.code.zero?
+
+      Rails.logger.tagged('ldap') { Rails.logger.error msg }
+      raise msg
     end
 
     # Query all currently active employees

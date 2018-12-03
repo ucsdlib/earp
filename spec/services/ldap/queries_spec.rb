@@ -76,7 +76,7 @@ RSpec.describe Ldap::Queries, type: :service do
       operation_result = OpenStruct.new(:code => 1, :message => 'Something terrible happened')
       allow(mock_ldap_connection).to receive(:get_operation_result).and_return(operation_result)
       expect{ described_class.validate_ldap_response }.to raise_error(RuntimeError).
-        with_message("Response Code: 1\nMessage: Something terrible happened\n")
+        with_message("Response Code: Operations Error\nMessage: Something terrible happened\n")
     end
 
     it 'returns nil with a zero exit code' do

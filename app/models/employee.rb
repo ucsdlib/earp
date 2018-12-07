@@ -23,12 +23,26 @@ class Employee < ApplicationRecord
 
   # Update a new, or existing, Employee with the employee info from LDAP
   def self.update_employee_from_ldap(employee, employee_info)
-    Rails.logger.tagged('employee', 'update') { Rails.logger.error "updating employee: #{employee.uid}" }
+    Rails.logger.tagged('employee', 'update') { Rails.logger.info "updating employee: #{employee.uid}" }
     employee.display_name = employee_info.displayname.first
     employee.email = employee_info.mail.first
-    employee.manager = employee_info.manager.first
-    employee.name = "#{employee_info.givenName.first} #{employee_info.sn.first}"
+    employee.manager = manager_cn_from_dn(employee_info.manager.first)
+    employee.name = employee_display_name(employee_info)
     employee.save
+  end
+
+  # Given an Net::LDAP::Entry extract and populate an Employee record
+  # using the cn/uid as the unique key
+  # @param [Net::LDAP::Entry] employee_info
+  def self.employee_display_name(employee_info)
+    "#{employee_info.givenName.first} #{employee_info.sn.first}"
+  end
+
+  # Extract the CN/UID for a manager from their full DN
+  # @param [String] manager_dn
+  # Example: CN=bigboss1,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU
+  def self.manager_cn_from_dn(manager_dn)
+    manager_dn.split(',').first.gsub('CN=', '')
   end
 
   # If an employee already exists in our local database,

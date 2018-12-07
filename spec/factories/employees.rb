@@ -4,7 +4,7 @@ FactoryBot.define do
     sequence(:email) { |n| "employee#{n}@ucsd.edu" }
     name { "MyString" }
     active { true }
-    sequence(:manager) { |n| "CN=employee#{n-1},OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU" }
+    sequence(:manager) { |n| "manager#{n}" }
     display_name { "MyString" }
   end
 end

@@ -16,9 +16,8 @@ class RecognitionMailer < ApplicationMailer
     @key = optout_obj ? optout_obj.key : Recognition.new.generate_key(id)
   end
 
-  def manager_email(manager_dn)
-    uid = manager_dn.split(',').first.gsub('CN=', '')
-    manager = Employee.find_by(uid: uid)
+  def manager_email(manager_uid)
+    manager = Employee.find_by(uid: manager_uid)
     return manager.email if manager
   end
 end

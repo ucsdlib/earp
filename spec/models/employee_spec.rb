@@ -24,7 +24,7 @@ RSpec.describe Employee, type: :model do
       entry['givenName'] = ['A']
       entry['sn'] = ['Employee']
       entry['mail'] = ['aemployee@ucsd.edu']
-      entry['manager'] = ['boss1@ucsd.edu']
+      entry['manager'] = ['CN=bigboss1,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU']
       entry['whenChanged'] = ['20181127172427.0Z']
     end
 
@@ -73,7 +73,7 @@ RSpec.describe Employee, type: :model do
       entry1['givenName'] = ['A']
       entry1['sn'] = ['Employee']
       entry1['mail'] = ['aemployee@ucsd.edu']
-      entry1['manager'] = ['boss1@ucsd.edu']
+      entry1['manager'] = ['CN=bigboss1,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU']
       entry1['whenChanged'] = ['20181127172427.0Z']
     end
 

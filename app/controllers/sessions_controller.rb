@@ -71,6 +71,8 @@ class SessionsController < ApplicationController
 
   def add_user_info(request)
     results = request.env['omniauth.auth']
+    return nil unless results
+
     results.info[:name] = request.env['FULL_NAME']
     results.info[:email] = request.env['LONG_EMAIL']
     results

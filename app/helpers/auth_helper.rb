@@ -16,7 +16,7 @@ module AuthHelper
   end
 
   def valid_administrator?
-    User.administrator?(current_user.id) || current_user.developer?
+    User.administrator?(current_user.uid) || current_user.developer?
   end
 
   # Determines when the currently authenticate user is allowed to Edit/Update/Destroy a given recognition

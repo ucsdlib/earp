@@ -29,8 +29,8 @@ module AuthHelper
   # Require that a current user is authenticated and an administrator
   def require_administrator
     store_location
-    redirect_to signin_path, notice: 'You need to sign in!' unless logged_in?
-    redirect_to root_url unless valid_administrator?
+    redirect_to signin_path, notice: 'You need to sign in!' && return unless logged_in?
+    redirect_to root_url && return unless valid_administrator?
   end
 
   # Stores the URL trying to be accessed.

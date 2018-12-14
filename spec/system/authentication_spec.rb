@@ -47,6 +47,7 @@ RSpec.describe 'authenticating', type: :system do
 
     it 'allows access for library staff' do
       mock_valid_library_employee
+      mock_non_library_administrator
       sign_in
       expect(page).to have_content('Sign out')
     end
@@ -59,6 +60,7 @@ RSpec.describe 'authenticating', type: :system do
 
     it 'redirects to root url on sign out' do
       mock_valid_library_employee
+      mock_non_library_administrator
       sign_in
       sign_out
       expect(page).to have_content('Sign in')

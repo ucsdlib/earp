@@ -2,8 +2,17 @@
   <strong>Welcome to High Five!</strong>
 </p>
 
+<% if current_user && (current_user.developer? || valid_administrator?) %>
+<p>
+<%= link_to 'Generate Statistics', statistics_path, class: "btn btn-outline-primary"%>
+</p>
+<% end %>
+
+<p>
 <% if logged_in? %>
 <%= link_to 'Sign out', signout_path, class: "btn btn-outline-secondary"%>
 <% else %>
 <%= link_to 'Sign in', signin_path, class: "btn btn-outline-secondary"%>
 <% end %>
+</p>
+

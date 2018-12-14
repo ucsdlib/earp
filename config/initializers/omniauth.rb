@@ -4,6 +4,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     :shib_application_id_field => "Shib-Application-ID",
     :uid_field                 => 'ADUSERNAME',
     :debug                     => false,
-    :info_fields               => {:email => 'EMAIL', :name => 'NAME'}
+    :info_fields               => {:email => 'LONG_EMAIL', :name => 'FULL_NAME'}
   }
 end

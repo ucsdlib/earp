@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
 
   def find_or_create_user(auth_type)
     find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
-    omniauth_results = add_user_info(request)
+    omniauth_results = request.env['omniauth.auth']
     user = User.send(find_or_create_method, omniauth_results)
 
     if valid_user?(auth_type, omniauth_results)
@@ -67,14 +67,5 @@ class SessionsController < ApplicationController
   def redirect_back_or(default)
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
-  end
-
-  def add_user_info(request)
-    results = request.env['omniauth.auth']
-    return nil unless results
-
-    results.info[:name] = request.env['FULL_NAME']
-    results.info[:email] = request.env['LONG_EMAIL']
-    results
   end
 end

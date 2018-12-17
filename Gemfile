@@ -36,7 +36,7 @@ gem 'omniauth-shibboleth'
 # Use Capistrano for deployment
 gem 'capistrano', '~> 3.11.0'
 gem 'capistrano-bundler', '1.4.0'
-gem 'capistrano-rails', '~> 1.3.1'
+gem 'capistrano-rails', '~> 1.4.0'
 gem 'capistrano-rbenv', '~> 2.1.4'
 
 # Simple Form, Bootstrap and friends

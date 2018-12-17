@@ -2,6 +2,10 @@
   <strong>Welcome to High Five!</strong>
 </p>
 
+<p>
+  <%= link_to 'View Recognitions', recognitions_path, class: "btn btn-outline-primary"%>
+</p>
+
 <% if current_user && (current_user.developer? || valid_administrator?) %>
 <p>
 <%= link_to 'Generate Statistics', statistics_path, class: "btn btn-outline-primary"%>

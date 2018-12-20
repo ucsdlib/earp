@@ -24,6 +24,15 @@ To edit secrets: `bin/rails credentials:edit`
 1. Install docker and docker-compose
 1. Run docker-compose file `docker-compose up`
 
+#### Employee Data
+To load employee data locally, after running the docker commands above to start
+up the local environment, you can run the `db:seed` rake command as follows:
+
+`docker-compose exec web rake db:seed`
+
+Note that you will need to either be on campus or using the VPN, as this
+accesses LDAP data from Active Directory.
+
 #### Testing
 1. Run tests with `docker-compose exec web` prefix for any RSpec command.
 

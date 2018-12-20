@@ -64,7 +64,7 @@ If you get odd errors about tmp or cached file permissions, particularly if you
 are testing both the development and production docker environments, you should
 try removing the cached files in the `./tmp` folder.
 
-`sudo rm -rf ./tmp`
+`sudo rm -rf ./tmp/cache`
 
 #### Debugging
 With docker-compose running, in a new terminal/tab attach to the container:

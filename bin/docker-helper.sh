@@ -34,7 +34,6 @@ while [ "$1" != "" ]; do
     shift
 done
 # support remove option
-echo $remove_containers_and_volumes
 if [ "$remove_containers_and_volumes" = "1" ]; then
   # clear out existing data
   docker-compose -f "${compose_env}docker-compose.yml" rm -v

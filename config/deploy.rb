@@ -4,6 +4,12 @@ set :repo_url, "git@github.com:ucsdlib/hifive.git"
 
 set :deploy_to, '/pub/hifive'
 
+# rails
+# rails migrations are related to the framework/app
+set :migration_role, :app
+# Skip migration if files in db/migrate were not modified
+set :conditionally_migrate, true
+
 # rbenv
 set :rbenv_type, :user
 set :rbenv_ruby, File.read('.ruby-version').strip

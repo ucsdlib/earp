@@ -3,7 +3,6 @@ set :application, "hifive"
 set :repo_url, "git@github.com:ucsdlib/hifive.git"
 
 set :deploy_to, '/pub/hifive'
-set :scm, :git
 
 # rbenv
 set :rbenv_type, :user

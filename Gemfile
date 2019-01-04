@@ -40,7 +40,7 @@ gem 'capistrano-rails', '~> 1.4.0'
 gem 'capistrano-rbenv', '~> 2.1.4'
 
 # Simple Form, Bootstrap and friends
-gem 'bootstrap', '~> 4.1.3'
+gem 'bootstrap', '~> 4.2.1'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'simple_form'

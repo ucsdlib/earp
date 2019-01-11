@@ -19,6 +19,6 @@ services:
     tty: true
 
   database:
-    image: postgres:10.5-alpine
+    image: postgres:10.6-alpine
     ports:
       - "5432:5432"

@@ -21,7 +21,11 @@ RSpec.describe RecognitionMailer do
   end
 
   it 'renders the receiver email' do
-    expect(email.to).to eql([employee.email, manager.email])
+    expect(email.to).to eql([employee.email, manager.email, user.email])
+  end
+
+  it 'sends the recognizer a copy of the email' do
+    expect(email.to).to include(user.email)
   end
 
   it 'renders the sender email' do

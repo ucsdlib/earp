@@ -5,10 +5,16 @@ class RecognitionMailer < ApplicationMailer
   def email(recognition)
     @recognition = recognition
     opt_out_key(recognition.id)
-    mail(to: "#{@recognition.employee.email},#{manager_email(@recognition.employee.manager)}",
+    mail(to: mail_to_group,
          from: Rails.application.credentials.email[:sender],
          bcc: Rails.application.credentials.email[:bcc],
          subject: 'You have been recognized!')
+  end
+
+  def mail_to_group
+    [@recognition.employee.email,
+     manager_email(@recognition.employee.manager),
+     @recognition.user.email].join(',')
   end
 
   def opt_out_key(id)

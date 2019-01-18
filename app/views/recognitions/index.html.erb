@@ -1,45 +1,24 @@
-<% if logged_in? %>
-<%= link_to 'Sign out', signout_path, class: "btn btn-outline-secondary"%>
-<% else %>
-<%= link_to 'Sign in', signin_path, class: "btn btn-outline-secondary"%>
-<% end %>
-<p id="notice"><%= notice %></p>
-
 <h1>Library Staff Recognitions</h1>
-
-<table class='table'>
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">Recognizee</th>
-      <th scope="col">Library value</th>
-      <th scope="col">Description</th>
-      <th scope="col">Anonymous</th>
-      <th scope="col">Recognizer</th>
-      <th scope="col" colspan="3">Actions</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @recognitions.each do |recognition| %>
-      <tr>
-        <td><%= recognition.employee.display_name %></td>
-        <td><%= LIBRARY_VALUES[ recognition.library_value ] %></td>
-        <td><%= recognition.description %></td>
-        <td><%= recognition.anonymous ? 'Anonymous' : 'No' %></td>
-        <td><%= recognition.user.full_name %></td>
-        <td><%= link_to 'Show', recognition %></td>
-        <% if can_administrate?(recognition) %>
-        <td><%= link_to 'Edit', edit_recognition_path(recognition) %></td>
-        <td><%= link_to 'Destroy', recognition, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% else %>
-        <td></td>
-        <td></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Recognition', new_recognition_path ,class: "btn btn-primary"%>
+<% @recognitions.each do |recognition| %>
+  <div class="le-fake-row shadow-sm">
+    <div class="le-fake-cell">
+      <p class="shrinky-dink"><b>To:</b> <%= recognition.employee.display_name %></p>
+      <p class="shrinky-dink"><b>From:</b> <%= recognition.anonymous ? 'Anonymous' : recognition.user.full_name.titlecase %></p>
+			<div class="push-in-a-little-bit">
+        <b><%= LIBRARY_VALUES[ recognition.library_value ] %></b><br>
+        <%= recognition.description.truncate(200, separator: '…') %>
+			</div>
+    </div>
+    <div class="le-fake-cell">
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group" role="group" aria-label="First group">
+          <%= link_to 'View', recognition, class: 'btn btn-outline-secondary btn-sm'%>
+          <% if can_administrate?(recognition) %>
+            <%= link_to 'Edit', edit_recognition_path(recognition), class: 'btn btn-outline-secondary btn-sm' %>
+            <%= link_to 'Delete', recognition, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-outline-secondary btn-sm' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

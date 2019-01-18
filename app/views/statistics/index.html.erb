@@ -1,14 +1,19 @@
-<div class="text-center"><h3>Recognition Statistics</h3></div>
-<br>
-<div class="center-block">
-<%= form_tag statistics_path, method: "GET", class: "navbar-form" do %>
-    <div class="input-daterange input-group" id="datepicker">
-      <input type="text" aria-label="Start Date" class="input-sm form-control" name="start_date" />
-      <span class="input-group-addon">to</span>
-      <input type="text" aria-label="End Date" class="input-sm form-control" name="end_date" />
-    </div>
-    <br>
-    <%= submit_tag "Submit", name: nil, class: "btn btn-primary" %>
-<% end %>
-</div>
+<h1>Recognition Statistics</h1>
 
+<p>Enter a date range and click the button to generate a downloadable report (CSV format).</p>
+
+<%= form_tag statistics_path, method: 'GET', class: 'input-daterange', id: 'datepicker' do %>
+
+  <div class="form-group">
+    <label for="start_date">From:</label>
+    <input type="text" aria-label="Start Date" class="form-control form-control-lg" name="start_date" id="start_date" placeholder="Start Date"/>
+  </div>
+
+  <div class="form-group">
+    <label for="start_date">To:</label>
+    <input type="text" aria-label="End Date" class="form-control form-control-lg" name="end_date" id="end_date" placeholder="End Date"/>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Generate Report</button>
+
+<% end %>

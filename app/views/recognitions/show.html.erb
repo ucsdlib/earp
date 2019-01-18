@@ -1,27 +1,22 @@
-<p>
-  <strong>Recognizee:</strong>
-  <%= @recognition.employee.display_name %>
-</p>
+<%
+	prettyDate = Date.parse(@recognition.created_at.to_s)
+%>
 
-<p>
-  <strong>Library value:</strong>
-  <%= LIBRARY_VALUES[@recognition.library_value] %>
-</p>
+<div id="hi5-award-wrapper">
+  <div id="hi5-award">
+    <div class="c1"><img src="https://library.ucsd.edu/assets/hi5/hi5.png"></div>
+    <div class="c2">A High Five of Appreciation</div>
+		<div class="c3">Is hereby presented to</div>
+    <div class="c4"><%= @recognition.employee.display_name[/\w+,\s+(\w+)/,1] %> <%= @recognition.employee.display_name[/(\w+),\s+\w+/,1] %></div>
+    <div class="c5">FOR <%= LIBRARY_VALUES[@recognition.library_value] %></div>
+    <div class="c6"><%= @recognition.description %></div>
+    <div class="c7"><%= prettyDate.strftime("Given on the #{prettyDate.day.ordinalize} day of %B %Y ") %></div>
+    <div class="c8">Signed <%= @recognition.anonymous ? 'Anonymous' : @recognition.user.full_name.titlecase %></div>
+  </div>
+</div>
 
-<p>
-  <strong>Description:</strong>
-  <%= @recognition.description %>
-</p>
-
-<p>
-  <strong>Anonymous:</strong>
-  <%= @recognition.anonymous %>
-</p>
-
-<p>
-  <strong>Recognizer:</strong>
-  <%= @recognition.user.full_name %>
-</p>
-
-<%= link_to 'Edit', edit_recognition_path(@recognition) %> |
-<%= link_to 'Back', recognitions_path %>
+<% if can_administrate?(@recognition) %>
+  <div class="lower-toolbar">
+      <%= link_to 'Edit Recognition', edit_recognition_path(@recognition), class: 'btn btn-outline-secondary btn-sm' %>
+  </div>
+<% end %>

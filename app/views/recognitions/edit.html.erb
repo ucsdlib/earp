@@ -1,6 +1,5 @@
-<h1>Editing Recognition</h1>
+<h1>Edit Recognition</h1>
+<p class="text-danger">You are about to edit an existing recognition. Are you sure this is something you want to do?</p>
+<hr>
 
-<%= render 'form', recognition: @recognition %>
-
-<%= link_to 'Show', @recognition, class: "btn btn-secondary" %>
-<%= link_to 'Back', recognitions_path, class: "btn btn-secondary" %>
+<%= render 'form-edit', recognition: @recognition %>

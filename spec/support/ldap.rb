@@ -1,6 +1,6 @@
 def mock_employee_query
-  FactoryBot.create(:employee, display_name: 'Joe Employee')
-  FactoryBot.create(:employee, display_name: 'Jane Employee')
+  FactoryBot.create(:employee, display_name: 'Employee, Joe')
+  FactoryBot.create(:employee, display_name: 'Employee, Jane')
 end
 
 # Mock out core ldap connection methods

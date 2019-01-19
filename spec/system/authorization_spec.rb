@@ -40,13 +40,13 @@ RSpec.describe 'enforcing authorization in recognitions', type: :system do
     it 'can see links to edit/delete all records', :aggregate_failures do
       visit recognitions_path
       expect(page).to have_link('Edit', count: 2)
-      expect(page).to have_link('Destroy', count: 2)
+      expect(page).to have_link('Delete', count: 2)
     end
 
     it 'can edit a recognition they did not create', :aggregate_failures do
       visit edit_recognition_path(recognition_for_different_user)
       fill_in('recognition_description', with: 'admin approved')
-      click_on('Update Recognition')
+      click_on('Edit the love')
       expect(page).to have_content('admin approved')
     end
 
@@ -54,9 +54,9 @@ RSpec.describe 'enforcing authorization in recognitions', type: :system do
       visit recognitions_path
 
       accept_confirm do
-        click_link('Destroy', href: recognition_path(recognition_for_different_user))
+        click_link('Delete', href: recognition_path(recognition_for_different_user))
       end
-      expect(page.find(:css, "#notice")).to have_content "Recognition was successfully destroyed."
+      expect(page.find(:css, "#flash_notice")).to have_content "Recognition was successfully destroyed."
     end
   end
 
@@ -79,8 +79,8 @@ RSpec.describe 'enforcing authorization in recognitions', type: :system do
       visit recognitions_path
       expect(page).to have_link('Edit', count: 1)
       expect(page).to have_link('Edit', href: edit_recognition_path(recognition_for_logged_in_user))
-      expect(page).to have_link('Destroy', count: 1)
-      expect(page).to have_link('Destroy', href: recognition_path(recognition_for_logged_in_user))
+      expect(page).to have_link('Delete', count: 1)
+      expect(page).to have_link('Delete', href: recognition_path(recognition_for_logged_in_user))
     end
 
     it 'cannot edit a recognition they did not create', :aggregate_failures do

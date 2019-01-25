@@ -13,6 +13,8 @@ class OptOutLink < ApplicationRecord
 
   # Will find and remove any OptOutLinks that have expired
   def self.audit_expired_links
+    Rails.logger.tagged('rake', 'optoutlink-expire') { Rails.logger.info 'Starting expired links audit' }
     where('DATE(expires) <= ?', Time.zone.today).delete_all
+    Rails.logger.tagged('rake', 'optoutlink-expire') { Rails.logger.info 'Finished expired links audit' }
   end
 end

@@ -25,9 +25,6 @@ class RecognitionsController < ApplicationController
   # GET /recognitions/1.json
   def show; end
 
-  # Homepage for app
-  def front; end
-
   # GET /recognitions/new
   def new
     @recognition = Recognition.new

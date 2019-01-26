@@ -1,7 +1,8 @@
 <%= simple_form_for(@recognition) do |f| %>
+
   <%= f.association :employee,
-                    label: 'The person you would like to recognize',
-                    error: 'Select an employee from the list',
+              label: 'The person you would like to recognize',
+              error: 'Select an employee from the list',
               label_method: :display_name,
               collection: Employee.active_employees,
               prompt: 'Select one…' %>
@@ -12,11 +13,18 @@
               prompt: 'Select one…',
               collection: library_values %>
 
-  <%= f.input :description, label: 'Some kind words about this person', error: 'You need to tell us why this person deserves recognition' %>
+  <%= f.input :description,
+              label: 'Some kind words about this person',
+              error: 'You need to tell us why this person deserves recognition' %>
 
   <%= f.input :anonymous,
               label: 'Please do not include my name with the post',
               hint: 'Your name will be shared with the person being recognized and their supervisor, but it will not be included in the post displayed on the LiSN home page'%>
 
-  <%= f.button :submit, 'Share the love', class: "btn-primary" %>
+	<% if defined?(form_mode) && form_mode == 'Edit' %>
+		<%= f.button :submit, 'Edit the love', class: "btn-danger" %>
+	<% else %>
+		<%= f.button :submit, 'Share the love', class: "btn-primary" %>
+	<% end %>
+
 <% end %>

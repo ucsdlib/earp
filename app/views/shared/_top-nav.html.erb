@@ -13,9 +13,11 @@
         <li class="nav-item">
           <%= link_to 'New', new_recognition_path, class: 'nav-link' %>
         </li>
-	      <li class="nav-item">
-	        <%= link_to 'Stats', statistics_path, class: 'nav-link' %>
-	      </li>
+        <% if can_administrate?(@recognition) %>
+		      <li class="nav-item">
+		        <%= link_to 'Stats', statistics_path, class: 'nav-link' %>
+		      </li>
+        <% end %>
       <% end %>
     </ul>
     <div class="form-inline my-2 my-lg-0">

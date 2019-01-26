@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   resources :recognitions
   resources :statistics
-#  root 'recognitions#front'
   root 'recognitions#index'
 
   # RSS feed

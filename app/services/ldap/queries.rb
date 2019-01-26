@@ -37,6 +37,7 @@ module Ldap
     # Query all currently active employees
     # rubocop:disable Metrics/MethodLength
     def self.employees
+      Rails.logger.tagged('rake', 'employees') { Rails.logger.info 'Starting LDAP Employee load..' }
       current_employees = []
       ldap_connection.search(
         filter: Ldap::Filters.employees,
@@ -48,6 +49,7 @@ module Ldap
       end
       Employee.update_status_for_all(current_employees)
       validate_ldap_response
+      Rails.logger.tagged('rake', 'employees') { Rails.logger.info 'Finished LDAP Employee load..' }
     end
     # rubocop:enable Metrics/MethodLength
 

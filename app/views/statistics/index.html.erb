@@ -1,27 +1,20 @@
 <h1>Recognition Statistics</h1>
 
-<% if can_administrate?(@recognition) %>
+<p>Enter a date range and click the button to generate a downloadable report (CSV format).</p>
 
-	<p>Enter a date range and click the button to generate a downloadable report (CSV format).</p>
+<%= form_tag statistics_path, method: 'GET', class: 'input-daterange', id: 'datepicker' do %>
 
-	<%= form_tag statistics_path, method: 'GET', class: 'input-daterange', id: 'datepicker' do %>
+  <div class="form-group">
+    <label for="start_date">From:</label>
+    <input type="text" aria-label="Start Date" data-provide="datepicker" class="form-control form-control-lg" name="start_date" id="start_date" placeholder="Start Date"/>
+  </div>
 
-	  <div class="form-group">
-	    <label for="start_date">From:</label>
-	    <input type="text" aria-label="Start Date" data-provide="datepicker" class="form-control form-control-lg" name="start_date" id="start_date" placeholder="Start Date"/>
-	  </div>
+  <div class="form-group">
+    <label for="end_date">To:</label>
+    <input type="text" aria-label="End Date" data-provide="datepicker" class="form-control form-control-lg" name="end_date" id="end_date" placeholder="End Date"/>
+  </div>
 
-	  <div class="form-group">
-	    <label for="end_date">To:</label>
-	    <input type="text" aria-label="End Date" data-provide="datepicker" class="form-control form-control-lg" name="end_date" id="end_date" placeholder="End Date"/>
-	  </div>
-
-	  <button type="submit" class="btn btn-primary">Generate Report</button>
-
-	<% end %>
-
-<% else %>
-
-	<p><em>You do not have permission to access this page.</em></p>
+  <button type="submit" class="btn btn-primary">Generate Report</button>
 
 <% end %>
+

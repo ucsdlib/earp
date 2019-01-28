@@ -62,7 +62,7 @@ class Employee < ApplicationRecord
   # inactive under the assumption they no longer work for the library
   # @param [Array] employees where each entry is the uid of a given employee
   def self.update_status_for_all(employees)
-    (Employee.pluck(:uid) - employees).each do |employee_uid|
+    (Employee.active_employees.pluck(:uid) - employees).each do |employee_uid|
       Rails.logger.tagged('employee', 'deactivate') { Rails.logger.error "deactivating employee: #{employee_uid}" }
       employee_to_deactivate = Employee.find_by(uid: employee_uid)
       employee_to_deactivate.active = false

@@ -2,7 +2,7 @@
 set :application, "hifive"
 set :repo_url, "https://github.com/ucsdlib/hifive.git"
 
-set :deploy_to, '/pub/hifive'
+set :deploy_to, '/pub/highfive'
 
 # rails
 # rails migrations are related to the framework/app

@@ -1,6 +1,6 @@
 # config valid for current version and patch releases of Capistrano
 set :application, "hifive"
-set :repo_url, "git@github.com:ucsdlib/hifive.git"
+set :repo_url, "https://github.com/ucsdlib/hifive.git"
 
 set :deploy_to, '/pub/hifive'
 

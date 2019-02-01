@@ -25,7 +25,7 @@ namespace :deploy do
       on roles(:web) do
         within release_path do
           with rails_env: fetch(:rails_env) do
-            execute :rake, 'RAILS_RELATIVE_URL_ROOT=/hifive assets:precompile'
+            execute :rake, 'assets:precompile'
           end
         end
       end

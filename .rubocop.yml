@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
     - 'bin/**/*'
+    - 'lib/capistrano/**/*'
     - 'db/**/*'
     - 'app/assets/**/*'
     - 'config/**/*'

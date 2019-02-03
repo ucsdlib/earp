@@ -1,5 +1,20 @@
 <%
 	prettyDate = Date.parse(@recognition.created_at.to_s)
+
+	prettyUser = @recognition.user.full_name
+	prettyEmployee = @recognition.employee.display_name
+
+	# Reformat "Lastname, Firstanme" to "Firstname Lastname"
+	if prettyUser.count(',') == 1
+		prettyUser = prettyUser.split(',', 2)
+		prettyUser = prettyUser[1] + ' ' + prettyUser[0]
+	end
+
+	# Reformat "Lastname, Firstanme" to "Firstname Lastname"
+	if prettyEmployee.count(',') == 1
+		prettyEmployee = prettyEmployee.split(',', 2)
+		prettyEmployee = prettyEmployee[1] + ' ' + prettyEmployee[0]
+	end
 %>
 
 <div id="hi5-award-wrapper">
@@ -7,11 +22,11 @@
     <div class="c1"><img src="https://library.ucsd.edu/assets/hi5/hi5.png" alt=""></div>
     <div class="c2">A High Five of Appreciation</div>
 		<div class="c3">Is hereby presented to</div>
-    <div class="c4"><%= @recognition.employee.display_name[/\w+,\s+(\w+)/,1] %> <%= @recognition.employee.display_name[/(\w+),\s+\w+/,1] %></div>
+    <div class="c4"><%= prettyEmployee %></div>
     <div class="c5">FOR <%= LIBRARY_VALUES[@recognition.library_value] %></div>
     <div class="c6"><%= @recognition.description %></div>
     <div class="c7"><%= prettyDate.strftime("Given on the #{prettyDate.day.ordinalize} day of %B %Y ") %></div>
-    <div class="c8">Signed <%= @recognition.anonymous ? 'Anonymous' : @recognition.user.full_name.titlecase %></div>
+    <div class="c8">Signed <%= @recognition.anonymous ? 'Anonymous' : prettyUser.titlecase %></div>
   </div>
 </div>
 

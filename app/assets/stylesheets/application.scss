@@ -34,26 +34,16 @@ footer{margin-top:3em;padding:1em;border-top: 1px solid #007bff;text-align:cente
 //---
 
 #hi5-award-wrapper{border:10px solid #00448B;background:white;padding:5px;margin: 1rem 0 2rem 0;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08);}
-#hi5-award
-{
-  border:5px solid #0059B6;
-  text-align:center;
-  padding:2em;
-  background: #f2f9fe; /* Old browsers */
-  background: -moz-linear-gradient(top, #f2f9fe 0%, #d6f0fd 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #f2f9fe 0%,#d6f0fd 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #f2f9fe 0%,#d6f0fd 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f9fe', endColorstr='#d6f0fd',GradientType=0 ); /* IE6-9 */
-}
+#hi5-award{border:5px solid #0059B6;text-align:center;padding:2em;background: #f2f9fe;background: linear-gradient(to bottom, #f2f9fe 0%,#d6f0fd 100%);}
 #hi5-award div{margin:0.5rem 0;}
 #hi5-award .c1 img{width:64px;height:auto;}
-#hi5-award .c2{font-size:1.75em;color:#2C8CF0;font-weight:400;font-family: 'Roboto Slab', serif;}
-#hi5-award .c3{font-size:1em;font-weight:normal;text-transform: uppercase;color:gray;}
-#hi5-award .c4{font-size:2.85em;font-weight:700;color:#2C8CF0;font-family: 'Roboto Slab', serif;margin:1rem 0 1.5rem 0;}
-#hi5-award .c5{font-size:1.25em;text-transform: uppercase;font-weight:bold;}
-#hi5-award .c6{font-size:1em;text-transform: none;font-family: 'Roboto Slab', serif;font-weight:300;margin:1rem 0;}
-#hi5-award .c7{font-size:1em;text-transform: uppercase;color:gray;font-family: 'Roboto Slab', serif;font-weight:400;}
-#hi5-award .c8{font-size:1.5em;color:gray;font-family: 'Satisfy', cursive;}
+#hi5-award .c2{font-family:'Roboto Slab',serif;font-size:1.75em;color:#2C8CF0;font-weight:400;}
+#hi5-award .c3{font-size:1em;color:#7F93A7;text-transform:uppercase;font-weight:normal;}
+#hi5-award .c4{font-family:'Roboto Slab',serif;font-size:2.85em;text-transform: uppercase;font-weight:700;color:#2C8CF0;margin:1rem 0 1.5rem 0;}
+#hi5-award .c5{font-size:1.25em;text-transform:uppercase;font-weight:bold;}
+#hi5-award .c6{font-family:'Roboto Slab',serif;font-size:1em;text-transform: none;font-weight:300;margin:1rem 0;}
+#hi5-award .c7{font-family:'Roboto Slab',serif;font-size:1.25em;color:#7F93A7;text-transform:uppercase;font-weight:400;}
+#hi5-award .c8{font-family:'Roboto Slab',serif;font-size:1.1em;color:#7F93A7;text-transform:uppercase;font-weight:100;}
 .lower-toolbar{text-align:center !important;}
 
 //---

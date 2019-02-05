@@ -16,6 +16,18 @@ RSpec.describe RecognitionMailer do
     mock_email_credential
   end
 
+  it 'pretty prints the name of the user' do
+    user.full_name = 'Developer, The'
+    recognition = FactoryBot.build_stubbed(:recognition,
+                                            user: user,
+                                            created_at: Time.parse('2018-10-01'),
+                                            description: 'in report',
+                                            employee: employee)
+    email_name_test = RecognitionMailer.email(recognition)
+
+    expect(email_name_test.body.encoded).to match('The Developer')
+  end
+
   it 'renders the subject' do
     expect(email.subject).to eql("You have been recognized!")
   end

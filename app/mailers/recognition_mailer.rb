@@ -2,6 +2,8 @@
 
 # Sends a recognition email
 class RecognitionMailer < ApplicationMailer
+  helper :recognitions
+
   def email(recognition)
     @recognition = recognition
     opt_out_key(recognition.id)

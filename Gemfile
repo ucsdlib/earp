@@ -58,6 +58,8 @@ group :development, :test do
   gem 'capybara'
   gem 'coveralls'
   gem 'factory_bot_rails'
+  gem 'pry-rails'
+  gem 'pry-doc'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rspec'

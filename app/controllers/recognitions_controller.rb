@@ -76,8 +76,7 @@ class RecognitionsController < ApplicationController
   end
 
   # GET /recognitions/logout
-  def logout
-  end
+  def logout; end
 
   private
 

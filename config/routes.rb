@@ -17,5 +17,8 @@ Rails.application.routes.draw do
   match "/signout" => "sessions#destroy", as: :signout, via: [:get, :post]
   match "/auth/failure", to: 'sessions#failure', as: :failed_signin, via: [:get, :post]
 
+  # Log out
+  get 'logout', to: 'recognitions#logout', as: :logout
+  
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end

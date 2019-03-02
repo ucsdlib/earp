@@ -33,10 +33,12 @@ RSpec.describe 'authenticating', type: :system do
       expect(page).to have_content('Sign out')
     end
 
-    it 'redirects to root url on sign out' do
+    it 'redirects to logout url on sign out' do
       sign_in
       sign_out
-      expect(page).to have_content('Library Staff Recognitions')
+      expect(page).to have_current_path(logout_path)
+      expect(page).to have_content('You have been logged out of this application.')
+      expect(page).to have_content('Sign in')
     end
   end
 
@@ -58,12 +60,14 @@ RSpec.describe 'authenticating', type: :system do
       expect(page).to have_content('Forbidden')
     end
 
-    it 'redirects to root url on sign out' do
+    it 'redirects to logout url on sign out' do
       mock_valid_library_employee
       mock_non_library_administrator
       sign_in
       sign_out
-      expect(page).to have_content('Library Staff Recognitions')
+      expect(page).to have_current_path(logout_path)
+      expect(page).to have_content('You have been logged out of this application.')
+      expect(page).to have_content('Sign in')
     end
   end
 end

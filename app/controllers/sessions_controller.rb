@@ -40,8 +40,8 @@ class SessionsController < ApplicationController
     destroy_user_session
 
     # rubocop:disable Metrics/LineLength
-    redirect_to root_url,
-                notice: 'You have been logged out of this applicaton. To logout of all Single Sign-On applications, close your browser'
+    redirect_to logout_url,
+                notice: 'You have been logged out of this application. To logout of all Single Sign-On applications, close your browser'
     # rubocop:enable Metrics/LineLength
   end
 

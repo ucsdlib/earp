@@ -75,6 +75,10 @@ class RecognitionsController < ApplicationController
     end
   end
 
+  # GET /recognitions/logout
+  def logout
+  end
+
   private
 
   # Ensure the current user is allowed to edit/update/delete the current recognition

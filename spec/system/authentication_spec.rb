@@ -37,7 +37,7 @@ RSpec.describe 'authenticating', type: :system do
       sign_in
       sign_out
       expect(page).to have_current_path(logout_path)
-      expect(page).to have_content('You have been logged out of this application.')
+      expect(page).to have_content('You have been logged out of High Five!')
       expect(page).to have_content('Sign in')
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe 'authenticating', type: :system do
       sign_in
       sign_out
       expect(page).to have_current_path(logout_path)
-      expect(page).to have_content('You have been logged out of this application.')
+      expect(page).to have_content('You have been logged out of High Five!')
       expect(page).to have_content('Sign in')
     end
   end

@@ -41,7 +41,7 @@ class SessionsController < ApplicationController
 
     # rubocop:disable Metrics/LineLength
     redirect_to logout_url,
-                notice: 'You have been logged out of High Five!. To logout of all Single Sign-On applications, close your browser'
+                notice: 'You have been logged out of High Five! To log out of all Single Sign-On applications, close your browser.'
     # rubocop:enable Metrics/LineLength
   end
 

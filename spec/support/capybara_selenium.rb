@@ -4,36 +4,29 @@ require 'selenium-webdriver'
 
 Capybara.server = :puma, { Silent: true }
 
-Capybara.register_driver :chrome_headless do |app|
-  options = ::Selenium::WebDriver::Chrome::Options.new
-
-  options.add_argument('--headless')
-  options.add_argument('--no-sandbox')
-  options.add_argument('--disable-dev-shm-usage')
-  options.add_argument('--window-size=1400,1400')
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
-end
-
-if ENV["CIRCLECI"] == true
-  Capybara.javascript_driver = :selenium_chrome_headless
-else
-  Capybara.javascript_driver = :chrome_headless
-end
-
-Capybara.javascript_driver = :chrome_headless
-
-Capybara.default_max_wait_time = 5
-
 RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :rack_test
   end
   config.before(:each, type: :system, js: true) do
-  if ENV["CIRCLECI"] == true
-    driven_by :selenium_chrome_headless
-  else
-    driven_by :chrome_headless
-  end
+    if ENV["SELENIUM_URL"].present?
+      # Capybara setup to allow for docker
+      net = Socket.ip_address_list.detect(&:ipv4_private?)
+      ip = net.nil? ? 'localhost' : net.ip_address
+
+      # Get the application container's IP
+      host! "http://#{ip}:#{Capybara.server_port}"
+
+      # make test app listen to outside requests (selenium container)
+      Capybara.server_host = '0.0.0.0'
+
+      driven_by :selenium,
+                using: :chrome,
+                options: { browser: :remote,
+                           url: ENV["SELENIUM_URL"],
+                           desired_capabilities: :chrome, }
+    else
+      driven_by :selenium_chrome_headless
+    end
   end
 end

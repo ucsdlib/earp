@@ -40,7 +40,7 @@ if [ "$remove_containers_and_volumes" = "1" ]; then
 fi
 
 if [ "$run_tests" = "1" ]; then
-  docker-compose -f "${compose_env}docker-compose.yml" exec web bundle exec rspec
+  docker-compose -f "./docker/test/docker-compose.yml" build && docker-compose -f "./docker/test/docker-compose.yml" up
 elif [ "$seed_database" = "1" ]; then
   docker-compose -f "${compose_env}docker-compose.yml" exec web bundle exec rake db:seed
 else

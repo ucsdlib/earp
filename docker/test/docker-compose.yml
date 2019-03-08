@@ -1,0 +1,32 @@
+version: '3.6'
+
+services:
+  web:
+    build:
+      context: ../../.
+      dockerfile: Dockerfile.development
+    ports:
+      - "3000:3000"
+    working_dir: /app
+    command: sh -c 'bundle exec rake db:test:prepare && bundle exec rspec'
+    volumes:
+      - ../../.:/app
+    depends_on:
+      - database
+    environment:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres@database
+      SELENIUM_URL: http://browser:4444/wd/hub/
+    stdin_open: true
+    tty: true
+
+  database:
+    image: postgres:10.6-alpine
+    ports:
+      - "5433:5432"
+
+  browser:
+    image: selenium/standalone-chrome:latest
+    ports:
+      - "4444:4444"
+

@@ -1,4 +1,4 @@
-FROM ruby:2.6.1-alpine as builder
+FROM ruby:2.6.2-alpine as builder
 
 RUN apk --no-cache upgrade && \
   apk add --no-cache \
@@ -14,7 +14,7 @@ WORKDIR /build-src
 COPY Gemfile* ./
 RUN bundle install --jobs 4 --retry 2
 
-FROM ruby:2.6.1-alpine
+FROM ruby:2.6.2-alpine
 
 RUN apk --no-cache upgrade && \
   apk add --no-cache \

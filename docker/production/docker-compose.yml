@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 
 services:
   web:
@@ -11,6 +11,7 @@ services:
     entrypoint: sh -c 'bin/rails db:create db:migrate && bundle exec puma'
     volumes:
       - ../../.:/app
+      - bundle_cache:/usr/local/bundle
     depends_on:
       - database
     environment:
@@ -22,3 +23,6 @@ services:
     image: postgres:11-alpine
     ports:
       - "5432:5432"
+
+  volumes:
+    bundle_cache:

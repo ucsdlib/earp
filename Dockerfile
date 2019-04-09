@@ -12,7 +12,8 @@ RUN apk --no-cache upgrade && \
 RUN mkdir -p /build-src
 WORKDIR /build-src
 COPY Gemfile* ./
-RUN bundle install --jobs 4 --retry 2
+RUN gem update bundler
+RUN bundle check || bundle install --jobs "$(nproc)" --retry 2
 
 FROM ruby:2.6.2-alpine
 

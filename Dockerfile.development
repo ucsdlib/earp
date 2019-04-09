@@ -16,5 +16,5 @@ RUN mkdir -p /home/theodor/app
 WORKDIR /home/theodor/app
 COPY --chown=theodor:theodor Gemfile* ./
 RUN gem update bundler
-RUN bundle install --jobs 4 --retry 3
+RUN bundle check || bundle install --jobs "$(nproc)" --retry 2
 COPY --chown=theodor:theodor . /home/theodor/app/

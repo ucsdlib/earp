@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.7'
 
 services:
   web:
@@ -11,6 +11,7 @@ services:
     command: sh -c 'bundle exec rake db:test:prepare && bundle exec rspec'
     volumes:
       - ../../.:/app
+      - bundle_cache:/usr/local/bundle
     depends_on:
       - database
     environment:
@@ -30,3 +31,5 @@ services:
     ports:
       - "4444:4444"
 
+volumes:
+  bundle_cache:

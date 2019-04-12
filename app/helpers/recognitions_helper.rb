@@ -2,6 +2,8 @@
 
 # RecognitionsHelper
 module RecognitionsHelper
+  include Pagy::Frontend
+
   def library_values
     # helper for form needs to be [label, value]
     LIBRARY_VALUES.to_a.map { |entry| [entry[1], entry[0]] }

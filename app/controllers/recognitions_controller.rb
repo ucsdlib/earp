@@ -2,6 +2,8 @@
 
 # RecognitionsController
 class RecognitionsController < ApplicationController
+  include Pagy::Backend
+
   helper RecognitionsHelper
   before_action :require_user, only: %i[show index new edit create update destroy]
   before_action :set_recognition, only: %i[show edit update destroy]
@@ -10,7 +12,11 @@ class RecognitionsController < ApplicationController
   # GET /recognitions
   # GET /recognitions.json
   def index
-    @recognitions = valid_administrator? ? Recognition.all_recognitions : Recognition.public_recognitions
+    @pagy, @recognitions = if valid_administrator?
+                             pagy(Recognition.all_recognitions)
+                           else
+                             pagy(Recognition.public_recognitions)
+                           end
   end
 
   # GET /feed.rss

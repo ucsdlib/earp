@@ -26,6 +26,10 @@ To edit secrets: `bin/rails credentials:edit`
     - Run `./bin/docker-helper.sh -h` to see all options
 
 #### Employee Data
+
+> Note: To load the seed data, your local machine must have the `shuf` command
+> Install on Mac OS by: brew install coreutils
+
 To load employee data locally, after running the docker commands above to start
 up the local environment, you can run the `db:seed` rake command as follows:
 

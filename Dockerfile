@@ -1,20 +1,3 @@
-FROM ruby:2.6.2-alpine as builder
-
-RUN apk --no-cache upgrade && \
-  apk add --no-cache \
-  build-base \
-  postgresql \
-  postgresql-dev \
-  nodejs \
-  nodejs-npm \
-  tzdata
-
-RUN mkdir -p /build-src
-WORKDIR /build-src
-COPY Gemfile* ./
-RUN gem update bundler
-RUN bundle check || bundle install --jobs "$(nproc)" --retry 2
-
 FROM ruby:2.6.2-alpine
 
 RUN apk --no-cache upgrade && \
@@ -30,7 +13,9 @@ USER theodor
 
 RUN mkdir -p /home/theodor/app
 WORKDIR /home/theodor/app
-COPY --from=builder /usr/local/bundle /usr/local/bundle
+COPY --chown=theodor:theodor Gemfile* /home/theodor/app/
+RUN gem update bundler
+RUN bundle check || bundle install --jobs "$(nproc)" --retry 2
 COPY --chown=theodor:theodor . /home/theodor/app/
 
 ENV RAILS_ENV production

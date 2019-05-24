@@ -37,6 +37,7 @@ done
 if [ "$remove_containers_and_volumes" = "1" ]; then
   # clear out existing data
   docker-compose -f "${compose_env}docker-compose.yml" rm -v
+  exit
 fi
 
 if [ "$run_tests" = "1" ]; then

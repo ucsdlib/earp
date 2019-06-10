@@ -19,3 +19,5 @@ COPY --chown=theodor:theodor Gemfile* ./
 RUN gem update bundler
 RUN bundle check || bundle install --jobs "$(nproc)" --retry 2
 COPY --chown=theodor:theodor . /home/theodor/app/
+
+ENTRYPOINT ["/bin/sh", "/home/theodor/app/docker/docker-entrypoint.sh"]

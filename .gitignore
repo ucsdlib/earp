@@ -35,5 +35,7 @@
 # Ignore untar'd dictionary
 /vendor/dictionary
 
+# Personal project/IDE files
 .project
 .DS_STORE
+vimrc.local

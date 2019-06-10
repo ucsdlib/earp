@@ -6,9 +6,9 @@ services:
       context: ../../.
       dockerfile: Dockerfile.development
     ports:
-      - "3000:3000"
+      - "3001:3001"
     working_dir: /app
-    command: sh -c 'bundle exec rake db:test:prepare && bundle exec rspec'
+    command: sh -c 'bundle exec puma'
     volumes:
       - ../../.:/app
     depends_on:

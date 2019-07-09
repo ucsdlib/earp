@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'enforcing authorization in recognitions', type: :system do
   before do
     mock_valid_library_employee
-    omniauth_setup_shibboleth
+    omniauth_setup_azureactivedirectory
     mock_email_credential
   end
 
@@ -18,7 +18,7 @@ RSpec.describe 'enforcing authorization in recognitions', type: :system do
                                                 description: 'employee2 is great',
                                                 employee: employee2) }
   let(:employee2) { FactoryBot.create(:employee) }
-  # note omniauth_test is the uid set in omniauth_setup_shibboleth
+  # note omniauth_test is the uid set in omniauth_setup_azureactivedirectory
   # we need these to match for testing the 'logged in user'
   let(:logged_in_user) { FactoryBot.create(:user, uid: 'omniauth_test' ) }
 

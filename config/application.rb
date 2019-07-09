@@ -31,6 +31,6 @@ module Hifive
     config.generators.system_tests = nil
 
     # Only production (staging eventually)
-    config.shibboleth = false
+    config.azureactivedirectory = false
   end
 end

@@ -4,6 +4,6 @@ FactoryBot.define do
     sequence(:email) { |n| "user#{n}@ucsd.edu" }
     sequence(:uid) { |n| "user#{n}" }
     full_name { 'Jane Triton' }
-    provider { 'shibboleth' }
+    provider { 'azureactivedirectory' }
   end
 end

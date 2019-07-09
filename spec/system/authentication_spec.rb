@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'authenticating', type: :system do
-  context 'as a user with no shibboleth credentials' do
+  context 'as a user with no azureactivedirectory credentials' do
     before do
       mock_valid_library_employee
-      omniauth_setup_shibboleth
-      OmniAuth.config.mock_auth[:shibboleth] = :invalid_credentials
+      omniauth_setup_azureactivedirectory
+      OmniAuth.config.mock_auth[:azureactivedirectory] = :invalid_credentials
       OmniAuth.config.on_failure = Proc.new { |env|
         OmniAuth::FailureEndpoint.new(env).redirect_to_failure
       }
@@ -25,7 +25,7 @@ RSpec.describe 'authenticating', type: :system do
     end
 
     after(:all) do
-      Rails.configuration.shibboleth = true
+      Rails.configuration.azureactivedirectory = true
     end
 
     it 'enforces authentication' do
@@ -42,9 +42,9 @@ RSpec.describe 'authenticating', type: :system do
     end
   end
 
-  context 'as a regular user with shibboleth' do
+  context 'as a regular user with azureactivedirectory' do
     before do
-      omniauth_setup_shibboleth
+      omniauth_setup_azureactivedirectory
     end
 
     it 'allows access for library staff' do

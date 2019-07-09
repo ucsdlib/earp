@@ -7,23 +7,23 @@ def sign_out
 end
 
 def omniauth_setup_developer
-  Rails.configuration.shibboleth = false
+  Rails.configuration.azureactivedirectory = false
   OmniAuth.config.test_mode = true
-  OmniAuth.config.mock_auth[:shibboleth] = OmniAuth::AuthHash.new({
+  OmniAuth.config.mock_auth[:azureactivedirectory] = OmniAuth::AuthHash.new({
     provider: 'developer',
     uid: '1',
     info: { 'email' => 'developer@ucsd.edu', 'name' => 'developer' }
   })
-  Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:shibboleth]
+  Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:azureactivedirectory]
 end
 
-def omniauth_setup_shibboleth
-  Rails.configuration.shibboleth = true
+def omniauth_setup_azureactivedirectory
+  Rails.configuration.azureactivedirectory = true
   OmniAuth.config.test_mode = true
-  OmniAuth.config.mock_auth[:shibboleth] = OmniAuth::AuthHash.new({
-    provider: 'shibboleth',
+  OmniAuth.config.mock_auth[:azureactivedirectory] = OmniAuth::AuthHash.new({
+    provider: 'azureactivedirectory',
     uid: 'omniauth_test',
     info: { 'email' => 'test@ucsd.edu', 'name' => 'Dr. Seuss' }
   })
-  Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:shibboleth]
+  Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:azureactivedirectory]
 end

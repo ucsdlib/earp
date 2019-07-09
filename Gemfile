@@ -26,6 +26,7 @@ gem 'jbuilder', '~> 2.9'
 # gem 'redis', '~> 4.0'
 gem 'net-ldap', '~> 0.16.1'
 gem 'omniauth'
+gem 'omniauth-azure-activedirectory'
 gem 'omniauth-shibboleth'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

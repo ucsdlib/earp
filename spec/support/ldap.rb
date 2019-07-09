@@ -17,7 +17,7 @@ def mock_ldap_validation
 end
 
 def mock_valid_library_employee
-  # omniauth_test from #omniauth_setup_shibboleth
+  # omniauth_test from #omniauth_setup_azureactivedirectory
   allow(Ldap::Queries).to receive(:library_staff).and_return('omniauth_test')
 end
 

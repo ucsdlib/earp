@@ -12,16 +12,16 @@ class User < ApplicationRecord
       User.create(uid: 1, provider: 'developer', email: 'developer@ucsd.edu', full_name: 'developer')
   end
 
-  # Finds or creates a shibboleth account
+  # Finds or creates a azureactivedirectory account
   # @param access_token [OmniAuth::AuthHash]
-  def self.find_or_create_for_shibboleth(access_token)
+  def self.find_or_create_for_azureactivedirectory(access_token)
     begin
       uid = access_token.uid
       email = access_token.info.email || "#{uid}@ucsd.edu"
       provider = access_token.provider
       name = access_token.info.name
     rescue StandardError => e
-      logger.tagged('shibboleth') { logger.error e } && return
+      logger.tagged('azureactivedirectory') { logger.error e } && return
     end
     User.find_by(uid: uid, provider: provider) ||
       User.create(uid: uid, provider: provider, email: email, full_name: name)

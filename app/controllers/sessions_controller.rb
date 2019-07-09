@@ -3,8 +3,8 @@
 # SessionsController
 class SessionsController < ApplicationController
   def new
-    if Rails.configuration.shibboleth
-      redirect_to shibboleth_path
+    if Rails.configuration.azureactivedirectory
+      redirect_to azureactivedirectory_path
     else
       redirect_to developer_path
     end
@@ -14,8 +14,8 @@ class SessionsController < ApplicationController
     find_or_create_user('developer')
   end
 
-  def shibboleth
-    find_or_create_user('shibboleth')
+  def azureactivedirectory
+    find_or_create_user('azureactivedirectory')
   end
 
   def failure
@@ -50,7 +50,7 @@ class SessionsController < ApplicationController
   def valid_user?(auth_type, omniauth_results)
     return true if auth_type.eql? 'developer'
 
-    auth_type == 'shibboleth' && User.library_staff?(omniauth_results.uid)
+    auth_type == 'azureactivedirectory' && User.library_staff?(omniauth_results.uid)
   end
 
   def create_user_session(user)

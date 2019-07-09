@@ -1,9 +1,5 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :shibboleth, {
-    :shib_session_id_field     => "Shib-Session-ID",
-    :shib_application_id_field => "Shib-Application-ID",
-    :uid_field                 => 'ADUSERNAME',
-    :debug                     => false,
-    :info_fields               => {:email => 'LONG_EMAIL', :name => 'FULL_NAME'}
-  }
+  provider :azure_activedirectory,
+    Rails.credentials.dig(:azure_ad, :client),
+    Rails.credentials.dig(:azure_ad, :tenant)
 end

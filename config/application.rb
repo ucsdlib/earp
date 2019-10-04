@@ -30,6 +30,14 @@ module Hifive
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    # Default to supporting RAILS_LOG_TO_STDOUT
+    config.log_formatter = ::Logger::Formatter.new
+    if ENV["RAILS_LOG_TO_STDOUT"].present?
+      logger           = ActiveSupport::Logger.new(STDOUT)
+      logger.formatter = config.log_formatter
+      config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    end
+
     # Only production (staging eventually)
     config.shibboleth = false
   end

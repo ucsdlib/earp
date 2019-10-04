@@ -1,20 +1,25 @@
 version: '3.7'
 
+volumes:
+  bundles:
+  database:
+
 services:
   web:
     build:
-      context: ../../.
-      dockerfile: Dockerfile.development
+      context: .
+      target: development
     ports:
-      - "3001:3001"
-    working_dir: /app
-    command: sh -c 'bundle exec puma'
+      - "3000:3000"
+    working_dir: /home/highfive/app
+    user: "${UID}:${GID}"
     volumes:
-      - ../../.:/app
+      - .:/home/highfive/app
+      - bundles:/home/highfive/bundle
     depends_on:
+      - browser
       - database
     environment:
-      RAILS_ENV: test
       DATABASE_URL: postgres://postgres@database
       SELENIUM_URL: http://browser:4444/wd/hub/
     stdin_open: true
@@ -22,8 +27,10 @@ services:
 
   database:
     image: postgres:11-alpine
+    volumes:
+      - database:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5432:5432"
 
   browser:
     image: selenium/standalone-chrome:latest

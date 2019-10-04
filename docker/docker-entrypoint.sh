@@ -2,7 +2,7 @@
 set -e
 
 # Remove a potentially pre-existing server.pid for Rails.
-rm -f /home/theodor/app/tmp/pids/server.pid
+rm -f /home/highfive/app/tmp/pids/server.pid
 
 # Extract DB host and port
 if [ -z ${DATABASE_URL+x} ]; then

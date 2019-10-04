@@ -22,8 +22,8 @@ To edit secrets: `bin/rails credentials:edit`
 
 ### Docker
 1. Install docker and docker-compose
-1. To spin up your environment, run `./bin/docker-helper.sh`
-    - Run `./bin/docker-helper.sh -h` to see all options
+1. To spin up your environment, run `make up UID=${UID} GID=${GID}`
+    - Run `make menu` to see all options
 
 #### Employee Data
 
@@ -33,33 +33,27 @@ To edit secrets: `bin/rails credentials:edit`
 To load employee data locally, after running the docker commands above to start
 up the local environment, you can run the `db:seed` rake command as follows:
 
-You can use the helper script:
+You can use the Makefile:
 
-Development:
-
-`./bin/docker-helper.sh -s`
-
-Production:
-
-`./bin/docker-helper.sh -p -s`
+`make seed UID=${UID} GID=${GID}`
 
 Or you can invoke directly (development example):
 
-`docker-compose -f docker/development/docker-compose.yml exec web rake db:seed`
+`docker-compose exec web rake db:seed`
 
 Note that you will need to either be on campus or using the VPN, as this
 accesses LDAP data from Active Directory.
 
 #### Testing
-1. For full test suite, run `./bin/docker-helper.sh -t`
-1. Run individual tests with `docker-compose -f docker/development/docker-compose.yml exec web` prefix for any RSpec command.
+1. For full test suite, run `make test UID=${UID} GID=${GID}`
+1. Run individual tests with `docker-compose exec web` prefix for any RSpec command.
 
 Examples:
 ```
-docker-compose -f docker/development/docker-compose.yml exec web bin/rails spec
-docker-compose -f docker/development/docker-compose.yml exec web bundle exec rake spec
-docker-compose -f docker/development/docker-compose.yml exec web bundle exec rake spec/models/user.rb
-docker-compose -f docker/development/docker-compose.yml exec web bundle exec rake spec/models/user.rb:50
+docker-compose exec web bin/rails spec
+docker-compose exec web bundle exec rake spec
+docker-compose exec web bundle exec rake spec/models/user.rb
+docker-compose exec web bundle exec rake spec/models/user.rb:50
 ...
 ```
 

@@ -22,7 +22,7 @@ To edit secrets: `bin/rails credentials:edit`
 
 ### Docker
 1. Install docker and docker-compose
-1. To spin up your environment, run `make up UID=${UID} GID=${GID}`
+1. To spin up your environment, run `make up`
     - Run `make menu` to see all options
 
 #### Employee Data
@@ -35,7 +35,7 @@ up the local environment, you can run the `db:seed` rake command as follows:
 
 You can use the Makefile:
 
-`make seed UID=${UID} GID=${GID}`
+`make seed`
 
 Or you can invoke directly (development example):
 
@@ -45,7 +45,7 @@ Note that you will need to either be on campus or using the VPN, as this
 accesses LDAP data from Active Directory.
 
 #### Testing
-1. For full test suite, run `make test UID=${UID} GID=${GID}`
+1. For full test suite, run `make test`
 1. Run individual tests with `docker-compose exec web` prefix for any RSpec command.
 
 Examples:

@@ -1,5 +1,9 @@
 # Makefile for common High Five! development tasks
 
+# capture the user's UID and GID for files written in mounted docker volumes
+export GID = $(shell id -g)
+export UID = $(shell id -u)
+
 menu:
 	@echo 'build: Run docker-compose build for the current ENV (development, production)'
 	@echo 'clean: Run docker-compose down -v for the current ENV (development, production)'
@@ -9,21 +13,21 @@ menu:
 
 build:
 	@echo 'Building docker-compose environment'
-	@UID=${UID} GID=${GID} docker-compose build
+	@docker-compose build
 
 clean:
 	@echo 'Cleaning out docker-compose environment'
-	@UID=${UID} GID=${GID} docker-compose down -v
+	@docker-compose down -v
 
 seed:
 	@echo 'Seeding database with sample data'
-	@UID=${UID} GID=${GID} docker-compose exec web bundle exec rake db:seed
+	@docker-compose exec web bundle exec rake db:seed
 
 test:
 	@echo 'Running full test suite'
-	@UID=${UID} GID=${GID} docker-compose exec -e RAILS_ENV=test web bundle exec rake db:create db:schema:load
-	@UID=${UID} GID=${GID} docker-compose exec -e RAILS_ENV=test web bundle exec rake spec
+	@docker-compose exec -e RAILS_ENV=test web bundle exec rake db:create db:schema:load
+	@docker-compose exec -e RAILS_ENV=test web bundle exec rake spec
 
 up:
 	@echo 'Bringing up docker-compose environment'
-	@UID=${UID} GID=${GID} docker-compose up
+	@docker-compose up

@@ -2,6 +2,10 @@ ARG RUBY_VERSION=2.6.5
 
 FROM ruby:$RUBY_VERSION-alpine as development
 
+# Developer host machine UID/GID
+ARG UID
+ARG GID
+
 RUN apk --no-cache upgrade && \
   apk add --no-cache \
   build-base \
@@ -12,8 +16,8 @@ RUN apk --no-cache upgrade && \
   tzdata \
   && rm -rf /var/cache/apk/*
 
-RUN addgroup -S highfive && \
-    adduser -S highfive -G highfive
+RUN addgroup -g $GID -S highfive && \
+    adduser -u $UID -S highfive -G highfive
 USER highfive
 
 WORKDIR /home/highfive/app

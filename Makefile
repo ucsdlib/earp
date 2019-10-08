@@ -1,9 +1,5 @@
 # Makefile for common High Five! development tasks
 
-# capture the user's UID and GID for files written in mounted docker volumes
-export GID = $(shell id -g)
-export UID = $(shell id -u)
-
 menu:
 	@echo 'build: Run docker-compose build for the current ENV (development, production)'
 	@echo 'clean: Run docker-compose down -v for the current ENV (development, production)'

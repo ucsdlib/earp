@@ -9,14 +9,11 @@ services:
     build:
       context: .
       target: development
-      args:
-        UID: ${UID}
-        GID: ${GID}
     ports:
       - "3000:3000"
-    working_dir: /home/highfive/app
+    working_dir: /app
     volumes:
-      - .:/home/highfive/app
+      - .:/app
       - bundles:/home/highfive/bundle
     depends_on:
       - browser

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Recognition, type: :model do
-  let!(:email) { mock_email_credential }
   let!(:manager) { FactoryBot.create(:employee) }
 
   context 'invalid recognition' do

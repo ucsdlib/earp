@@ -12,13 +12,12 @@ To view emails submitted in a development context, you can navigate to:
 ```
 http://localhost:3000/letter_opener
 ```
-### Secrets
-This app is using Rails 5.2+ encrypted secrets, stored in
-`config/credentials.yml.enc`. In order to access them, you'll need to set the
-master key in `config/master.key`, stored in LastPass currently (final location
-TBD)
 
-To edit secrets: `bin/rails credentials:edit`
+### Environment Variables
+This app is using ENV-driven configuration options through
+[dotenv](https://github.com/bkeepers/dotenv) for non-production environments.
+
+To override environment variables set by `.env`, create a `.env.local` file: <https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use>.  We recommend adding the private variables into the `.env.local` file to avoid the risk of accidentally committing an updated file that contains the password.
 
 ### Docker
 1. Install docker and docker-compose
@@ -42,7 +41,7 @@ Or you can invoke directly (development example):
 `docker-compose exec web rake db:seed`
 
 Note that you will need to either be on campus or using the VPN, as this
-accesses LDAP data from Active Directory.
+accesses LDAP data from Active Directory. You will also need LDAP account info to load the seed data.  This info can be found in LastPass. You can put the following LDAP variables  `APPS_H5_LDAP_HOST, APPS_H5_LDAP_PORT, APPS_H5_LDAP_BASE, APPS_H5_LDAP_USERNAME, APPS_H5_LDAP_PW, APPS_H5_LDAP_GROUP` into `.env.local` file. 
 
 #### Testing
 1. For full test suite, run `make test`

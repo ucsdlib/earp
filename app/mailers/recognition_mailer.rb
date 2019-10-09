@@ -8,8 +8,8 @@ class RecognitionMailer < ApplicationMailer
     @recognition = recognition
     opt_out_key(recognition.id)
     mail(to: mail_to_group,
-         from: Rails.application.credentials.email[:sender],
-         bcc: Rails.application.credentials.email[:bcc],
+         from: ENV.fetch('APPS_H5_SENDER'),
+         bcc: ENV.fetch('APPS_H5_BCC'),
          subject: 'You have been recognized!')
   end
 

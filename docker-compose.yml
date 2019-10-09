@@ -14,7 +14,7 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-      - bundles:/home/highfive/bundle
+      - bundles:/bundle
     depends_on:
       - browser
       - database

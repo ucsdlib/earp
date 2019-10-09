@@ -12,9 +12,6 @@ RSpec.describe RecognitionMailer do
   let(:employee) { FactoryBot.create(:employee, manager: manager.uid) }
   let(:user) { FactoryBot.build_stubbed(:user) }
   let(:email) {RecognitionMailer.email(recognition)}
-  before do
-    mock_email_credential
-  end
 
   it 'pretty prints the name of the user' do
     user.full_name = 'Developer, The'

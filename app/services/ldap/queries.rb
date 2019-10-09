@@ -3,21 +3,21 @@
 module Ldap
   # A set of Ldap queries needed for the application
   class Queries
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def self.ldap_connection
       @ldap_connection ||= Net::LDAP.new(
-        host: Rails.application.credentials.ldap[:host],
-        port: Rails.application.credentials.ldap[:port],
-        base: Rails.application.credentials.ldap[:base],
+        host: ENV.fetch('APPS_H5_LDAP_HOST'),
+        port: ENV.fetch('APPS_H5_LDAP_PORT'),
+        base: ENV.fetch('APPS_H5_LDAP_BASE'),
         encryption: { method: :simple_tls },
         auth: {
           method: :simple,
-          username: Rails.application.credentials.ldap[:username],
-          password: Rails.application.credentials.ldap[:password]
+          username: ENV.fetch('APPS_H5_LDAP_USERNAME'),
+          password: ENV.fetch('APPS_H5_LDAP_PW')
         }
       )
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     # Used if an error is encountered for an ldap query. This could happen if LDAP is down, or a given user doesn't have
     # a manager in their record, etc.

@@ -39,3 +39,7 @@
 .project
 .DS_STORE
 vimrc.local
+
+# Ignore local environment variable file
+.env.local
+

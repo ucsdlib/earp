@@ -24,7 +24,7 @@ module Ldap
     # @param uid [String] the user id to check. e.g. 'drseuss'
     # @return [NET::LDAP::Filter] for employees query
     def self.hifive_admin(uid)
-      library_staff_member(uid) & Net::LDAP::Filter.eq('memberof', Rails.application.credentials.ldap[:group])
+      library_staff_member(uid) & Net::LDAP::Filter.eq('memberof', ENV.fetch('APPS_H5_LDAP_GROUP'))
     end
   end
 end

@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe Ldap::Queries, type: :service do
   describe '.library_staff' do
     before do
-      fake_credentials = { group: 'memberof=CN=lib-test' }
-      allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
       entry1 = Net::LDAP::Entry.new('CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry1['cn'] = 'drseuss'
       entry2 = Net::LDAP::Entry.new('CN=nonadmin,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
@@ -24,8 +22,6 @@ RSpec.describe Ldap::Queries, type: :service do
 
   describe '.hifive_group' do
     before do
-      fake_credentials = { group: 'memberof=CN=lib-test' }
-      allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
       entry1 = Net::LDAP::Entry.new('CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry1['cn'] = 'drseuss'
       entry2 = Net::LDAP::Entry.new('CN=nonadmin,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')

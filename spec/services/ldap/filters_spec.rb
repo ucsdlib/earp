@@ -9,8 +9,6 @@ RSpec.describe Ldap::Filters, type: :service do
 
   describe '.hifive_admin' do
     it 'returns an LDAP filter to check admin membership' do
-      fake_credentials = { group: 'memberof=CN=lib-test' }
-      allow(Rails.application.credentials).to receive(:ldap).and_return(fake_credentials)
       expect(described_class.hifive_admin('drseuss').to_s).to eq('(&(&(CN=drseuss)(&(&(&(EmployeeID=*)(ObjectCategory=person))(ObjectClass=user))(!(sAMAccountName=lib-*))))(memberof=memberof=CN=lib-test))')
     end
   end

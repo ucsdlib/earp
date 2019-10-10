@@ -10,10 +10,12 @@ RUN apk --no-cache upgrade && \
   nodejs \
   nodejs-npm \
   tzdata \
+  vim \
   && rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
+ENV EDITOR=vim
 ENV RAILS_ENV=development
 ENV RACK_ENV=development
 ENV RAILS_LOG_TO_STDOUT=true

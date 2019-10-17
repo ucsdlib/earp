@@ -88,9 +88,9 @@ class RecognitionsController < ApplicationController
 
   # Ensure the current user is allowed to edit/update/delete the current recognition
   def authorize_editor
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Metrics/LineLength, Style/IfUnlessModifier
     redirect_to @recognition, notice: 'You are only allowed to modify your own recognitions' unless can_administrate?(@recognition)
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Metrics/LineLength, Style/IfUnlessModifier
   end
 
   # Use callbacks to share common setup or constraints between actions.

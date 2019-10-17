@@ -57,7 +57,7 @@ group :development, :test do
   gem "simplecov", require: false
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara'
-  gem 'coveralls'
+  gem 'coveralls', '~> 0.8'
   gem 'factory_bot_rails'
   gem 'pry-rails'
   gem 'pry-doc'

@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hifive.fullname" . }}
+  labels:
+{{ include "hifive.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "hifive.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      role: application
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "hifive.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        role: application
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ template "hifive.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: "APPS_H5_BCC"
+              value: {{ .Values.email.bcc }}
+            - name: "APPS_H5_DELIVERY_METHOD"
+              value: {{ .Values.email.delivery_method }}
+            - name: "APPS_H5_EMAIL_HOST"
+              value: {{ .Values.email.host }}
+            - name: "APPS_H5_SENDER"
+              value: {{ .Values.email.sender }}
+            - name: "APPS_H5_LDAP_BASE"
+              value: {{ .Values.ldap.base }}
+            - name: "APPS_H5_LDAP_GROUP"
+              value: {{ .Values.ldap.group }}
+            - name: "APPS_H5_LDAP_HOST"
+              value: {{ .Values.ldap.host }}
+            - name: "APPS_H5_LDAP_PORT"
+              value: {{ .Values.ldap.port | quote }}
+            - name: "APPS_H5_LDAP_PW"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "hifive.fullname" . }}
+                  key: ldap-password
+            - name: "APPS_H5_LDAP_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "hifive.fullname" . }}
+                  key: ldap-username
+            - name: "APPS_H5_DB_NAME"
+              value: {{ .Values.global.postgresql.postgresqlDatabase }}
+            - name: "APPS_H5_DB_HOST"
+              value: {{ printf "%s-postgresql" .Release.Name }}
+            - name: "APPS_H5_DB_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "hifive.fullname" . }}
+                  key: db-username
+            - name: "APPS_H5_DB_PW"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "hifive.fullname" . }}
+                  key: db-password
+            - name: "APPS_H5_EMAIL_SMTP_HOST"
+              value: {{ template "hifive.fullname" . }}-email
+            - name: "APPS_H5_EMAIL_SMTP_PORT"
+              value: {{ .Values.email.smtp_port | quote }}
+            - name: "DATABASE_COMMAND"
+              value: {{ .Values.databaseCommand }}
+            - name: "GOOGLE_AUTH_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "hifive.fullname" . }}
+                  key: google-client-id
+            - name: "GOOGLE_AUTH_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "hifive.fullname" . }}
+                  key: google-client-secret
+            - name: "RAILS_ENV"
+              value: "production"
+            - name: "RAILS_LOG_TO_STDOUT"
+              value: "true"
+            - name: "RAILS_SERVE_STATIC_FILES"
+              value: "true"
+            - name: "SECRET_KEY_BASE"
+              value: {{ randAlphaNum 20 | b64enc }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

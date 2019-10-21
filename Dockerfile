@@ -62,6 +62,8 @@ ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
 ENV BUNDLE_BIN=$BUNDLE_PATH/bin
 ENV PATH=/app/bin:$BUNDLE_BIN:$PATH
 ENV SECRET_KEY_BASE=something
+ENV APPS_H5_DELIVERY_METHOD=letter_opener
+ENV APPS_H5_EMAIL_HOST=localhost:3000
 
 COPY --from=development /bundle /bundle
 COPY --from=development /app ./

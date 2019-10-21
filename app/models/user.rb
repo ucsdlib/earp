@@ -12,19 +12,33 @@ class User < ApplicationRecord
       User.create(uid: 1, provider: 'developer', email: 'developer@ucsd.edu', full_name: 'developer')
   end
 
-  # Finds or creates a shibboleth account
+  # Finds or creates a google oauth2 account
   # @param access_token [OmniAuth::AuthHash]
-  def self.find_or_create_for_shibboleth(access_token)
+  def self.find_or_create_for_google_oauth2(access_token)
     begin
-      uid = access_token.uid
       email = access_token.info.email || "#{uid}@ucsd.edu"
+      uid = employee_uid(email, access_token.uid)
       provider = access_token.provider
       name = access_token.info.name
     rescue StandardError => e
-      logger.tagged('shibboleth') { logger.error e } && return
+      logger.tagged('google_oauth2') { logger.error e } && return
     end
-    User.find_by(uid: uid, provider: provider) ||
+    User.find_by(uid: uid) ||
       User.create(uid: uid, provider: provider, email: email, full_name: name)
+  end
+
+  def self.employee_uid(user_email, uid)
+    uid unless numeric?(uid)
+    employee = Employee.find_by("lower(email) = '#{user_email.to_s.downcase}'")
+    return employee.uid.downcase if employee
+
+    uid
+  end
+
+  def self.numeric?(uid)
+    true if Integer(uid)
+  rescue StandardError
+    false
   end
 
   def self.administrator?(uid)

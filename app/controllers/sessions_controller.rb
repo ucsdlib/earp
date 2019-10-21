@@ -3,8 +3,8 @@
 # SessionsController
 class SessionsController < ApplicationController
   def new
-    if Rails.configuration.shibboleth
-      redirect_to shibboleth_path
+    if Rails.configuration.google_oauth2
+      redirect_to google_oauth2_path
     else
       redirect_to developer_path
     end
@@ -14,8 +14,8 @@ class SessionsController < ApplicationController
     find_or_create_user('developer')
   end
 
-  def shibboleth
-    find_or_create_user('shibboleth')
+  def google_oauth2
+    find_or_create_user('google_oauth2')
   end
 
   def failure
@@ -50,7 +50,8 @@ class SessionsController < ApplicationController
   def valid_user?(auth_type, omniauth_results)
     return true if auth_type.eql? 'developer'
 
-    auth_type == 'shibboleth' && User.library_staff?(omniauth_results.uid)
+    uid = User.employee_uid(omniauth_results.info.email, omniauth_results.uid)
+    auth_type == 'google_oauth2' && User.library_staff?(uid)
   end
 
   def create_user_session(user)

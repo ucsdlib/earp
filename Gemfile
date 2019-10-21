@@ -26,7 +26,7 @@ gem 'jbuilder', '~> 2.9'
 # gem 'redis', '~> 4.0'
 gem 'net-ldap', '~> 0.16.1'
 gem 'omniauth'
-gem 'omniauth-shibboleth'
+gem 'omniauth-google-oauth2'
 gem 'okcomputer'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -1,9 +1,3 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :shibboleth, {
-    :shib_session_id_field     => "Shib-Session-ID",
-    :shib_application_id_field => "Shib-Application-ID",
-    :uid_field                 => 'ADUSERNAME',
-    :debug                     => false,
-    :info_fields               => {:email => 'LONG_EMAIL', :name => 'FULL_NAME'}
-  }
+  provider :google_oauth2, ENV.fetch("GOOGLE_AUTH_ID"), ENV.fetch("GOOGLE_AUTH_SECRET")
 end

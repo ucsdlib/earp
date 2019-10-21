@@ -1,0 +1,93 @@
+# https://rancher.com/docs/rancher/v2.x/en/catalog/custom/creating/#question-variable-reference
+questions:
+- variable: service.type
+  default: "ClusterIP"
+  description: "Service type; see https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types"
+  label: Service Type
+  type: enum
+  group: "Services and Load Balancing"
+  options:
+    - "ClusterIP"
+    - "NodePort"
+  required: true
+- variable: ingress.enabled
+  default: true
+  description: "Expose app using Layer 7 Load Balancer - ingress"
+  type: boolean
+  label: Expose app using Layer 7 Load Balancer
+  show_subquestion_if: true
+  group: "Services and Load Balancing"
+  subquestions:
+  - variable: ingress.hosts[0].host
+    default: highfive.local
+    description: "Hostname for the High Five! installation"
+    type: hostname
+    required: true
+    label: Hostname
+  - variable: ingress.hosts[0].paths[0]
+    default: /
+    description: "Ingress host path for the High Five! installation"
+    type: string
+    required: true
+    label: Path
+- variable: email.host
+  type: string
+  group: "Email"
+  default: highfive.local
+  label: "Email hostname URL (should match ingress hostname)"
+  description: "Email hostname URL (should match ingress hostname)"
+- variable: email.sender
+  type: string
+  group: "Email"
+  label: "SMTP From Address"
+  description: "Email address for sending messages to users"
+- variable: email.bcc
+  type: string
+  group: "Email"
+  label: "BCC Users"
+  description: "Comma-separated list of users to blind carbon copy"
+- variable: auth.google_client_id
+  type: string
+  label: "Google Client ID"
+  description: "OAuth Client ID for google authentication"
+  group: "Authentication"
+- variable: auth.google_client_secret
+  type: password
+  label: "Google Client Secret"
+  description: "OAuth Client Secret for google authentication"
+  group: "Authentication"
+- variable: ldap.username
+  type: string
+  label: "LDAP username"
+  description: "LDAP username to use for ldap queries"
+  group: "LDAP"
+- variable: ldap.password
+  type: password
+  label: "LDAP password"
+  description: "LDAP password to use for ldap queries"
+  group: "LDAP"
+- variable: databaseCommand
+  type: string
+  label: "Rake database migration command(s) to run"
+  description: "Rake database migration command(s) to run"
+  default: db:create db:migrate
+  group: "Database"
+- variable: postgresql.postgresqlUsername
+  type: string
+  label: "Database username"
+  description: "PostgreSQL database username"
+  default: hifive
+  group: "Database"
+- variable: postgresql.postgresqlPassword
+  type: password
+  default: hifivepass
+  label: "Database password"
+  description: "PostgreSQL database password"
+  group: "Database"
+- variable: postgresql.postgresqlDatabase
+  type: string
+  default: hifive-production
+  label: "Database name"
+  description: "PostgreSQL database name"
+  group: "Database"
+

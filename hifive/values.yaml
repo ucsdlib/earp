@@ -1,0 +1,123 @@
+# Default values for hifive.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: ucsdlib/hifive
+  name: hifive
+  tag: stable
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+databaseCommand: db:create db:migrate
+
+# Dedicated container with postfix to support app email
+emailContainer:
+  repository: boky/postfix
+  name: postfix
+  tag: latest
+  pullPolicy: IfNotPresent
+  sender_domain: ucsd.edu
+  hostname: email
+
+ldap:
+  base: OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU
+  group: CN=lib-earp-ro,OU=Application Groups,OU=Groups,OU=University Library,DC=AD,DC=UCSD,DC=EDU
+  host: ldap.ad.ucsd.edu
+  port: 636
+  password: ldappass
+  username: ldapuser
+
+auth:
+  google_client_id: client
+  google_client_secret: secret
+
+email:
+  bcc: people@ucsd.edu
+  delivery_method: smtp
+  host: highfive-in-the-cloud.ucsd.edu
+  sender: sender@ucsd.edu
+  smtp_port: 587
+
+# Persistent volume claims for application
+pvc:
+  email:
+    size: 256Mi
+    class: ""
+
+global:
+  postgresql:
+    postgresqlUsername: hifive
+    postgresqlPassword: hifivepass
+    postgresqlDatabase: hifive-production
+    servicePort: 5432
+
+postgresql:
+  imageTag: "11.5.0"
+  memory: 1Gi
+  cpu: 1000m
+  persistence:
+    size: 10Gi
+
+rbac:
+  # Specifies whether RBAC resources should be created
+  create: true
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name:
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
+
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

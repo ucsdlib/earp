@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "hifive.fullname" . }}-email
+  labels:
+{{ include "hifive.labels" . | indent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.email.smtp_port }}
+      targetPort: email
+      protocol: TCP
+      name: email
+  selector:
+    app.kubernetes.io/name: {{ include "hifive.name" . }}-email
+    app.kubernetes.io/instance: {{ .Release.Name }}-email
+    role: email

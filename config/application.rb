@@ -42,6 +42,10 @@ module Hifive
     config.action_mailer.delivery_method = ENV.fetch('APPS_H5_DELIVERY_METHOD').to_sym
     config.action_mailer.default_url_options = { host: ENV.fetch('APPS_H5_EMAIL_HOST') }
 
+    if ENV['APPS_H5_EMAIL_SMTP_HOST'].present? && ENV['APPS_H5_EMAIL_SMTP_PORT'].present?
+      config.action_mailer.smtp_settings = { address: ENV.fetch('APPS_H5_EMAIL_SMTP_HOST'),
+                                             port: ENV.fetch('APPS_H5_EMAIL_SMTP_PORT') }
+    end
     # Only production (staging eventually)
     config.shibboleth = false
   end

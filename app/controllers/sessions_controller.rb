@@ -22,9 +22,11 @@ class SessionsController < ApplicationController
     render file: Rails.root.join('public', '403'), formats: [:html], status: 403, layout: false
   end
 
+  # rubocop:disable Metrics/MethodLength
   def find_or_create_user(auth_type)
     find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
     omniauth_results = request.env['omniauth.auth']
+    Rails.logger.info "Shibboleth Auth Results: #{omniauth_results}"
     user = User.send(find_or_create_method, omniauth_results)
 
     if valid_user?(auth_type, omniauth_results)
@@ -35,6 +37,7 @@ class SessionsController < ApplicationController
       render file: Rails.root.join('public', '403'), formats: [:html], status: 403, layout: false
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def destroy
     destroy_user_session

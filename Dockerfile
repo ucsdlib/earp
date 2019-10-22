@@ -6,6 +6,7 @@ RUN apk --no-cache upgrade && \
   apk add --no-cache \
   build-base \
   less \
+  postfix \
   postgresql-dev \
   nodejs \
   nodejs-npm \
@@ -43,6 +44,7 @@ FROM ruby:$RUBY_VERSION-alpine as production
 
 RUN apk --no-cache upgrade && \
   apk add --no-cache \
+  postfix \
   postgresql-dev \
   nodejs \
   tzdata \

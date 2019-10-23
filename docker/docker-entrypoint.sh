@@ -25,6 +25,11 @@ else
   done
 
   bundle exec rake db:create db:schema:load
+
+  if [ ! "$RAILS_ENV" = "test" ]; then
+    # populate LDAP employee data
+    bundle exec rake nightly:employees
+  fi
 fi
 
 # Then exec the container's main process

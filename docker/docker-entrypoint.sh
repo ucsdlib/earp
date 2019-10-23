@@ -8,11 +8,17 @@ rm -f /home/highfive/app/tmp/pids/server.pid
 postfix start
 
 # Extract DB host and port
-if [ -z ${DATABASE_URL+x} ]; then
-  echo "DATABASE_URL is not supplied, skipping database setup";
-else
+if [ "${DATABASE_URL}" ]; then
   db_host=$(echo "$DATABASE_URL" | cut -d "@" -f2 | cut -d "/" -f1 | cut -d ":" -f1)
   db_port=$(echo "$DATABASE_URL" | cut -d "@" -f2 | cut -d "/" -f1 | cut -d ":" -f2)
+elif [ "${APPS_H5_PROD_HOST}" ]; then
+  db_host="$APPS_H5_PROD_HOST"
+  db_port=5432
+fi
+
+if [ -z "${db_host}" ]; then
+  echo "No database host information found; skipping database setup"
+else
   # if port wasn't specified, use default PG port
   if [ "$db_port" = "$db_host" ]; then
     db_port=5432

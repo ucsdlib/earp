@@ -6,6 +6,7 @@ jobs:
       - image: circleci/ruby:2.6.5-node-browsers
       - image: circleci/postgres:11-alpine
     environment:
+      APPS_H5_DB_HOST: localhost
       RAILS_ENV: test
     steps:
       - checkout

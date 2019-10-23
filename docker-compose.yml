@@ -11,6 +11,9 @@ services:
       target: development
     ports:
       - "3000:3000"
+    environment:
+      APPS_H5_DB_HOST: database
+      SELENIUM_URL: http://browser:4444/wd/hub/
     working_dir: /app
     volumes:
       - .:/app
@@ -18,9 +21,6 @@ services:
     depends_on:
       - browser
       - database
-    environment:
-      DATABASE_URL: postgres://postgres@database
-      SELENIUM_URL: http://browser:4444/wd/hub/
     stdin_open: true
     tty: true
 

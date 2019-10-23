@@ -1,49 +1,25 @@
-# PostgreSQL. Versions 9.1 and up are supported.
-#
-# Install the pg driver:
-#   gem install pg
-# On OS X with Homebrew:
-#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
-# On OS X with MacPorts:
-#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
-# On Windows:
-#   gem install pg
-#       Choose the win32 build.
-#       Install PostgreSQL and put its /bin directory on your path.
-# On Linux: it is presumed you are smart enough to figure this out on your own.
-#
-# Configure Using Gemfile
-# gem 'pg'
-#
+# Note: the application assumes one is always using PostgreSQL and supplying the environment variables defined below.
+# The password field is optional, since it is not required for dev/test using the PG docker image
+
 default: &default
   adapter: postgresql
   encoding: unicode
+  database: <%= ENV.fetch("APPS_H5_DB_NAME") %>
+  host: <%= ENV.fetch("APPS_H5_DB_HOST") %>
+  username: <%= ENV.fetch("APPS_H5_DB_USER") %>
+  <% if ENV["APPS_H5_DB_PW"].present? %>
+  password: <%= ENV.fetch("APPS_H5_DB_PW") %>
+  <% end %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
-  url: <%= ENV.fetch("DATABASE_URL") { "postgres://postgres@localhost" } %>
-  database: hifive_development
 
 test:
   <<: *default
-  url: <%= ENV.fetch("DATABASE_URL") { "postgres://postgres@localhost" } %>
-  database: hifive_test
 
 staging:
   <<: *default
-  <% if ENV['RAILS_ENV'].eql? 'staging' %>
-  database: <%= ENV.fetch("APPS_H5_STAGING_DATABASE") %>
-  host: <%= ENV.fetch("APPS_H5_STAGING_HOST") %>
-  username: <%= ENV.fetch("APPS_H5_STAGING_USERNAME") %>
-  password: <%= ENV.fetch("APPS_H5_STAGING_PW") %>
-  <% end %>
 
 production:
   <<: *default
-  <% if ENV['RAILS_ENV'].eql? 'production' %>
-  database: <%= ENV.fetch("APPS_H5_PROD_DATABASE") %>
-  host: <%= ENV.fetch("APPS_H5_PROD_HOST") %>
-  username: <%= ENV.fetch("APPS_H5_PROD_USERNAME") %>
-  password: <%= ENV.fetch("APPS_H5_PROD_PW") %>
-  <% end %>

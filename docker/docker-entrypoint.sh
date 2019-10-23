@@ -8,11 +8,8 @@ rm -f /home/highfive/app/tmp/pids/server.pid
 postfix start
 
 # Extract DB host and port
-if [ "${DATABASE_URL}" ]; then
-  db_host=$(echo "$DATABASE_URL" | cut -d "@" -f2 | cut -d "/" -f1 | cut -d ":" -f1)
-  db_port=$(echo "$DATABASE_URL" | cut -d "@" -f2 | cut -d "/" -f1 | cut -d ":" -f2)
-elif [ "${APPS_H5_PROD_HOST}" ]; then
-  db_host="$APPS_H5_PROD_HOST"
+if [ "${APPS_H5_DB_HOST}" ]; then
+  db_host="$APPS_H5_DB_HOST"
   db_port=5432
 fi
 

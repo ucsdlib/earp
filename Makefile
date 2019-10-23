@@ -3,6 +3,7 @@
 menu:
 	@echo 'build: Run docker-compose build for the current ENV (development, production)'
 	@echo 'clean: Run docker-compose down -v for the current ENV (development, production)'
+	@echo 'ldap: Run rake task to populate the application with employee ldap data'
 	@echo 'seed: Run docker-compose up for the development environment'
 	@echo 'test: Run full rspec test suite using RAILS_ENV=test'
 	@echo 'up: Run docker-compose up for the current ENV (development, production)'
@@ -14,6 +15,10 @@ build:
 clean:
 	@echo 'Cleaning out docker-compose environment'
 	@docker-compose down -v
+
+ldap:
+	@echo 'Populating employee LDAP data'
+	@docker-compose exec web bundle exec rake nightly:employees
 
 seed:
 	@echo 'Seeding database with sample data'

@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
   def find_or_create_user(auth_type)
     find_or_create_method = "find_or_create_for_#{auth_type.downcase}".to_sym
     omniauth_results = request.env['omniauth.auth']
-    Rails.logger.info "Shibboleth Auth Results: #{omniauth_results}"
+    Rails.logger.info "Shibboleth Auth Results:  #{omniauth_results}"
     user = User.send(find_or_create_method, omniauth_results)
 
     if valid_user?(auth_type, omniauth_results)

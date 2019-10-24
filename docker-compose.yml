@@ -24,6 +24,12 @@ services:
     stdin_open: true
     tty: true
 
+  email:
+    image: smpio/postfix
+    expose:
+      - "25"
+    command: '-e mynetworks=0.0.0.0/0'
+
   database:
     image: postgres:11-alpine
     volumes:

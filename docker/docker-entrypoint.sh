@@ -4,9 +4,6 @@ set -e
 # Remove a potentially pre-existing server.pid for Rails.
 rm -f /home/highfive/app/tmp/pids/server.pid
 
-# start postfix for sending email via ActionMailer
-postfix start
-
 # Extract DB host and port
 if [ "${APPS_H5_DB_HOST}" ]; then
   db_host="$APPS_H5_DB_HOST"

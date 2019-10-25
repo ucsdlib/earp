@@ -27,11 +27,18 @@ else
     sleep 1
   done
 
-  bundle exec rake db:create db:schema:load
+  if [ -z "${DATABASE_COMMAND}" ]; then
+    echo "DATABASE_COMMAND is not supplied, skipping database rake tasks"
+  else
+    # Support env var option for database command(s)
+    for db_command in $DATABASE_COMMAND; do
+      bundle exec rake "$db_command"
+    done
 
-  if [ ! "$RAILS_ENV" = "test" ]; then
-    # populate LDAP employee data
-    bundle exec rake nightly:employees
+    if [ ! "$RAILS_ENV" = "test" ]; then
+      # populate LDAP employee data
+      bundle exec rake nightly:employees
+    fi
   fi
 fi
 

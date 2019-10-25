@@ -19,10 +19,19 @@ This app is using ENV-driven configuration options through
 
 To override environment variables set by `.env`, create a `.env.local` file: <https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use>.  We recommend adding the private variables into the `.env.local` file to avoid the risk of accidentally committing an updated file that contains the password.
 
+For the docker-compose setup, there is also a `.env.docker` file. This is used
+for environment variables that are required for the
+`docker/docker-entrypoint.sh` script that `dotenv` will not have made available
+yet. This allows the application to load the environment dotfile when needed
+(for development or test) while keeping these variables separate.
+
 ### Docker
 1. Install docker and docker-compose
 1. To spin up your environment, run `make up`
     - Run `make menu` to see all options
+
+> If you wish to persist your local development data across sessions, you can
+temporarily change the `DATABASE_COMMAND` to something like `db:migrate`
 
 #### Employee Data
 
@@ -41,7 +50,7 @@ Or you can invoke directly (development example):
 `docker-compose exec web rake db:seed`
 
 Note that you will need to either be on campus or using the VPN, as this
-accesses LDAP data from Active Directory. You will also need LDAP account info to load the seed data.  This info can be found in LastPass. You can put the following LDAP variables  `APPS_H5_LDAP_HOST, APPS_H5_LDAP_PORT, APPS_H5_LDAP_BASE, APPS_H5_LDAP_USERNAME, APPS_H5_LDAP_PW, APPS_H5_LDAP_GROUP` into `.env.local` file. 
+accesses LDAP data from Active Directory. You will also need LDAP account info to load the seed data.  This info can be found in LastPass. You can put the following LDAP variables  `APPS_H5_LDAP_HOST, APPS_H5_LDAP_PORT, APPS_H5_LDAP_BASE, APPS_H5_LDAP_USERNAME, APPS_H5_LDAP_PW, APPS_H5_LDAP_GROUP` into `.env.local` file.
 
 #### Testing
 1. For full test suite, run `make test`

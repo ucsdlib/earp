@@ -11,9 +11,8 @@ services:
       target: development
     ports:
       - "3000:3000"
-    environment:
-      APPS_H5_DB_HOST: database
-      SELENIUM_URL: http://browser:4444/wd/hub/
+    env_file:
+      - ./.env.docker
     working_dir: /app
     volumes:
       - .:/app

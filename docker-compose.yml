@@ -30,7 +30,6 @@ services:
     environment:
       ALLOWED_SENDER_DOMAINS: 'ucsd.edu'
       HOSTNAME: 'postfix-docker'
-      MYNETWORKS: '0.0.0.0/0'
     expose:
       - "587"
 

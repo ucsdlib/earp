@@ -15,7 +15,7 @@ class RecognitionMailer < ApplicationMailer
 
   def mail_to_group
     [@recognition.employee.email,
-     manager_email(@recognition.employee.manager),
+     # manager_email(@recognition.employee.manager),
      @recognition.user.email].join(',')
   end
 

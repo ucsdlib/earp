@@ -25,7 +25,7 @@ RSpec.describe 'authenticating', type: :system do
     end
 
     after(:all) do
-      Rails.configuration.google_oauth2 = true
+      ENV['AUTH_METHOD'] = 'google'
     end
 
     it 'enforces authentication' do

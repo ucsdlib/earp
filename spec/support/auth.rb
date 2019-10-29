@@ -7,7 +7,7 @@ def sign_out
 end
 
 def omniauth_setup_developer
-  Rails.configuration.google_oauth2 = false
+  ENV['AUTH_METHOD'] = 'developer'
   OmniAuth.config.test_mode = true
   OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
     provider: 'developer',
@@ -18,7 +18,7 @@ def omniauth_setup_developer
 end
 
 def omniauth_setup_google_oauth2
-  Rails.configuration.google_oauth2 = true
+  ENV['AUTH_METHOD'] = 'google'
   OmniAuth.config.test_mode = true
   OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
     provider: 'google_oauth2',

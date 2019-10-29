@@ -47,6 +47,5 @@ module Hifive
                                              port: ENV.fetch('APPS_H5_EMAIL_SMTP_PORT') }
     end
     # Only production (staging eventually)
-    config.google_oauth2 = false
   end
 end

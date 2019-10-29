@@ -3,7 +3,7 @@
 # SessionsController
 class SessionsController < ApplicationController
   def new
-    if Rails.configuration.google_oauth2
+    if ENV['AUTH_METHOD'] == 'google'
       redirect_to google_oauth2_path
     else
       redirect_to developer_path

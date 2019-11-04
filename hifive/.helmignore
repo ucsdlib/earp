@@ -20,3 +20,6 @@
 .idea/
 *.tmproj
 .vscode/
+
+# Local values file for helm deployment
+local-values.yaml

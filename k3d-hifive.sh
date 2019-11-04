@@ -1,10 +1,13 @@
 #!/usr/bin/env sh
 
-if test $# -ne 1 ; then
-  echo "You must provide the Slack API token for the bot to connect to"
+# Allow developer to set their own location if they wish
+HIGHFIVE_LOCAL_VALUES="${HIGHFIVE_LOCAL_VALUES:-hifive/local-values.yaml}"
+
+if ! test -f "$HIGHFIVE_LOCAL_VALUES" ; then
+  echo "You must provide local values/secrets for the High Five helm chart, such as:"
+  echo "    LDAP, Email, Authentication, Database command(s) "
   exit 1
 fi
-api_token=$1
 
 echo "cluster: creating hifive k3s cluster"
 k3d create -n hifive --workers 1 --wait 0
@@ -19,8 +22,9 @@ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceac
 echo "helm: initializing with tiller service account"
 helm init --service-account tiller --wait
 
-echo "helm: installing Theodor"
-# TODO: solution for secrets (auth in particular)
+echo "helm: installing High Five!"
+
 helm install --name hifive ./hifive
+helm install --name hifive -f hifive/values.yaml -f "$HIGHFIVE_LOCAL_VALUES" ./hifive
 
 

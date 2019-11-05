@@ -14,6 +14,9 @@ k3d create -n hifive --workers 1 --wait 0
 echo "k3s: setting up kubeconfig"
 export KUBECONFIG="$(k3d get-kubeconfig --name='hifive')"
 
+echo "storage: installing local-storage for PVCs"
+kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+
 echo "tiller: creating service account"
 kubectl -n kube-system create serviceaccount tiller
 echo "tiller: setting up rbac for service account"

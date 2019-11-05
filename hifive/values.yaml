@@ -34,6 +34,7 @@ ldap:
   username: ldapuser
 
 auth:
+  method: google
   google_client_id: client
   google_client_secret: secret
 

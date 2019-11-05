@@ -76,8 +76,46 @@ try removing the cached files in the `./tmp` folder.
 With docker-compose running, in a new terminal/tab attach to the container:
 `docker attach hifive_web_1`
 
-### Production Docker
-The main `Dockerfile` is setup for production. If you want to run this locally,
-you can use the `./bin/docker-helper.sh -p` script.
+### Helm Chart Development
+There is a Helm chart for the application in the ./hifive folder
 
-Note you _cannot_ run the test suite in this environment. The tooling is not in place.
+#### Requirements
+- Docker
+- k3s
+- k3d
+- kubernetes
+- helm
+
+#### Local Values File
+The `./k3d-hifive.sh` script will, by default, look for a file: `./hifive/local-values.yaml` which is expected to contain secrets and any variables that need to be overriddent in the Helm chart for a successful local deployment.
+
+You can alternatively set your own file location using the
+`HIGHFIVE_LOCAL_VALUES` environment variable.
+
+A sample `local-values.yaml` file might look like:
+
+```
+global:
+  storageClass: local-path
+
+postgresql:
+  persistence:
+    size: 500Mi
+
+ldap:
+  password: actual-ldap-password
+  username: actual-ldap-username
+
+auth:
+  method: google
+  google_client_id: actual-google-client-id
+  google_client_secret: actual-google-client-secret
+
+email:
+  class: local-path
+  bcc: <your-email-account>@ucsd.edu
+  delivery_method: smtp
+  host: localhost:3000
+  sender: <your-email-account>@ucsd.edu
+  smtp_port: 587
+```

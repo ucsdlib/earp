@@ -11,7 +11,6 @@ RSpec.describe User, type: :model do
     provider: 'google_oauth2',
     uid: 'test'
   })}
-
   describe "#developer?" do
     it 'should return true when provider is developer' do
       auth_hash.provider = 'developer'
@@ -79,6 +78,24 @@ RSpec.describe User, type: :model do
         user = User.find_or_create_for_google_oauth2(auth_hash)
         allow(Ldap::Queries).to receive(:hifive_group).with(user.uid).and_return(user.uid)
         expect(User.administrator?(user.uid)).to be true
+      end
+    end
+  end
+
+  describe '.employee_uid' do
+    context 'when google-oauth uid is a number' do
+      before(:all) do
+        @employee = Employee.create(email: 'test@ucsd.edu',
+                                    uid: 'test', name: 'Dr. Seuss', display_name: 'Dr.', manager: 'manager1')
+        @employee.save!
+      end
+      after(:all) do
+        @employee.delete
+      end
+
+      it 'converts google-oauth uid to AD uid' do
+        uid = described_class.employee_uid(auth_hash.info.email, auth_hash.uid)
+        expect(uid).to eq(@employee.uid)
       end
     end
   end

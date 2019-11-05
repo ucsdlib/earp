@@ -46,6 +46,5 @@ module Hifive
       config.action_mailer.smtp_settings = { address: ENV.fetch('APPS_H5_EMAIL_SMTP_HOST'),
                                              port: ENV.fetch('APPS_H5_EMAIL_SMTP_PORT') }
     end
-    # Only production (staging eventually)
   end
 end

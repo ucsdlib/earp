@@ -21,7 +21,7 @@ emailContainer:
   repository: boky/postfix
   name: postfix
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   sender_domain: ucsd.edu
   hostname: email
 

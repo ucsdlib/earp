@@ -27,7 +27,6 @@ helm init --service-account tiller --wait
 
 echo "helm: installing High Five!"
 
-helm install --name hifive ./hifive
 helm install --name hifive -f hifive/values.yaml -f "$HIGHFIVE_LOCAL_VALUES" ./hifive
 
 

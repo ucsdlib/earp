@@ -112,10 +112,12 @@ auth:
   google_client_secret: actual-google-client-secret
 
 email:
-  class: local-path
   bcc: <your-email-account>@ucsd.edu
   delivery_method: smtp
   host: localhost:3000
   sender: <your-email-account>@ucsd.edu
   smtp_port: 587
+pvc:
+  email:
+    class: local-path
 ```

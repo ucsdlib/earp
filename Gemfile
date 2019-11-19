@@ -24,7 +24,7 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.9'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
-gem 'net-ldap', '~> 0.16.1'
+gem 'net-ldap', '~> 0.16.2'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'okcomputer'

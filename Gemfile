@@ -51,7 +51,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'pagy', '~> 3.5'
 gem 'whenever', require: false
-gem 'listen', '>= 3.0.5', '< 3.2'
+gem 'listen', '>= 3.0.5', '< 3.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

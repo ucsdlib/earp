@@ -49,7 +49,7 @@ gem 'simple_form'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-gem 'pagy', '~> 3.5'
+gem 'pagy', '~> 3.7'
 gem 'whenever', require: false
 gem 'listen', '>= 3.0.5', '< 3.2'
 

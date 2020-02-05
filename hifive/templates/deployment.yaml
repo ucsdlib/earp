@@ -75,7 +75,7 @@ spec:
             - name: "APPS_H5_EMAIL_SMTP_HOST"
               value: {{ template "hifive.fullname" . }}-email
             - name: "APPS_H5_EMAIL_SMTP_PORT"
-              value: {{ .Values.email.smtp_port | quote }}
+              value: {{ .Values.postfix.smtp_port | quote }}
             - name: "DATABASE_COMMAND"
               value: {{ .Values.databaseCommand }}
             - name: "GOOGLE_AUTH_ID"

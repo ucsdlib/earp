@@ -5,4 +5,4 @@ dependencies:
     repository: https://kubernetes-charts.storage.googleapis.com/
   - name: postfix
     version: 0.1.0
-    repository: repository: file://../postfix
+    repository: file://../../postfix

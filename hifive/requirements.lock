@@ -2,5 +2,8 @@ dependencies:
 - name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 6.5.0
-digest: sha256:6a160a0ed3e2c301c3f505a642621a6ef8633e14ad1635694d5859f11af3c514
-generated: "2019-10-21T14:35:07.321003315-07:00"
+- name: postfix
+  repository: file://../../postfix
+  version: 0.1.0
+digest: sha256:0f7c041d7379102962518e6f07a64ec4503c6f30b30035c9451c697acc09c4e0
+generated: "2020-02-06T09:05:14.781598079-08:00"

@@ -99,4 +99,26 @@ RSpec.describe Employee, type: :model do
       expect(Employee.first.display_name).to eq('Batman')
     end
   end
+  
+  describe '.populate_from_ldap for employee without a mail attribute' do
+    let(:entry1) { Net::LDAP::Entry.new('CN=aemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU') }
+    before do
+      entry1['cn'] = 'aemployee'
+      entry1['displayName'] = ['Employee, A']
+      entry1['givenName'] = ['A']
+      entry1['sn'] = ['Employee']
+      entry1['manager'] = ['CN=bigboss1,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU']
+      entry1['whenChanged'] = ['20181127172427.0Z']
+    end
+
+    it 'should not handle updating Employee records', :aggregate_failures do
+      expect(Employee.count).to be_zero
+      # ensure the updated_at date is prior to our record to update
+      travel_to Date.new(2018, 10, 02) do
+        described_class.populate_from_ldap(entry1)
+      end
+
+      expect(Employee.count).to be_zero
+    end
+  end
 end

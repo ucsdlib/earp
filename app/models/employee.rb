@@ -24,6 +24,7 @@ class Employee < ApplicationRecord
   # Update a new, or existing, Employee with the employee info from LDAP
   def self.update_employee_from_ldap(employee, employee_info)
     Rails.logger.tagged('employee', 'update') { Rails.logger.info "updating employee: #{employee.uid}" }
+    Rails.logger.info "No mail for employee: #{employee.uid}" && return unless employee_info.respond_to?(:mail)
     employee.display_name = employee_info.displayname.first
     employee.email = employee_info.mail.first
     employee.manager = manager_cn_from_dn(employee_info.manager.first) if employee_info.respond_to?(:manager)

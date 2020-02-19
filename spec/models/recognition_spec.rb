@@ -54,6 +54,15 @@ RSpec.describe Recognition, type: :model do
     it 'finds recognitions in a given date range' do
       expect(described_class.created_between('2018-01-01', '2018-12-31').map(&:description)).to eq(['in report'])
     end
+
+    it 'finds recognitions using an inclusive end date' do
+      recognition3 = FactoryBot.create(:recognition,
+                                       user: user,
+                                       created_at: Time.parse('2018-12-31 9:00'),
+                                       description: 'inclusive end date',
+                                       employee: employee)
+      expect(described_class.created_between('2018-01-01', '2018-12-31').map(&:description)).to eq(['in report', 'inclusive end date'])
+    end
   end
 
   describe '.feed' do

@@ -18,8 +18,12 @@ class Recognition < ApplicationRecord
   scope :feed, -> { public_recognitions.first(15) }
 
   # A custom finder used for identifying records created between a given date range
+  # Note that the end date will be set to the end of the day, to allow for an inclusive search.
+  # @param start_date [String] start date for query of form YYYY-MM-DD
+  # @param end_date [String] end date for query of form YYYY-MM-DD
   def self.created_between(start_date, end_date)
-    where(created_at: start_date..end_date)
+    inclusive_end_date = Time.parse(end_date).end_of_day
+    where(created_at: start_date..inclusive_end_date)
   end
 
   # Generate an OptOutLink for this Recognition

@@ -37,6 +37,28 @@ RSpec.describe Recognition, type: :model do
     end
   end
 
+  describe '#notify_slack' do
+    let(:employee) { FactoryBot.create(:employee) }
+    let(:user) { FactoryBot.create(:user) }
+    before(:each) do
+      Rails.application.config.send_slack_notifications = true
+    end
+
+    after(:each) do
+      Rails.application.config.send_slack_notifications = false
+    end
+
+    it 'calls the SlackNotifier service' do
+      allow_any_instance_of(SlackNotifier).to receive(:call).and_return(:nothing)
+      expect_any_instance_of(SlackNotifier).to receive(:call)
+      recognition = FactoryBot.create(:recognition,
+                                       user: user,
+                                       created_at: Time.parse('2018-12-31 9:00'),
+                                       description: 'employee is the greatest',
+                                       employee: employee)
+    end
+  end
+
   describe '.created_between' do
     let!(:recognition1) { FactoryBot.create(:recognition,
                                                  user: user,

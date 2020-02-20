@@ -4,7 +4,10 @@ require 'digest/bubblebabble'
 
 # Recognition
 class Recognition < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   after_create :generate_link
+  after_create :notify_slack
 
   belongs_to :user
   belongs_to :employee
@@ -26,6 +29,14 @@ class Recognition < ApplicationRecord
     where(created_at: start_date..inclusive_end_date)
   end
 
+  def generate_key(recognition_id)
+    key = Digest::SHA1.bubblebabble(recognition_id.to_s + Time.zone.now.to_s)
+    OptOutLink.new(key: key, recognition_id: recognition_id, expires: 6.months.from_now).save
+    key
+  end
+
+  private
+
   # Generate an OptOutLink for this Recognition
   def generate_link
     logger.tagged('recognition') { logger.info "sending email for recognition #{id}" }
@@ -33,9 +44,8 @@ class Recognition < ApplicationRecord
     RecognitionMailer.email(Recognition.find(id)).deliver_now
   end
 
-  def generate_key(recognition_id)
-    key = Digest::SHA1.bubblebabble(recognition_id.to_s + Time.zone.now.to_s)
-    OptOutLink.new(key: key, recognition_id: recognition_id, expires: 6.months.from_now).save
-    key
+  def notify_slack
+    SlackNotifier.call(employee_name: employee.display_name,
+                       employee_rec_url: recognition_url(self))
   end
 end

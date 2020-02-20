@@ -1,6 +1,10 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # We want to be extra careful not to send any notifications during test runs
+  # While it's unlikely that the SLACK_WEBHOOK_URL var will be set for a test environment, stuff happens.
+  config.send_slack_notifications = false
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped

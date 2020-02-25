@@ -3,6 +3,7 @@
 menu:
 	@echo 'build: Run docker-compose build for the current ENV (development, production)'
 	@echo 'clean: Run docker-compose down -v for the current ENV (development, production)'
+	@echo 'console: Run rails console for debugging and local development'
 	@echo 'ldap: Run rake task to populate the application with employee ldap data'
 	@echo 'lint: Run rubocop to lint all files in the project'
 	@echo 'seed: Run docker-compose up for the development environment'
@@ -16,6 +17,10 @@ build:
 clean:
 	@echo 'Cleaning out docker-compose environment'
 	@docker-compose down -v
+
+console:
+	@echo 'Running rails console'
+	@docker-compose exec web bundle exec rails console
 
 lint:
 	@echo 'Running Rubocop'

@@ -30,6 +30,7 @@ RSpec.describe Employee, type: :model do
       entry['mail'] = ['aemployee@ucsd.edu']
       entry['manager'] = ['CN=bigboss1,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU']
       entry['whenChanged'] = ['20181127172427.0Z']
+      entry['SAMAccountName'] = 'aemployee'
     end
 
     it 'returns true with a new record' do
@@ -87,6 +88,7 @@ RSpec.describe Employee, type: :model do
       entry1['mail'] = ['aemployee@ucsd.edu']
       entry1['manager'] = ['CN=bigboss1,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU']
       entry1['whenChanged'] = ['20181127172427.0Z']
+      entry1['SAMAccountName'] = 'aemployee'
     end
 
     it 'should handle updating Employee records', :aggregate_failures do
@@ -113,6 +115,7 @@ RSpec.describe Employee, type: :model do
       entry1['sn'] = ['Employee']
       entry1['manager'] = ['CN=bigboss1,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU']
       entry1['whenChanged'] = ['20181127172427.0Z']
+      entry1['SAMAccountName'] = 'aemployee'
     end
 
     it 'should not handle updating Employee records', :aggregate_failures do

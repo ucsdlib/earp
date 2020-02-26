@@ -12,10 +12,10 @@ class Employee < ApplicationRecord
   scope :active_employees, -> { where(active: true).sort_by_name }
 
   # Given an Net::LDAP::Entry extract and populate an Employee record
-  # using the cn/uid as the unique key
+  # using the SAMAccountName/uid as the unique key
   # @param [Net::LDAP::Entry] employee_info
   def self.populate_from_ldap(employee_info)
-    e = find_or_initialize_by(uid: employee_info.cn.first)
+    e = find_or_initialize_by(uid: employee_info.SAMAccountName.first)
     return unless needs_update?(e, String(employee_info.whenChanged.first))
 
     update_employee_from_ldap(e, employee_info)
@@ -35,7 +35,7 @@ class Employee < ApplicationRecord
   # rubocop:enable Layout/LineLength
 
   # Given an Net::LDAP::Entry extract and populate an Employee record
-  # using the cn/uid as the unique key
+  # using the SAMAccountName/uid as the unique key
   # @param [Net::LDAP::Entry] employee_info
   def self.employee_display_name(employee_info)
     "#{employee_info.givenName.first} #{employee_info.sn.first}"

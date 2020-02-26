@@ -4,9 +4,9 @@ RSpec.describe Ldap::Queries, type: :service do
   describe '.library_staff' do
     before do
       entry1 = Net::LDAP::Entry.new('CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
-      entry1['cn'] = 'drseuss'
+      entry1['SAMAccountName'] = 'drseuss'
       entry2 = Net::LDAP::Entry.new('CN=nonadmin,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
-      entry2['cn'] = ''
+      entry2['SAMAccountName'] = ''
       mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
     end
@@ -15,7 +15,7 @@ RSpec.describe Ldap::Queries, type: :service do
       expect(described_class.library_staff('nonadmin')).to eq('')
     end
 
-    it 'returns the cn for the given user with a match' do
+    it 'returns the SAMAccountName for the given user with a match' do
       expect(described_class.library_staff('drseuss')).to eq('')
     end
   end
@@ -23,9 +23,9 @@ RSpec.describe Ldap::Queries, type: :service do
   describe '.hifive_group' do
     before do
       entry1 = Net::LDAP::Entry.new('CN=drseuss,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
-      entry1['cn'] = 'drseuss'
+      entry1['SAMAccountName'] = 'drseuss'
       entry2 = Net::LDAP::Entry.new('CN=nonadmin,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
-      entry2['cn'] = ''
+      entry2['SAMAccountName'] = ''
       mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
     end
@@ -34,7 +34,7 @@ RSpec.describe Ldap::Queries, type: :service do
       expect(described_class.hifive_group('nonadmin')).to eq('')
     end
 
-    it 'returns the cn for the given user with a match' do
+    it 'returns the SAMAccountName for the given user with a match' do
       expect(described_class.hifive_group('drseuss')).to eq('')
     end
   end
@@ -49,6 +49,7 @@ RSpec.describe Ldap::Queries, type: :service do
       entry1['mail'] = ['aemployee@ucsd.edu']
       entry1['manager'] = ['CN=bigboss1,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU']
       entry1['whenChanged'] = ['20181130172427.0Z']
+      entry1['SAMAccountName'] = 'aemployee'
       entry2 = Net::LDAP::Entry.new('CN=zbestemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU')
       entry2['cn'] = 'zbestemployee'
       entry2['displayName'] = ["Zbestemployee, The"]
@@ -57,6 +58,7 @@ RSpec.describe Ldap::Queries, type: :service do
       entry2['mail'] = ['zbestemployee@ucsd.edu']
       entry2['manager'] = ['CN=bigboss2,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU']
       entry2['whenChanged'] = ['20181130172427.0Z']
+      entry2['SAMAccountName'] = 'zbestemployee'
       mock_ldap_validation
       allow(mock_ldap_connection).to receive(:search).and_yield(entry1).and_yield(entry2)
     end

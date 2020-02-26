@@ -42,10 +42,10 @@ module Ldap
       ldap_connection.search(
         filter: Ldap::Filters.employees,
         return_result: false,
-        attributes: %w[DisplayName CN mail manager givenName sn whenChanged]
+        attributes: %w[DisplayName CN mail manager givenName sn whenChanged SAMAccountName]
       ) do |employee|
         Employee.populate_from_ldap(employee)
-        current_employees << employee.cn.first
+        current_employees << employee.SAMAccountName.first
       end
       Employee.update_status_for_all(current_employees)
       validate_ldap_response
@@ -53,7 +53,7 @@ module Ldap
     end
     # rubocop:enable Metrics/MethodLength
 
-    # Given a UID/CN determine whether a user is a library staff member using #employees filter
+    # Given a UID/SAMAccountName determine whether a user is a library staff member using #employees filter
     # @param uid [String] the user id to check. e.g. 'drseuss'
     # @return [String] the original uid if valid library staff
     def self.library_staff(uid)
@@ -61,15 +61,15 @@ module Ldap
 
       ldap_connection.search(
         filter: Ldap::Filters.library_staff_member(uid),
-        attributes: %w[CN],
+        attributes: %w[SAMAccountName],
         return_result: false
-      ) { |item| result = item.cn.first }
+      ) { |item| result = item.SAMAccountName.first }
 
       validate_ldap_response
       result
     end
 
-    # Given a UID/CN determine whether a user is in the hifive admin group
+    # Given a UID/SAMAccountName determine whether a user is in the hifive admin group
     # @param uid [String] the user id to check. e.g. 'drseuss'
     # @return [String] the original uid, assuming it is in the hifive group
     def self.hifive_group(uid)
@@ -77,9 +77,9 @@ module Ldap
 
       ldap_connection.search(
         filter: Ldap::Filters.hifive_admin(uid),
-        attributes: %w[CN],
+        attributes: %w[SAMAccountName],
         return_result: false
-      ) { |item| result = item.cn.first }
+      ) { |item| result = item.SAMAccountName.first }
 
       validate_ldap_response
       result

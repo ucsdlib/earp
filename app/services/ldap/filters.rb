@@ -5,19 +5,17 @@ module Ldap
   class Filters
     # Only show current library staff, excluding students
     # @return [NET::LDAP::Filter] for employees query
+    # rubocop:disable Metrics/LineLength
     def self.employees
-      employees_only = Net::LDAP::Filter.pres('EmployeeID')
-      staff = Net::LDAP::Filter.eq('ObjectCategory', 'person')
-      users = Net::LDAP::Filter.eq('ObjectClass', 'user')
-      no_lib_accounts = Net::LDAP::Filter.ne('sAMAccountName', 'lib-*')
-      employees_only & staff & users & no_lib_accounts
+      Net::LDAP::Filter::FilterParser.parse('(&(objectCategory=user)(memberOf:1.2.840.113556.1.4.1941:=CN=All Library Staff,OU=Groups,OU=University Library,DC=AD,DC=UCSD,DC=EDU))')
     end
+    # rubocop:enable Metrics/LineLength
 
     # Filters for checking if a given user is a library employee
     # @param uid [String] the user id to check. e.g. 'drseuss'
     # @return [NET::LDAP::Filter] for employees query
     def self.library_staff_member(uid)
-      Net::LDAP::Filter.eq('CN', uid) & employees
+      Net::LDAP::Filter.eq('SAMAccountName', uid) & employees
     end
 
     # Only query against the given uid as a member of the hifive ldap group

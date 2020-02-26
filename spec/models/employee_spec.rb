@@ -8,11 +8,15 @@ RSpec.describe Employee, type: :model do
     end
   end
 
-
   context 'valid recognition' do
     let(:employee) { FactoryBot.build_stubbed(:employee) }
+    let(:employee_without_manager) { FactoryBot.build_stubbed(:employee_without_manager) }
     it "persists with required attributes" do
       expect(employee).to be_valid
+    end
+
+    it "persists without requiring a manager" do
+      expect(employee_without_manager).to be_valid
     end
   end
 
@@ -99,7 +103,7 @@ RSpec.describe Employee, type: :model do
       expect(Employee.first.display_name).to eq('Batman')
     end
   end
-  
+
   describe '.populate_from_ldap for employee without a mail attribute' do
     let(:entry1) { Net::LDAP::Entry.new('CN=aemployee,OU=Users,OU=University Library,DC=AD,DC=UCSD,DC=EDU') }
     before do

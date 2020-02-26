@@ -5,7 +5,7 @@
 class Employee < ApplicationRecord
   has_many :recognitions, dependent: :destroy
 
-  validates :uid, :email, :manager, :display_name, :name, presence: true
+  validates :uid, :email, :display_name, :name, presence: true
 
   # custom scopes
   scope :sort_by_name, -> { order(:display_name) }

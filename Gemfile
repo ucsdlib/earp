@@ -60,6 +60,7 @@ group :development, :test do
   gem 'capybara'
   gem 'coveralls', '~> 0.8'
   gem 'factory_bot_rails'
+  gem 'pry-byebug'
   gem 'pry-rails'
   gem 'pry-doc'
   gem 'rspec-rails'

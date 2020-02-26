@@ -36,8 +36,8 @@ spec:
               value: {{ .Values.email.bcc }}
             - name: "APPS_H5_DELIVERY_METHOD"
               value: {{ .Values.email.delivery_method }}
-            - name: "APPS_H5_EMAIL_HOST"
-              value: {{ .Values.email.host }}
+            - name: "APPS_H5_APP_HOST"
+              value: {{ .Values.image.host }}
             - name: "APPS_H5_SENDER"
               value: {{ .Values.email.sender }}
             - name: "APPS_H5_LDAP_BASE"

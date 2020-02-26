@@ -5,6 +5,7 @@
 replicaCount: 1
 
 image:
+  host: highfive.local
   repository: ucsdlib/hifive
   name: hifive
   tag: stable

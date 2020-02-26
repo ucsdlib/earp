@@ -30,12 +30,12 @@ questions:
     type: string
     required: true
     label: Path
-- variable: email.host
+- variable: image.host
   type: string
-  group: "Email"
+  group: "Application Host"
   default: highfive.local
-  label: "Email hostname URL (should match ingress hostname)"
-  description: "Email hostname URL (should match ingress hostname)"
+  label: "Application hostname URL (should match ingress hostname)"
+  description: "Application hostname URL (should match ingress hostname)"
 - variable: email.sender
   type: string
   group: "Email"

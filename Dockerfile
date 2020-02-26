@@ -50,7 +50,7 @@ ENV RAILS_ROOT=/app
 ENV LANG=C.UTF-8
 ENV SECRET_KEY_BASE=something
 ENV APPS_H5_DELIVERY_METHOD=letter_opener
-ENV APPS_H5_EMAIL_HOST=localhost:3000
+ENV APPS_H5_APP_HOST=localhost:3000
 
 COPY --from=development /usr/local/bundle /usr/local/bundle
 COPY --from=development /app ./

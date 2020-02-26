@@ -16,7 +16,7 @@ class RecognitionMailer < ApplicationMailer
   def mail_to_group
     [@recognition.employee.email,
      manager_email(@recognition.employee.manager),
-     @recognition.user.email].join(',')
+     @recognition.user.email].compact.join(',')
   end
 
   def opt_out_key(id)

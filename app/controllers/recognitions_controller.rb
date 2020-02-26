@@ -41,7 +41,7 @@ class RecognitionsController < ApplicationController
 
   # POST /recognitions
   # POST /recognitions.json
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Layout/MethodLength
   def create
     @recognition = Recognition.new(recognition_params)
     @recognition.user = current_user
@@ -55,7 +55,7 @@ class RecognitionsController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Layout/MethodLength
 
   # PATCH/PUT /recognitions/1
   # PATCH/PUT /recognitions/1.json
@@ -88,9 +88,9 @@ class RecognitionsController < ApplicationController
 
   # Ensure the current user is allowed to edit/update/delete the current recognition
   def authorize_editor
-    # rubocop:disable Metrics/LineLength, Style/IfUnlessModifier
+    # rubocop:disable Layout/LineLength
     redirect_to @recognition, notice: 'You are only allowed to modify your own recognitions' unless can_administrate?(@recognition)
-    # rubocop:enable Metrics/LineLength, Style/IfUnlessModifier
+    # rubocop:enable Layout/LineLength
   end
 
   # Use callbacks to share common setup or constraints between actions.

@@ -2,6 +2,13 @@ require:
   - rubocop-performance
   - rubocop-rspec
 
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+
 AllCops:
   TargetRubyVersion: 2.6
   DisplayCopNames: true
@@ -28,7 +35,7 @@ Style/Documentation:
     - 'app/helpers/application_helper.rb'
     - 'app/models/application_record.rb'
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 Metrics/AbcSize:

@@ -22,7 +22,7 @@ class Employee < ApplicationRecord
   end
 
   # Update a new, or existing, Employee with the employee info from LDAP
-  # rubocop:disable Metrics/LineLength, Style/IfUnlessModifier
+  # rubocop:disable Layout/LineLength
   def self.update_employee_from_ldap(employee, employee_info)
     Rails.logger.tagged('employee', 'update') { Rails.logger.info "updating employee: #{employee.uid}" }
     Rails.logger.tagged('employee', 'update') { Rails.logger.info "No mail for employee: #{employee.uid}" } && return unless employee_info.respond_to?(:mail)
@@ -32,7 +32,7 @@ class Employee < ApplicationRecord
     employee.name = employee_display_name(employee_info)
     employee.save
   end
-  # rubocop:enable Metrics/LineLength, Style/IfUnlessModifier
+  # rubocop:enable Layout/LineLength
 
   # Given an Net::LDAP::Entry extract and populate an Employee record
   # using the cn/uid as the unique key

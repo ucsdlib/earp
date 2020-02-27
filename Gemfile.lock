@@ -191,6 +191,9 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-byebug (3.8.0)
+      byebug (~> 11.0)
+      pry (~> 0.10)
     pry-doc (1.0.0)
       pry (~> 0.11)
       yard (~> 0.9.11)
@@ -366,6 +369,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   pagy (~> 3.5)
   pg (>= 0.18, < 2.0)
+  pry-byebug
   pry-doc
   pry-rails
   puma (~> 4.3)

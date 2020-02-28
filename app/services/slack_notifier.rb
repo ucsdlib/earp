@@ -8,7 +8,7 @@ require 'json'
 # to a pre-configured Slack App channel
 # It is expected that the Slack incoming webhook will be provided as an environment variables
 class SlackNotifier
-  TEMPLATE = 'Who-hoo! :tada: %s just received a High Five! :raised_hands: Check it out :point_right: %s'
+  TEMPLATE = 'Woo-hoo! :tada: %s just received a High Five! :raised_hands: Check it out :point_right: %s'
 
   # Entrypoint for calling classes such as Recognition
   def self.call(*args)

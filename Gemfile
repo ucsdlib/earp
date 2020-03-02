@@ -68,7 +68,7 @@ group :development, :test do
   gem 'rubocop-performance'
   gem 'rubocop-rspec'
   gem 'selenium-webdriver'
-  gem 'dotenv-rails', '2.7.4'
+  gem 'dotenv-rails', '2.7.5'
 end
 
 group :development do

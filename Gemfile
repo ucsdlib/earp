@@ -28,18 +28,6 @@ gem 'net-ldap', '~> 0.16.2'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'okcomputer'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use ActiveStorage variant
-# gem 'mini_magick', '~> 4.8'
-
-# Use Capistrano for deployment
-gem 'capistrano', '~> 3.12.0'
-gem 'capistrano-bundler', '1.6.0'
-gem 'capistrano-rails', '~> 1.4.0'
-gem 'capistrano-rbenv', '~> 2.1.4'
-
 # Simple Form, Bootstrap and friends
 gem 'bootstrap', '~> 4.3.1'
 gem 'bootstrap-datepicker-rails'
@@ -52,6 +40,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'pagy', '~> 3.5'
 gem 'whenever', require: false
 gem 'listen', '>= 3.0.5', '< 3.3'
+
+# Use Capistrano for deployment
+group :deploy do
+  gem 'capistrano', '~> 3.12.0'
+  gem 'capistrano-bundler', '1.6.0'
+  gem 'capistrano-rails', '~> 1.4.0'
+  gem 'capistrano-rbenv', '~> 2.1.4'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

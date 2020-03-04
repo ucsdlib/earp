@@ -5,11 +5,11 @@ module Ldap
   class Filters
     # Only show current library staff, excluding students
     # @return [NET::LDAP::Filter] for employees query
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     def self.employees
       Net::LDAP::Filter::FilterParser.parse('(&(objectCategory=user)(memberOf:1.2.840.113556.1.4.1941:=CN=All Library Staff,OU=Groups,OU=University Library,DC=AD,DC=UCSD,DC=EDU))')
     end
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
 
     # Filters for checking if a given user is a library employee
     # @param uid [String] the user id to check. e.g. 'drseuss'

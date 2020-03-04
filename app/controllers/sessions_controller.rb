@@ -39,10 +39,10 @@ class SessionsController < ApplicationController
   def destroy
     destroy_user_session
 
-    # rubocop:disable Metrics/LineLength
+    # rubocop:disable Layout/LineLength
     redirect_to logout_url,
                 notice: 'You have been logged out of High Five! To log out of all Single Sign-On applications, close your browser.'
-    # rubocop:enable Metrics/LineLength
+    # rubocop:enable Layout/LineLength
   end
 
   private

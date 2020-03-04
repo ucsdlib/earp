@@ -24,7 +24,7 @@ module RecognitionsHelper
   def pretty_name(name)
     if name.count(',') == 1
       name = name.split(',', 2)
-      name = name[1] + ' ' + name[0]
+      name = "#{name[1]} #{name[0]}".strip
     end
     name
   end

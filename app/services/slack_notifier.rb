@@ -8,6 +8,8 @@ require 'json'
 # to a pre-configured Slack App channel
 # It is expected that the Slack incoming webhook will be provided as an environment variables
 class SlackNotifier
+  include RecognitionsHelper
+  attr_reader :employee_name, :employee_rec_url
   TEMPLATE = 'Woo-hoo! :tada: %s just received a High Five! :raised_hands: Check it out :point_right: %s'
 
   # Entrypoint for calling classes such as Recognition
@@ -18,7 +20,7 @@ class SlackNotifier
   # @param employee_name [String] The display name for the recognized employee
   # @param employee_rec_url [String] The full url to the Recognition
   def initialize(employee_name:, employee_rec_url:)
-    @employee_name = employee_name
+    @employee_name = pretty_name(employee_name)
     @employee_rec_url = employee_rec_url
   end
 
@@ -35,7 +37,7 @@ class SlackNotifier
     end
 
     Rails.logger.tagged('slack', 'notification') do
-      Rails.logger.info "Notifying Slack Channel for: #{@employee_name} with url #{@employee_rec_url} "
+      Rails.logger.info "Notifying Slack Channel for: #{employee_name} with url #{employee_rec_url} "
     end
     notify_slack
   end
@@ -60,7 +62,7 @@ class SlackNotifier
 
   def payload
     {
-      text: format(TEMPLATE, @employee_name, @employee_rec_url)
+      text: format(TEMPLATE, employee_name, employee_rec_url)
     }.to_json
   end
 end

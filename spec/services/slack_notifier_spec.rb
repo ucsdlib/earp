@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SlackNotifier, type: :service do
   describe '#call' do
-    let!(:notifier) { described_class.new(employee_name: 'Jane Triton',
+    let!(:notifier) { described_class.new(employee_name: 'Triton, Jane',
                                           employee_rec_url: 'http://example.com/recognitions/1') }
     # Temporarily use SlackNotifier in test environment
     # This is set to false in config/environments/test
@@ -13,6 +13,10 @@ RSpec.describe SlackNotifier, type: :service do
 
     after(:each) do
       Rails.application.config.send_slack_notifications = false
+    end
+
+    it 'prints first name then last when name is of form lastname, firstname' do
+      expect(notifier.employee_name).to eq('Jane Triton')
     end
 
     context 'with SLACK_WEBHOOK_URL set' do

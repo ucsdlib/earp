@@ -22,8 +22,7 @@ module RecognitionsHelper
   # Reformat "Lastname, Firstanme" to "Firstname Lastname" (show view)
   #---
   def pretty_name(name)
-    exceptions = ['John H. Robinson, IV']
-    if name.count(',') == 1 && !exceptions.include?(name)
+    if name.count(',') == 1
       name = name.split(',', 2)
       name = name[1] + ' ' + name[0]
     end

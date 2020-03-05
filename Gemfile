@@ -29,7 +29,7 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'okcomputer'
 # Simple Form, Bootstrap and friends
-gem 'bootstrap', '~> 4.3.1'
+gem 'bootstrap', '~> 4.4.1'
 gem 'bootstrap-datepicker-rails'
 gem 'jquery-rails'
 gem 'simple_form'

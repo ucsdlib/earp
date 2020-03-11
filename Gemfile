@@ -43,7 +43,7 @@ gem 'listen', '>= 3.0.5', '< 3.3'
 
 # Use Capistrano for deployment
 group :deploy do
-  gem 'capistrano', '~> 3.12.0'
+  gem 'capistrano', '~> 3.12.1'
   gem 'capistrano-bundler', '1.6.0'
   gem 'capistrano-rails', '~> 1.4.0'
   gem 'capistrano-rbenv', '~> 2.1.4'
